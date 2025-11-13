@@ -1,0 +1,36 @@
+<robot name="conveyor_belt">
+
+  <!-- Base Link (ground) -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="1 0.5 0.1"/> <!-- 1m x 0.5m x 0.1m -->
+      </geometry>
+      <material name="gray">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Belt (just visual, can be animated in Gazebo) -->
+  <link name="belt">
+    <visual>
+      <origin xyz="0 0 0.05"/>
+      <geometry>
+        <box size="1 0.4 0.02"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Fixed Joint between base and belt -->
+  <joint name="belt_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="belt"/>
+    <origin xyz="0 0 0"/>
+  </joint>
+
+</robot>
+
