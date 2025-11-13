@@ -58,6 +58,10 @@ parser.add_argument(
 )
 parser.add_argument("--real-time", action="store_true", default=False, help="Run in real-time, if possible.")
 
+parser.add_argument("--log", type=int, default=None,
+                    help="Number of episodes to run then exit (e.g., --log 1).")
+
+
 # append AppLauncher cli args
 AppLauncher.add_app_launcher_args(parser)
 # parse the arguments
@@ -79,9 +83,6 @@ import os
 import random
 import time
 import torch
-
-
-import envs
 
 import skrl
 from packaging import version
@@ -115,7 +116,11 @@ from isaaclab_rl.skrl import SkrlVecEnvWrapper
 import isaaclab_tasks  # noqa: F401
 from isaaclab_tasks.utils import get_checkpoint_path
 from isaaclab_tasks.utils.hydra import hydra_task_config
+####
+# Custom envs
+import envs  # noqa: F401
 
+####
 # PLACEHOLDER: Extension template (do not remove this comment)
 
 # config shortcuts
@@ -124,7 +129,6 @@ if args_cli.agent is None:
     agent_cfg_entry_point = "skrl_cfg_entry_point" if algorithm in ["ppo"] else f"skrl_{algorithm}_cfg_entry_point"
 else:
     agent_cfg_entry_point = args_cli.agent
-    algorithm = agent_cfg_entry_point.split("_cfg")[0].split("skrl_")[-1].lower()
 
 
 @hydra_task_config(args_cli.task, agent_cfg_entry_point)
@@ -182,9 +186,6 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, expe
         print("[INFO] Using checkpoint:", resume_path)
     log_dir = os.path.dirname(os.path.dirname(resume_path))
 
-    # set the log directory for the environment (works for all environment types)
-    env_cfg.log_dir = log_dir
-
     # create isaac environment
     env = gym.make(args_cli.task, cfg=env_cfg, render_mode="rgb_array" if args_cli.video else None)
 
@@ -225,9 +226,37 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, expe
     # set agent to evaluation mode
     runner.agent.set_running_mode("eval")
 
+  
+    # #### User Code #### export the policy
+
+    # class PolicyONNXWrapper(torch.nn.Module):
+    #     def __init__(self, model):
+    #         super().__init__()
+    #         self.net_container = model.net_container
+    #         self.policy_layer = model.policy_layer
+
+    #     def forward(self, x):
+    #         x = self.net_container(x)
+    #         return self.policy_layer(x)
+
+    # policy_onnx = PolicyONNXWrapper(runner.agent.models["policy"])
+    # dummy_input = torch.randn(1, policy_onnx.net_container[0].in_features, device=env_cfg.sim.device)
+
+    # torch.onnx.export(
+    #     policy_onnx,
+    #     dummy_input,
+    #     "policy.onnx",
+    #     input_names=["obs"],
+    #     output_names=["actions"],
+    #     opset_version=17,
+    # )
+    ###############
+
+
     # reset environment
     obs, _ = env.reset()
     timestep = 0
+    num_episode = 0
     # simulate environment
     while simulation_app.is_running():
         start_time = time.time()
@@ -235,7 +264,10 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, expe
         # run everything in inference mode
         with torch.inference_mode():
             # agent stepping
+            # print("************************")
+            # print("obs = ",obs)
             outputs = runner.agent.act(obs, timestep=0, timesteps=0)
+            # print("predicted joints pos = ",outputs)
             # - multi-agent (deterministic) actions
             if hasattr(env, "possible_agents"):
                 actions = {a: outputs[-1][a].get("mean_actions", outputs[0][a]) for a in env.possible_agents}
@@ -243,7 +275,12 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, expe
             else:
                 actions = outputs[-1].get("mean_actions", outputs[0])
             # env stepping
-            obs, _, _, _, _ = env.step(actions)
+            # print("predicted joints pos = ",actions)
+            obs, rew, terminated, truncated, info= env.step(actions)
+
+            # print("robot joint pos = ",info["robot joint pos"])
+            # print("agent output ", actions)
+            # print(obs)
         if args_cli.video:
             timestep += 1
             # exit the play loop after recording one video
@@ -254,6 +291,13 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, expe
         sleep_time = dt - (time.time() - start_time)
         if args_cli.real_time and sleep_time > 0:
             time.sleep(sleep_time)
+
+        
+        if args_cli.log:
+            if truncated or terminated:
+                num_episode += 1
+                if num_episode >= args_cli.log:
+                    break
 
     # close the simulator
     env.close()
