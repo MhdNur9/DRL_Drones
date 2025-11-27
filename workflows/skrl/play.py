@@ -57,6 +57,9 @@ parser.add_argument(
     help="The RL algorithm used for training the skrl agent.",
 )
 parser.add_argument("--real-time", action="store_true", default=False, help="Run in real-time, if possible.")
+parser.add_argument("--log", type=int, default=None,
+                    help="Number of episodes to run then exit (e.g., --log 1).")
+
 
 # append AppLauncher cli args
 AppLauncher.add_app_launcher_args(parser)
@@ -80,7 +83,7 @@ import random
 import time
 import torch
 
-
+from datetime import datetime
 import envs
 
 import skrl
@@ -228,10 +231,14 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, expe
     # reset environment
     obs, _ = env.reset()
     timestep = 0
+    num_episode = 0
     # simulate environment
     while simulation_app.is_running():
+        
         start_time = time.time()
-
+        readable = datetime.fromtimestamp(start_time)
+        # print("Readable time =", readable)
+        
         # run everything in inference mode
         with torch.inference_mode():
             # agent stepping
@@ -243,7 +250,8 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, expe
             else:
                 actions = outputs[-1].get("mean_actions", outputs[0])
             # env stepping
-            obs, _, _, _, _ = env.step(actions)
+            # obs, _, _, _, _ = env.step(actions)
+            obs, rew, terminated, truncated, info= env.step(actions)
         if args_cli.video:
             timestep += 1
             # exit the play loop after recording one video
@@ -254,6 +262,12 @@ def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, expe
         sleep_time = dt - (time.time() - start_time)
         if args_cli.real_time and sleep_time > 0:
             time.sleep(sleep_time)
+
+        if args_cli.log:
+            if truncated or terminated:
+                num_episode += 1
+                if num_episode >= args_cli.log:
+                    break
 
     # close the simulator
     env.close()

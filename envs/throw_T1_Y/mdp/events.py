@@ -73,7 +73,7 @@ def moving_cube(
     # print("obj pos = ",obj_pos)
     # print("obj vel = ",obj_vel)
     if obj_pos[0][2]<0.0365:
-        if obj_pos[0][1]<0:
+        if obj_pos[0][1]<-0.25:
 
             # velocities
             vel_w = asset.data.root_vel_w[env_ids]

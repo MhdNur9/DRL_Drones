@@ -45,6 +45,44 @@ def object_position_in_robot_root_frame(
     env.extras['robot_pos']= robot_pos
     # robot_pos=robot.data.root_pos_w
     # env.extras['robot_pos']= robot_pos
+
+    # Get linear velocity of the last link (usually the end-effector)
+    ee_lin_vel = robot.data.body_lin_vel_w[0, -1]  # shape: (3,)
+    ee_speed = torch.norm(ee_lin_vel).item()
+    # Extract linear velocities of all links (shape: [num_links, 3])
+    ang_vel = robot.data.body_ang_vel_w
+    # print("ang_vel = ",ang_vel)
+    
+    # print("ang_vel com = ",ang_vel)
+    lin_vel = robot.data.body_lin_vel_w[0]
+
+    
+    # Compute Euclidean speed (norm) for each link
+    link_speeds = torch.norm(lin_vel, dim=1)
+
+    max_speed = link_speeds.max().item()
+
+    # Compute speed of each link
+    link_speeds = torch.norm(lin_vel, dim=1)   # shape: [num_links]
+    # print("link_speeds = ",link_speeds)
+    # print("Object velocity per axis = ",object.data.body_com_lin_vel_w )
+    # print("Object velocity = ",torch.norm(object.data.body_com_lin_vel_w).item()  )
+
+    # Get the maximum speed AND its index
+    max_speed, max_index = torch.max(link_speeds, dim=0)
+
+    # print("Maximum link speed:", max_speed.item(), "m/s")
+    # print("Link index with maximum speed:", max_index.item())
+
+    # if max_speed>5:
+    #     print("Maximum link speed - safety violation :", max_speed, "m/s")
+    # if ee_speed>5:
+    #     print("End-effector speed - safety violation :", ee_speed, "m/s")
+
+    # print("Maximum link speed:", max_speed, "m/s")
+    # print("End-effector speed:", ee_speed, "m/s")
+
+
     return object_pos_b
 
 def bsk_pos_in_robot_root_frame(

@@ -226,7 +226,7 @@ class EventCfg:
         func=mdp.reset_root_state_uniform,
         mode="reset",
         params={
-            "pose_range": {"x": (0.2, 0.5), "y": (-0.25, 0.25), "z": (0.0, 0.0)}, 
+            "pose_range": {"x": (0.25, 0.45), "y": (-0.25, 0.25), "z": (0.0, 0.0)}, 
             "velocity_range": {},
             "asset_cfg": SceneEntityCfg("object", body_names="Object"),
         },
@@ -256,17 +256,6 @@ class RewardsCfg:
     """Reward terms for the MDP."""
     # minimal height do not change
     
-    
-    
-    #exp1
-
-    # reaching_object = RewTerm(func=mdp.object_ee_distance, params={"std": 0.1}, weight=1)
-
-    # lifting_object = RewTerm(func=mdp.object_is_lifted, params={"minimal_height": 0.04}, weight=10)
-
-    # releasing_cube=RewTerm(func=mdp.reward_gripper_release_mid_throw,params={"minimal_height": 0.06}, weight=15)
-    # # exp 2
-
     reaching_object = RewTerm(func=mdp.object_ee_distance, params={"std": 0.1}, weight=1)
 
     lifting_object = RewTerm(func=mdp.object_is_lifted, params={"minimal_height": 0.04}, weight=10)
@@ -283,7 +272,7 @@ class RewardsCfg:
     # vel_check=RewTerm(func=mdp.obj_vel_release_check,params={"std": 0.05, "minimal_height": 0.24, "command_name": "Target_pose",
     #                                  "ee_distance_release": 0.1, "Vxy_velocity": 1.65},  weight=150)    
     vel_check=RewTerm(func=mdp.obj_vel_release_check2,params={"std": 0.05, "minimal_height": 0.24, "command_name": "Target_pose",
-                                     "ee_distance_release": 0.1, "Vxy_velocity": 1.65},  weight=150)    
+                                     "ee_distance_release": 0.1, "Vxy_velocity": 1.5},  weight=150)    
     
     # # # adding later as bonus
     # # # xmin, xmax = 0.95, 1.45, ymin, ymax = -0.25, 0.25

@@ -13,6 +13,9 @@ from isaaclab.managers import SceneEntityCfg
 from isaaclab.sensors import FrameTransformer
 from isaaclab.utils.math import combine_frame_transforms
 from envs.throw_T3_sc1.mdp.observations import bsk_pos_in_robot_root_frame
+from datetime import datetime
+
+
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedRLEnv
@@ -54,7 +57,6 @@ def object_ee_distance(
     # Distance of the end-effector to the object: (num_envs,)
     object_ee_distance = torch.norm(obj_pos - ee_w, dim=1)
 
-
     # Compute the reward
     return 1 - torch.tanh(object_ee_distance / std)
 
@@ -87,21 +89,23 @@ def object_inside_basket(
     object: RigidObject = env.scene[object_cfg.name]
     object_pos_w = object.data.root_pos_w[:, :3]
     obj_pos=object.data.root_pos_w
+    # print("obj_pos = ",obj_pos)
     # Define box boundaries:
     # xmin, xmax = 0.95, 1.45
     xmin, xmax = 1.0, 1.5
     # xmin, xmax = 1.25, 1.75
     # ymin, ymax = -0.25, 0.25
     ymin, ymax = -0.25, 0.+25
-    z_max = 0.05  # Condition: z must be less than 0.23
+    z_max = 0.07  # Condition: z must be less than 0.23
     # Check conditions for each coordinate:
     inside_x = (object_pos_w[:, 0] >= xmin) & (object_pos_w[:, 0] <= xmax)
     inside_y = (object_pos_w[:, 1] >= ymin) & (object_pos_w[:, 1] <= ymax)
     inside_z = object_pos_w[:, 2] < z_max
+    # print("Conditions = ",inside_x,inside_y,inside_z)
     # Combine all conditions:
     inside_box = inside_x & inside_y & inside_z
     # if inside_box:
-    # #     print("obj is inside the basket")
+    #     print("obj is inside the basket")
     # if obj_pos[0][0]>1.0 :
     #     if obj_pos[0][2]<0.05 :
     #          print("obj_pos = ",obj_pos)
@@ -158,6 +162,16 @@ def reward_gripper_release_mid_throw(
     # Check if the last 2 elements are approximately 0.04
     right_gripper=joint_pos[:, -1]>0.037
     left_gripper=joint_pos[:, -2]>0.037
+    cond = (object.data.root_pos_w[:, 2] > minimal_height) * (right_gripper & left_gripper)
+    print(datetime.now())
+
+    if object.data.root_pos_w[:, 2] .item() > 0.270:
+        print("lifted")
+
+
+
+    if cond.item():
+        print("reward_gripper_release_mid_throw =", cond.item())
     
     return (object.data.root_pos_w[:, 2] > minimal_height)*(right_gripper&left_gripper)
 

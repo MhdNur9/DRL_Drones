@@ -13,6 +13,8 @@ from isaaclab.managers import SceneEntityCfg
 from isaaclab.sensors import FrameTransformer
 from isaaclab.utils.math import combine_frame_transforms
 from envs.throw_T3_sc4_speed.mdp.observations import bsk_pos_in_robot_root_frame
+from datetime import datetime
+
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedRLEnv
@@ -149,7 +151,17 @@ def reward_gripper_release_mid_throw(
     # Check if the last 2 elements are approximately 0.04
     right_gripper=joint_pos[:, -1]>0.037
     left_gripper=joint_pos[:, -2]>0.037
-    
+    cond = (object.data.root_pos_w[:, 2] > minimal_height) * (right_gripper & left_gripper)
+    print(datetime.now())
+
+    if object.data.root_pos_w[:, 2] .item() > 0.270:
+        print("lifted")
+
+
+
+    if cond.item():
+        print("reward_gripper_release_mid_throw =", cond.item())
+
     return (object.data.root_pos_w[:, 2] > minimal_height)*(right_gripper&left_gripper)
 
 def obj_vel_release_check2(

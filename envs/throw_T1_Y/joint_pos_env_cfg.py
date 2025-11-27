@@ -12,8 +12,11 @@ from isaaclab.utils import configclass
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
 
 from isaaclab_tasks.manager_based.manipulation.lift import mdp
+
 from envs.throw_T1_Y.lift_env_cfg import LiftEnvCfg
+
 from envs.throw_T1_Y import mdp as mdp
+
 ##
 # Pre-defined configs
 ##

@@ -18,6 +18,7 @@ from isaaclab_tasks.manager_based.manipulation.lift import mdp
 from envs.throw_T3_sc2.lift_env_cfg import LiftEnvCfg
 
 from envs.throw_T3_sc2 import mdp as mdp
+from assets.user_humaniod import User_HUMANOID_CFG
 
 ##
 # Pre-defined configs
@@ -84,65 +85,62 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
                 ),
             ],
         )
+        # self.scene.person = User_HUMANOID_CFG.replace(prim_path="{ENV_REGEX_NS}/person")
+                
+
         self.scene.person = ArticulationCfg(
-        prim_path="{ENV_REGEX_NS}/person",
-        spawn=sim_utils.UsdFileCfg(
-            usd_path=f"{ISAAC_NUCLEUS_DIR}/Robots/1X/Neo/Neo.usd",
-            rigid_props=sim_utils.RigidBodyPropertiesCfg(
-                disable_gravity=True,
-                max_depenetration_velocity=10.0,
-                enable_gyroscopic_forces=True,
-            ),
-            articulation_props=sim_utils.ArticulationRootPropertiesCfg(
-                enabled_self_collisions=True,
-                solver_position_iteration_count=4,
-                solver_velocity_iteration_count=0,
-                sleep_threshold=0.005,
-                stabilization_threshold=0.001,
-            ),
-            copy_from_source=False,
-        ),
-        init_state=ArticulationCfg.InitialStateCfg(
-            pos=(-0.58, -1.5, -0.2),
-            joint_pos={".*": 0.0},
-            # choose ONE:
-            rot=(0.707, 0, 0, 0.707),   # 90° about X  (what you currently have)
-            # rot=(0, 0, 0.707, 0.707), # 90° about Z
-            # rot=(0, 1, 0, 0),         # 180° flip around Y
-        ),
-        actuators={
-            "body": ImplicitActuatorCfg(
-                joint_names_expr=[".*"],  # acts on all unless you split groups
-                stiffness={
-                    # torso/neck
-                    r"j_spine_.*": 20.0,
-                    r"j_neck_[xyz]": 10.0,
+                    prim_path="{ENV_REGEX_NS}/person",
+                    spawn=sim_utils.UsdFileCfg(
+                        usd_path=f"{ISAAC_NUCLEUS_DIR}/Robots/1X/Neo/Neo.usd",
+                        rigid_props=sim_utils.RigidBodyPropertiesCfg(
+                            disable_gravity=True,
+                            max_depenetration_velocity=10.0,
+                            enable_gyroscopic_forces=True,
+                        ),
+                        articulation_props=sim_utils.ArticulationRootPropertiesCfg(
+                            enabled_self_collisions=True,
+                            solver_position_iteration_count=4,
+                            solver_velocity_iteration_count=0,
+                            sleep_threshold=0.005,
+                            stabilization_threshold=0.001,
+                        ),
+                        copy_from_source=False,
+                    ),
+                    init_state=ArticulationCfg.InitialStateCfg(
+                        pos=(-0.65, -1.5, -0.2),
+                        joint_pos={".*": 0.0},
+                        # choose ONE:
+                        rot=(0.707, 0, 0, 0.707),   # 90° about X  (what you currently have)
+                        # rot=(0, 0, 0.707, 0.707), # 90° about Z
+                        # rot=(0, 1, 0, 0),         # 180° flip around Y
+                    ),
+                    actuators={
+                        # "body": ImplicitActuatorCfg(
+                        #     joint_names_expr=[".*"],
+                        #     stiffness={
+                        #         r"j_spine_.*": 20.0,
+                        #         r"j_neck_[xyz]": 10.0,
+                        #         r"j_[lr]_shoulder_[xyz]": 10.0,
+                        #         r"j_[lr]_elbow_[yz]": 2.0,
+                        #         r"j_[lr]_wrist_[xy]": 2.0,
+                        #         r"j_[lr]_hip_[xyz]": 10.0,
+                        #         r"j_[lr]_(upperknee|lowerknee)_y": 5.0,
+                        #         r"j_[lr]_ankle_[xy]": 2.0,
+                        #     },
+                        #     damping={
+                        #         r"j_spine_.*": 5.0,
+                        #         r"j_neck_[xyz]": 5.0,
+                        #         r"j_[lr]_shoulder_[xyz]": 5.0,
+                        #         r"j_[lr]_elbow_[yz]": 1.0,
+                        #         r"j_[lr]_wrist_[xy]": 1.0,
+                        #         r"j_[lr]_hip_[xyz]": 5.0,
+                        #         r"j_[lr]_(upperknee|lowerknee)_y": 0.1,
+                        #         r"j_[lr]_ankle_[xy]": 1.0,
+                        #     },
+                        # ),
+                    }
 
-                    # shoulders & arms
-                    r"j_[lr]_shoulder_[xyz]": 10.0,   # was upper_arm
-                    r"j_[lr]_elbow_[yz]": 2.0,        # was lower_arm
-                    r"j_[lr]_wrist_[xy]": 2.0,
-
-                    # hips & legs
-                    r"j_[lr]_hip_[xyz]": 10.0,        # was thigh:*
-                    r"j_[lr]_(upperknee|lowerknee)_y": 5.0,  # was shin/thigh buckets
-                    r"j_[lr]_ankle_[xy]": 2.0,        # was foot
-                },
-                damping={
-                    r"j_spine_.*": 5.0,
-                    r"j_neck_[xyz]": 5.0,
-
-                    r"j_[lr]_shoulder_[xyz]": 5.0,
-                    r"j_[lr]_elbow_[yz]": 1.0,
-                    r"j_[lr]_wrist_[xy]": 1.0,
-
-                    r"j_[lr]_hip_[xyz]": 5.0,
-                    r"j_[lr]_(upperknee|lowerknee)_y": 0.1,
-                    r"j_[lr]_ankle_[xy]": 1.0,
-                },
-            ),
-        },
-    )
+                )
 
 @configclass
 class FrankaCubeLiftEnvCfg_PLAY(FrankaCubeLiftEnvCfg):

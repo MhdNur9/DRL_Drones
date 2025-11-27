@@ -176,8 +176,8 @@ class EventCfg:
         func=mdp.reset_root_state_uniform,
         mode="reset",
         params={
-            "pose_range": {"x": (0.2, 0.5), "y": (-0.25, +0.25), "z": (0.0, 0.0)}, 
-            # "pose_range": {"x": (0.2, 0.5), "y": (-0.45, -0.3), "z": (0.0, 0.0)}, 
+            # "pose_range": {"x": (0.2, 0.5), "y": (-0.25, +0.25), "z": (0.0, 0.0)}, 
+            "pose_range": {"x": (0.2, 0.5), "y": (-0.25, -0.25), "z": (0.0, 0.0)}, 
             "velocity_range": {},
             "asset_cfg": SceneEntityCfg("object", body_names="Object"),
         },
@@ -197,21 +197,21 @@ class EventCfg:
     ############
 
     # interval
-    # belt_moving = EventTerm(
-    #     func=mdp.moving_cube,
-    #     mode="interval",
-    #     interval_range_s=(0.1, 0.1),
-    #     params={
-    #         "velocity_range": {
-    #             "x": (0.0,0.0), 
-    #             "y": (+0.6,+0.6), 
-    #             "z": (+0.1, +0.1), 
-    #             "roll": (0.0,0.0), 
-    #             "pitch": (0.0,0.0), 
-    #             "yaw": (0.0,0.0)
-    #         }
-    #     },
-    # )
+    belt_moving = EventTerm(
+        func=mdp.moving_cube,
+        mode="interval",
+        interval_range_s=(0.1, 0.1),
+        params={
+            "velocity_range": {
+                "x": (0.0,0.0), 
+                "y": (+0.6,+0.6), 
+                "z": (+0.1, +0.1), 
+                "roll": (0.0,0.0), 
+                "pitch": (0.0,0.0), 
+                "yaw": (0.0,0.0)
+            }
+        },
+    )
 
 @configclass
 class RewardsCfg:
@@ -229,8 +229,8 @@ class RewardsCfg:
     obj_bsk_tracking_tunes= RewTerm(func=mdp.obj_cmd_distance,weight=5.0,
         params={"std": 0.3, "minimal_height": 0.04, "command_name": "Target_pose"})
     
-    # releasing_cube=RewTerm(func=mdp.reward_gripper_release_mid_throw,params={"minimal_height": 0.24}, weight=150)
-    releasing_cube=RewTerm(func=mdp.reward_gripper_release_mid_throw,params={"minimal_height": 0.24}, weight=500)
+    releasing_cube=RewTerm(func=mdp.reward_gripper_release_mid_throw,params={"minimal_height": 0.24}, weight=150)
+    # releasing_cube=RewTerm(func=mdp.reward_gripper_release_mid_throw,params={"minimal_height": 0.24}, weight=500)
 
     # vel_check=RewTerm(func=mdp.obj_vel_release_check,params={"Vxy_velocity": 1.5},  weight=50)
     vel_check=RewTerm(func=mdp.obj_vel_release_check2,params={"Vxy_velocity": 1.0},  weight=50)

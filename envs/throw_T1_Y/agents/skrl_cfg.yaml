@@ -67,7 +67,7 @@ agent:
   time_limit_bootstrap: False
   # logging and checkpoint
   experiment:
-    directory: "franka_throw_Y_T1_New"
+    directory: "franka_throw_T1_Y"
     experiment_name: ""
     write_interval: auto
     checkpoint_interval: auto

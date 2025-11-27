@@ -13,6 +13,9 @@ from isaaclab.managers import SceneEntityCfg
 from isaaclab.sensors import FrameTransformer
 from isaaclab.utils.math import combine_frame_transforms, quat_error_magnitude, quat_mul
 from envs.throwing_T1_exp1.mdp.observations import bsk_pos_in_robot_root_frame
+from datetime import datetime
+
+
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedRLEnv
@@ -157,6 +160,17 @@ def reward_gripper_release_mid_throw(
     # print("before right_gripper = ",right_gripper)
     left_gripper=joint_pos[:, -2]>0.037
     # print("the gripper is open or not = ",right_gripper&left_gripper)
+    cond = (object.data.root_pos_w[:, 2] > minimal_height) * (right_gripper & left_gripper)
+    print(datetime.now())
+
+    if object.data.root_pos_w[:, 2] .item() > 0.270:
+        print("lifted")
+
+
+
+    if cond.item():
+        print("reward_gripper_release_mid_throw =", cond.item())
+
     results=(object.data.root_pos_w[:, 2] > minimal_height)*(right_gripper&left_gripper).int()
     results=results.int()
    

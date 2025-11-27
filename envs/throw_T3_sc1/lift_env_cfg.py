@@ -174,8 +174,8 @@ class EventCfg:
         func=mdp.reset_root_state_uniform,
         mode="reset",
         params={
-            # "pose_range": {"x": (0.2, 0.5), "y": (-0.25, +0.25), "z": (0.0, 0.0)}, 
-            "pose_range": {"x": (0.35, 0.35), "y": (-0.15, +0.15), "z": (0.0, 0.0)}, 
+            "pose_range": {"x": (0.3, 0.5), "y": (-0.25, +0.25), "z": (0.0, 0.0)}, 
+            # "pose_range": {"x": (0.35, 0.35), "y": (-0.15, +0.15), "z": (0.0, 0.0)}, 
             "velocity_range": {},
             "asset_cfg": SceneEntityCfg("object", body_names="Object"),
         },
@@ -202,7 +202,7 @@ class EventCfg:
     #     params={
     #         "velocity_range": {
     #             "x": (0.0,0.0), 
-    #             "y": (+0.6,+0.6), 
+    #             "y": (+0.5,+0.5), 
     #             "z": (+0.1, +0.1), 
     #             "roll": (0.0,0.0), 
     #             "pitch": (0.0,0.0), 

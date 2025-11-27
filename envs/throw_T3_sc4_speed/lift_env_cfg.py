@@ -178,7 +178,7 @@ class EventCfg:
         mode="reset",
         params={
             # "pose_range": {"x": (0.2, 0.5), "y": (-0.25, +0.25), "z": (0.0, 0.0)}, 
-            "pose_range": {"x": (0.3, 0.4), "y": (-0.35, -0.35), "z": (0.0, 0.0)}, 
+            "pose_range": {"x": (0.3, 0.4), "y": (-0.25, -0.25), "z": (0.0, 0.0)}, 
             "velocity_range": {},
             "asset_cfg": SceneEntityCfg("object", body_names="Object"),
         },
@@ -199,21 +199,21 @@ class EventCfg:
     ############
 
     # interval
-    # belt_moving = EventTerm(
-    #     func=mdp.moving_cube,
-    #     mode="interval",
-    #     interval_range_s=(0.1, 0.1),
-    #     params={
-    #         "velocity_range": {
-    #             "x": (0.0,0.0), 
-    #             "y": (+0.6,+0.6), 
-    #             "z": (+0.1, +0.1), 
-    #             "roll": (0.0,0.0), 
-    #             "pitch": (0.0,0.0), 
-    #             "yaw": (0.0,0.0)
-    #         }
-    #     },
-    # )
+    belt_moving = EventTerm(
+        func=mdp.moving_cube,
+        mode="interval",
+        interval_range_s=(0.1, 0.1),
+        params={
+            "velocity_range": {
+                "x": (0.0,0.0), 
+                "y": (+0.6,+0.6), 
+                "z": (+0.1, +0.1), 
+                "roll": (0.0,0.0), 
+                "pitch": (0.0,0.0), 
+                "yaw": (0.0,0.0)
+            }
+        },
+    )
 
 @configclass
 class RewardsCfg:

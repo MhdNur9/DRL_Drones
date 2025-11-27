@@ -112,30 +112,30 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
         actuators={
             "body": ImplicitActuatorCfg(
                 joint_names_expr=[".*"],
-                # stiffness=500.0,  # or start with 200–1000
-                # damping=20.0,     # strong damping to reduce oscillation
-                stiffness={
-                    ".*_waist.*": 20.0,
-                    ".*_upper_arm.*": 10.0,
-                    "pelvis": 10.0,
-                    ".*_lower_arm": 2.0,
-                    ".*_thigh:0": 10.0,
-                    ".*_thigh:1": 20.0,
-                    ".*_thigh:2": 10.0,
-                    ".*_shin": 5.0,
-                    ".*_foot.*": 2.0,
-                },
-                damping={
-                    ".*_waist.*": 5.0,
-                    ".*_upper_arm.*": 5.0,
-                    "pelvis": 5.0,
-                    ".*_lower_arm": 1.0,
-                    ".*_thigh:0": 5.0,
-                    ".*_thigh:1": 5.0,
-                    ".*_thigh:2": 5.0,
-                    ".*_shin": 0.1,
-                    ".*_foot.*": 1.0,
-                },
+                stiffness=500.0,  # or start with 200–1000
+                damping=20.0,     # strong damping to reduce oscillation
+                # stiffness={
+                #     ".*_waist.*": 20.0,
+                #     ".*_upper_arm.*": 10.0,
+                #     "pelvis": 10.0,
+                #     ".*_lower_arm": 2.0,
+                #     ".*_thigh:0": 10.0,
+                #     ".*_thigh:1": 20.0,
+                #     ".*_thigh:2": 10.0,
+                #     ".*_shin": 5.0,
+                #     ".*_foot.*": 2.0,
+                # },
+                # damping={
+                #     ".*_waist.*": 5.0,
+                #     ".*_upper_arm.*": 5.0,
+                #     "pelvis": 5.0,
+                #     ".*_lower_arm": 1.0,
+                #     ".*_thigh:0": 5.0,
+                #     ".*_thigh:1": 5.0,
+                #     ".*_thigh:2": 5.0,
+                #     ".*_shin": 0.1,
+                #     ".*_foot.*": 1.0,
+                # },
             ),
         },
     )

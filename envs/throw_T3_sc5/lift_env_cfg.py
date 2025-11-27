@@ -187,9 +187,9 @@ class EventCfg:
         func=mdp.reset_root_state_uniform,
         mode="reset",
         params={
-            "pose_range": {"x": (0.2, 0.5), "y": (-0.25, +0.25), "z": (0.0, 0.0)}, 
+            # "pose_range": {"x": (0.2, 0.5), "y": (-0.25, +0.25), "z": (0.0, 0.0)}, 
             # "pose_range": {"x": (0.2, 0.2), "y": (-0.2, -0.2), "z": (0.0, 0.0)}, 
-            # "pose_range": {"x": (0.2, 0.5), "y": (-0.25, -0.25), "z": (0.0, 0.0)}, 
+            "pose_range": {"x": (0.2, 0.5), "y": (-0.25, -0.25), "z": (0.0, 0.0)}, 
             "velocity_range": {},
             "asset_cfg": SceneEntityCfg("object", body_names="Object"),
         },
@@ -209,21 +209,21 @@ class EventCfg:
     ############
 
     # interval
-    # belt_moving = EventTerm(
-    #     func=mdp.moving_cube,
-    #     mode="interval",
-    #     interval_range_s=(0.1, 0.1),
-    #     params={
-    #         "velocity_range": {
-    #             "x": (0.0,0.0), 
-    #             "y": (+0.6,+0.6), 
-    #             "z": (+0.1, +0.1), 
-    #             "roll": (0.0,0.0), 
-    #             "pitch": (0.0,0.0), 
-    #             "yaw": (0.0,0.0)
-    #         }
-    #     },
-    # )
+    belt_moving = EventTerm(
+        func=mdp.moving_cube,
+        mode="interval",
+        interval_range_s=(0.1, 0.1),
+        params={
+            "velocity_range": {
+                "x": (0.0,0.0), 
+                "y": (+0.6,+0.6), 
+                "z": (+0.1, +0.1), 
+                "roll": (0.0,0.0), 
+                "pitch": (0.0,0.0), 
+                "yaw": (0.0,0.0)
+            }
+        },
+    )
 
 @configclass
 class RewardsCfg:
@@ -243,8 +243,8 @@ class RewardsCfg:
     
     releasing_cube=RewTerm(func=mdp.reward_gripper_release_mid_throw,params={"minimal_height": 0.24}, weight=150)
 
-    vel_check=RewTerm(func=mdp.obj_vel_release_check,params={"Vxy_velocity": 1.0},  weight=50)
-    # vel_check=RewTerm(func=mdp.obj_vel_release_check2,params={"Vxy_velocity": 0.9},  weight=50)
+    # vel_check=RewTerm(func=mdp.obj_vel_release_check,params={"Vxy_velocity": 1.0},  weight=50)
+    vel_check=RewTerm(func=mdp.obj_vel_release_check2,params={"Vxy_velocity": 0.9},  weight=50)
   
     # # # adding later as bonus
     # # # xmin, xmax = 0.95, 1.45, ymin, ymax = -0.25, 0.25

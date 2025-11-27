@@ -110,8 +110,8 @@ class FrankaCubeLiftEnvCfg(LiftEnvCfg):
         actuators={
             "body": ImplicitActuatorCfg(
                 joint_names_expr=[".*"],
-                # stiffness=500.0,  # or start with 200–1000
-                # damping=20.0,     # strong damping to reduce oscillation
+                stiffness=500.0,  # or start with 200–1000
+                damping=20.0,     # strong damping to reduce oscillation
                 stiffness={
                     ".*_waist.*": 20.0,
                     ".*_upper_arm.*": 10.0,

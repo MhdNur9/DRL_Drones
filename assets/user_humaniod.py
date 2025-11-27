@@ -17,54 +17,34 @@ from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
 ##
 
 User_HUMANOID_CFG = ArticulationCfg(
-    prim_path="{ENV_REGEX_NS}/Robot",
-    spawn=sim_utils.UsdFileCfg(
-        usd_path=f"{ISAAC_NUCLEUS_DIR}/Robots/IsaacSim/Humanoid/humanoid_instanceable.usd",
-        rigid_props=sim_utils.RigidBodyPropertiesCfg(
-            disable_gravity=None,
-            max_depenetration_velocity=10.0,
-            enable_gyroscopic_forces=True,
+        prim_path="{ENV_REGEX_NS}/person",
+        spawn=sim_utils.UsdFileCfg(
+            usd_path=f"{ISAAC_NUCLEUS_DIR}/Robots/1X/Neo/Neo.usd",
+            rigid_props=sim_utils.RigidBodyPropertiesCfg(
+                disable_gravity=True,
+                max_depenetration_velocity=10.0,
+                enable_gyroscopic_forces=True,
+            ),
+            articulation_props=sim_utils.ArticulationRootPropertiesCfg(
+                enabled_self_collisions=True,
+                solver_position_iteration_count=4,
+                solver_velocity_iteration_count=0,
+                sleep_threshold=0.005,
+                stabilization_threshold=0.001,
+            ),
+            copy_from_source=False,
         ),
-        articulation_props=sim_utils.ArticulationRootPropertiesCfg(
-            enabled_self_collisions=True,
-            solver_position_iteration_count=4,
-            solver_velocity_iteration_count=0,
-            sleep_threshold=0.005,
-            stabilization_threshold=0.001,
+        init_state=ArticulationCfg.InitialStateCfg(
+            pos=(-0.8, -1.5, -0.2),
+            joint_pos={".*": 0.0},
+            rot=(0.707, 0, 0, 0.707),  # rotated 90° about Z
         ),
-        copy_from_source=False,
-    ),
-    init_state=ArticulationCfg.InitialStateCfg(
-        pos=(-0.8, -1.5, -0.2),
-        joint_pos={".*": 0.0},
-        rot=(0.707, 0, 0, 0.707),  # rotated 90° about Z
-    ),
-    actuators={
-        "body": ImplicitActuatorCfg(
-            joint_names_expr=[".*"],
-            stiffness={
-                ".*_waist.*": 20.0,
-                ".*_upper_arm.*": 10.0,
-                "pelvis": 10.0,
-                ".*_lower_arm": 2.0,
-                ".*_thigh:0": 10.0,
-                ".*_thigh:1": 20.0,
-                ".*_thigh:2": 10.0,
-                ".*_shin": 5.0,
-                ".*_foot.*": 2.0,
-            },
-            damping={
-                ".*_waist.*": 5.0,
-                ".*_upper_arm.*": 5.0,
-                "pelvis": 5.0,
-                ".*_lower_arm": 1.0,
-                ".*_thigh:0": 5.0,
-                ".*_thigh:1": 5.0,
-                ".*_thigh:2": 5.0,
-                ".*_shin": 0.1,
-                ".*_foot.*": 1.0,
-            },
-            velocity_limit_sim={".*": 100.0},
-        ),
-    },
-)
+        actuators={
+            "body": ImplicitActuatorCfg(
+                joint_names_expr=[".*"],
+                stiffness=500.0,  # or start with 200–1000
+                damping=20.0,     # strong damping to reduce oscillation
+                
+            ),
+        },
+    )
