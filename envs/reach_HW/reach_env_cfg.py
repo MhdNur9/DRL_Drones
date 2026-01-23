@@ -24,9 +24,9 @@ from isaaclab.sensors.frame_transformer.frame_transformer_cfg import FrameTransf
 from isaaclab.sim.spawners.from_files.from_files_cfg import GroundPlaneCfg, UsdFileCfg
 import random
 import isaaclab_tasks.manager_based.manipulation.reach.mdp as mdp
-from envs.reach.mdp.rewards import reset_joints_limit
-from envs.reach.mdp.observations import ee_pos_error
-import envs.reach.mdp as mdp
+from envs.reach_HW.mdp.observations import ee_pos_error as ee_pos_err
+import envs.reach_HW.mdp as mdp
+
 
 ##
 # Scene definition
@@ -62,19 +62,6 @@ class ReachSceneCfg(InteractiveSceneCfg):
         prim_path="/World/light",
         spawn=sim_utils.DomeLightCfg(color=(0.75, 0.75, 0.75), intensity=2500.0),
     )
-        # Basket Table
-    bs_table = AssetBaseCfg(
-        prim_path="{ENV_REGEX_NS}/basket_Table",
-        init_state=AssetBaseCfg.InitialStateCfg(pos=[1.8, 0, 0], rot=[0.707, 0, 0, 0.707]),
-        spawn=UsdFileCfg(usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Mounts/SeattleLabTable/table_instanceable.usd"),
-    )
-
-    # Basket
-    basket = AssetBaseCfg(
-        prim_path="{ENV_REGEX_NS}/Basket",
-        init_state=AssetBaseCfg.InitialStateCfg(pos=[1.0, 0, 0.105], rot=[0.707, 0, 0, 0.707]),
-        spawn=UsdFileCfg(usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/KLT_Bin/small_KLT_visual_collision.usd",scale=[2.5,1.5,1.5]),
-    )
 
 ##
 # MDP settings
@@ -91,16 +78,12 @@ class CommandsCfg:
         resampling_time_range=(4.0, 4.0),
         debug_vis=True,
         ranges=mdp.UniformPoseCommandCfg.Ranges(
-            # pos_x=(0.25, 0.45),
-            pos_x=(1.0, 1.0),
-            # pos_y=(-0.2, 0.2),
-            pos_y=(0.0, 0.0),
-            # pos_z=(0.2, 0.3),
-            pos_z=(0.5, 0.5),
+            pos_x=(0.35, 0.65),
+            pos_y=(-0.2, 0.2),
+            pos_z=(0.15, 0.5),
             roll=(0.0, 0.0),
             pitch=MISSING,  # depends on end-effector axis
-            # yaw=(-3.14, 3.14),
-            yaw=(0.0, 0.0),
+            yaw=(-3.14, 3.14),
         ),
     )
 
@@ -121,13 +104,17 @@ class ObservationsCfg:
     class PolicyCfg(ObsGroup):
         """Observations for policy group."""
 
-        # observation terms (order preserved)
+        # observation terms
+        # joint_pos = ObsTerm(func=mdp.joint_pos_rel, noise=Unoise(n_min=-0.00, n_max=0.00))
+        # joint_vel = ObsTerm(func=mdp.joint_vel_rel, noise=Unoise(n_min=-0.00, n_max=0.00))
+
         joint_pos = ObsTerm(func=mdp.joint_pos_rel, noise=Unoise(n_min=-0.01, n_max=0.01))
         joint_vel = ObsTerm(func=mdp.joint_vel_rel, noise=Unoise(n_min=-0.01, n_max=0.01))
+
+
         pose_command = ObsTerm(func=mdp.generated_commands, params={"command_name": "ee_pose"})
         actions = ObsTerm(func=mdp.last_action)
-        pos_error = ObsTerm(func=mdp.ee_pos_error,params={"command_name": "ee_pose"})
-        
+        pos_error = ObsTerm(func=ee_pos_err,params={"command_name": "ee_pose"})        
 
         def __post_init__(self):
             self.enable_corruption = True
@@ -172,12 +159,13 @@ class RewardsCfg:
     )
     end_effector_position_tracking_fine_grained = RewTerm(
         func=mdp.position_command_error_tanh,
-        weight=0.2,
+        weight=-0.2,
         params={"asset_cfg": SceneEntityCfg("robot", body_names=MISSING), "std": 0.1, "command_name": "ee_pose"},
     )
+
     end_effector_orientation_tracking = RewTerm(
         func=mdp.orientation_command_error,
-        weight=-0.75,
+        weight=-0.1,
         params={"asset_cfg": SceneEntityCfg("robot", body_names=MISSING), "command_name": "ee_pose"},
     )
 
@@ -236,7 +224,7 @@ class ReachEnvCfg(ManagerBasedRLEnvCfg):
         # general settings
         self.decimation = 2
         self.sim.render_interval = self.decimation
-        self.episode_length_s = 12.0
+        self.episode_length_s = 24.0
         self.viewer.eye = (3.5, 3.5, 3.5)
         # simulation settings
         self.sim.dt = 1.0 / 60.0

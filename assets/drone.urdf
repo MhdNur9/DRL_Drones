@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<robot name="cf2x_with_arm_payload">
+
+  <!-- =========================
+       Base / Crazyflie body
+       ========================= -->
+  <link name="base_link"/>
+
+  <joint name="base_to_cf2x_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="cf2x_body"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Placeholder for cf2x body:
+       Replace the visual/collision geometry with your mesh if you export one -->
+  <link name="cf2x_body">
+    <inertial>
+      <!-- Crazyflie ~27g in real life; adjust if you add mass -->
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.027"/>
+      <!-- Rough inertia placeholder (kg*m^2). You SHOULD tune this. -->
+      <inertia ixx="2.0e-5" ixy="0" ixz="0"
+               iyy="2.0e-5" iyz="0"
+               izz="4.0e-5"/>
+    </inertial>
+
+    <!-- Visual: placeholder box approx 9cm x 9cm x 3cm -->
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.09 0.09 0.03"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.09 0.09 0.03"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <!-- =========================
+       30 cm arm (rigid link)
+       ========================= -->
+  <joint name="cf2x_body_to_arm" type="fixed">
+    <parent link="cf2x_body"/>
+    <child link="arm_link"/>
+    <!-- attach at body origin -->
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="arm_link">
+    <inertial>
+      <origin xyz="0 0 -0.15" rpy="0 0 0"/>
+      <mass value="0.020"/>
+      <!-- very rough inertia placeholder -->
+      <inertia ixx="2.0e-4" ixy="0" ixz="0"
+               iyy="2.0e-4" iyz="0"
+               izz="1.0e-5"/>
+    </inertial>
+
+    <!-- Arm as a 30cm cylinder pointing in -Z direction.
+         Cylinder is centered, so we shift it by -0.15m -->
+    <visual>
+      <origin xyz="0 0 -0.15" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.30" radius="0.01"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -0.15" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.30" radius="0.01"/>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <!-- =========================
+       Payload box 30x5x30 cm at the arm end
+       ========================= -->
+  <joint name="arm_to_payload" type="fixed">
+    <parent link="arm_link"/>
+    <child link="payload_link"/>
+    <!-- place payload center at the far end of the arm: -0.30m -->
+    <origin xyz="0 0 -0.30" rpy="0 0 0"/>
+  </joint>
+
+  <link name="payload_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.100"/>
+      <!-- inertia placeholder -->
+      <inertia ixx="2.0e-3" ixy="0" ixz="0"
+               iyy="2.0e-3" iyz="0"
+               izz="2.0e-3"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <!-- 30cm x 5cm x 30cm -->
+        <box size="0.30 0.05 0.30"/>
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.30 0.05 0.30"/>
+      </geometry>
+    </collision>
+  </link>
+
+</robot>
+

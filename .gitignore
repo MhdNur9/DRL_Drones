@@ -1,3 +1,47 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+
+# Conda / environments
+anaconda3/
+.envs/
+env_isaaclab/
+
+# Isaac / Omniverse
+isaac-sim/
+omniverse/
+*.usd
+*.usda
+*.usdc
+*.log
+*.cache
+
+# RL artifacts (DO NOT PUSH)
+logs/
+results/
+outputs/
+policy.onnx
+joints_output*.csv
+joints_output*.xlsx
+
+# Data dumps / temp
+Data/
+DRL KPIs/
+temp.txt
+*.txt
+
+# ROS bags / data
+ros_data*
+sim2real/
+
+# OS
+.DS_Store
+Thumbs.db
+
 # C++
 **/cmake-build*/
 **/build*/

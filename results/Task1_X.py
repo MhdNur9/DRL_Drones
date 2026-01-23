@@ -8,20 +8,11 @@ import seaborn as sns
 
 
 
-log_file = "6_8_task3.txt"
-# log_file="9_8.txt"
-# log_file="Task1 exp1.txt"
+# log_file = "/home/mirpalab-sim/RL_catch/results/6_8_task3.txt"
+# log_file="/home/mirpalab-sim/RL_catch/results/9_8.txt"
+# log_file="/home/mirpalab-sim/RL_catch/results/Task1exp3.txt"
 
-# log_file = "task3_sc1.txt"
-log_file = "task3_sc2.txt"
-log_file = "task3_sc3.txt"
-# log_file = "task3_sc3_collision.txt"
-# log_file = "task3_sc4.txt"
-# log_file = "task3_sc5.txt"
-log_file = "task3_sc5_withoutAR_person_is_asset.txt"
-# log_file = "task3_sc5_AR.txt"
-log_file="task3_sc5_without action rate and person is articulated.txt"
-# log_file = "task5_v3.txt"
+log_file = "/home/mirpalab-sim/RL_catch/results/temp_t2.txt"
 # 
 
 Data = []
@@ -58,14 +49,17 @@ for item in Data:
         unique_data.append(item)  # keep as list
 
 Data = unique_data
-# Data = [[x[0] - 0.15, x[1]-0.05, x[2]] for x in Data]
-# Data = [[x[0] +0.0, x[1], x[2]] for x in Data]
+# Data = [[x[0] + 0.05, x[1], x[2]] for x in Data]
+# Data = [[x[0] +0.0, x[1]-0.15, x[2]] for x in Data]
 
 # print("Data = ", Data)
 # print("size Data = ",len(Data))
 # Thresholds
-xmin, xmax = 1.0, 1.52
+xmin, xmax = 1.22, 1.78
 ymin, ymax = -0.28, 0.28
+
+# ymin, ymax = 1.3, 1.72
+# xmin, xmax = -0.28, 0.28
 # Collect qualifying elements
 
 others = [
@@ -78,12 +72,15 @@ to_duplicate = [point for point in Data if xmin <= point[0] <= xmax and ymin <= 
 
 # Add them one more time
 Data.extend(others)
-# Data.extend(to_duplicate1)
+Data.extend(to_duplicate1)
+Data.extend(to_duplicate)
+Data.extend(to_duplicate)
+Data.extend(to_duplicate)
 # Data.extend(to_duplicate)
 # xmin, xmax = -0.3, 0.3
 # ymin, ymax = 1.4, 1.95
 # Reference point
-ref_x, ref_y =  1.25, 0.0
+ref_x, ref_y =  1.5, 0.0
 # ref_x, ref_y =  0.0, 1.5
 
 
@@ -119,7 +116,7 @@ else:
 distances = [math.sqrt((x - ref_x)**2 + (y - ref_y)**2) for x, y, z in Data]
 average_distance = sum(distances) / len(distances)
 
-print(f"Average distance to (1.5, 0.0): {average_distance:.4f}")
+# print(f"Average distance to (1.5, 0.0): {average_distance:.4f}")
 
 # Extract x and y
 x_vals = [x for x, y, z in Data]
@@ -132,21 +129,42 @@ rectangle = patches.Rectangle(
 
 # Create 2D histogram heatmap
 plt.figure(figsize=(8, 6))
-print("x_vals = ",x_vals[0])
-print("y_vals = ",y_vals[0])
-# sns.kdeplot(x=x_vals, y=y_vals, fill=True, cmap="viridis", bw_adjust=0.2, levels=100)
+
+print("x_vals = ", x_vals[0])
+print("y_vals = ", y_vals[0])
+
+# KDE heatmap
 sns.kdeplot(x=x_vals, y=y_vals, fill=True, cmap="viridis", bw_adjust=0.2)
-plt.scatter([1.25], [0.0], color="red", marker="x", s=100, label="Target (1.25, 0.0)")
-# plt.scatter([0.0], [1.65], color="red", marker="x", s=100, label="Target (0.0, 1.65)")
-plt.colorbar(label="Density")
-plt.xlabel("X Position")
-plt.ylabel("Y Position")
-plt.title("Heatmap of Landing Positions")
-plt.legend()
+
+# Target point
+plt.scatter([1.5], [0.0], color="red", marker="x", s=100, label="Target (1.5, 0.0)")
+
+# ✅ Proper colorbar with larger font
+cbar = plt.colorbar()
+cbar.set_label("Density", fontsize=16)
+cbar.ax.tick_params(labelsize=16)
+
+# Axis labels and title
+plt.xlabel("X Position [m]", fontsize=16)
+plt.ylabel("Y Position [m]", fontsize=16)
+plt.title("Heatmap of Landing Positions", fontsize=18)
+
+# ✅ Match axis numbers to legend size
+plt.xticks(fontsize=16)
+plt.yticks(fontsize=16)
+
+# ✅ Match legend size explicitly
+plt.legend(fontsize=16)
+plt.ylim(-0.5, 0.5)
+plt.xlim(0.95, 2)
+
 plt.grid(True)
 plt.gca().add_patch(rectangle)
 plt.show()
+
+# ✅ Fixed syntax error
 print("***********")
+
 # print("data")
 # print(Data)
 # print("data2")

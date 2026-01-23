@@ -1,6 +1,6 @@
 import gymnasium as gym
 
-from envs.throwing_T1_exp1 import agents
+from envs.old projects.throwing_T1_exp1 import agents
 
 gym.register(
     id="Isaac-Franka-Throw-T1-exp1",

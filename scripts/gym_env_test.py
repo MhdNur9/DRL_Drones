@@ -42,6 +42,35 @@ def main():
     print(f"[INFO]: Gym action space: {env.action_space}")
     # reset environment
     env.reset()
+
+    ####
+    # 
+    
+    scene = env.unwrapped.scene
+
+    print("Scene entities:", scene.keys())
+
+    robot = scene["robot"]   # adjust key if different
+
+    print("\n=== Articulation prim path ===")
+    print(robot.cfg.prim_path)
+
+    # ------------------------
+    # LINKS / BODIES
+    # ------------------------
+    print("\n=== Links (Bodies) ===")
+    print(f"Number of bodies: {len(robot.body_names)}")
+    for i, name in enumerate(robot.body_names):
+        print(f"[{i}] {name}")
+
+    # ------------------------
+    # JOINTS
+    # ------------------------
+    print("\n=== Joints ===")
+    print(f"Number of joints: {len(robot.joint_names)}")
+    for i, name in enumerate(robot.joint_names):
+        print(f"[{i}] {name}") 
+    # 
     # simulate environment
     while simulation_app.is_running():
         # run everything in inference mode
@@ -50,7 +79,7 @@ def main():
             actions = torch.zeros(env.action_space.shape, device=env.unwrapped.device)
             # print("actions = ",actions)
             
-            # actions[:, :] = 0.0
+            actions[:, :] = 0.0
 
             # actions[:, 0] = 0.5 # Push into wall
             #actions[:, 2] = 0.5 # Hover
