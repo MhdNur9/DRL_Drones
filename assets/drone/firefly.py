@@ -28,25 +28,25 @@ firefly_CFG = ArticulationCfg(
             sleep_threshold=0.005,
             stabilization_threshold=0.001,
         ),
-        scale=(2.0, 2.0, 2.0),
-        # scale=(1.0, 1.0, 1.0),
+        # scale=(5.0, 5.0, 5.0),
+        scale=(1.0, 1.0, 1.0),
     ),
     init_state=ArticulationCfg.InitialStateCfg(
         pos=(0.0, 0.0, 0.0),
         joint_pos={
             ".*": 0.0,
         },
-        joint_vel={
-            "rotor_0_joint": 200.0,
-            "rotor_1_joint": -200.0,
-            "rotor_2_joint": 200.0,
-            "rotor_3_joint": -200.0,
-            "rotor_4_joint": 200.0,
-            "rotor_5_joint": -200.0,
-        },
         # joint_vel={
-        #     ".*": 0.0,
+        #     "rotor_0_joint": 200.0,
+        #     "rotor_1_joint": -200.0,
+        #     "rotor_2_joint": 200.0,
+        #     "rotor_3_joint": -200.0,
+        #     "rotor_4_joint": 200.0,
+        #     "rotor_5_joint": -200.0,
         # },
+        joint_vel={
+            ".*": 0.0,
+        },
 
     ),
     actuators={
