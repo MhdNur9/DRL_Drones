@@ -1,0 +1,1332 @@
+actions =  tensor(1.2866, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0398, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 1.3869, -0.0076], device='cuda:0')
+ gripper applied_torque =  tensor([ 1.3869, -0.0076], device='cuda:0')
+2025-12-12 19:05:10.521227
+actions =  tensor(0.9486, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0399, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0392, -0.2727], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0392, -0.2727], device='cuda:0')
+2025-12-12 19:05:10.562667
+actions =  tensor(1.0137, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0977,  0.0824], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0977,  0.0824], device='cuda:0')
+2025-12-12 19:05:10.644899
+actions =  tensor(1.0063, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0399], device='cuda:0')
+ gripper computed_torque =  tensor([-1.1848,  0.4408], device='cuda:0')
+ gripper applied_torque =  tensor([-1.1848,  0.4408], device='cuda:0')
+2025-12-12 19:05:10.655742
+actions =  tensor(1.0002, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0398], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0722,  0.6039], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0722,  0.6039], device='cuda:0')
+2025-12-12 19:05:10.666280
+actions =  tensor(1.0000, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0398], device='cuda:0')
+ gripper computed_torque =  tensor([-0.7906,  0.5800], device='cuda:0')
+ gripper applied_torque =  tensor([-0.7906,  0.5800], device='cuda:0')
+2025-12-12 19:05:10.676652
+actions =  tensor(1.0103, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0398], device='cuda:0')
+ gripper computed_torque =  tensor([-0.5045,  0.4714], device='cuda:0')
+ gripper applied_torque =  tensor([-0.5045,  0.4714], device='cuda:0')
+2025-12-12 19:05:10.686818
+actions =  tensor(1.0488, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0398], device='cuda:0')
+ gripper computed_torque =  tensor([-0.2849,  0.3308], device='cuda:0')
+ gripper applied_torque =  tensor([-0.2849,  0.3308], device='cuda:0')
+2025-12-12 19:05:10.697454
+actions =  tensor(1.1670, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0399], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1690,  0.2601], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1690,  0.2601], device='cuda:0')
+2025-12-12 19:05:10.709136
+actions =  tensor(1.3480, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0399], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0389,  0.0237], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0389,  0.0237], device='cuda:0')
+2025-12-12 19:05:10.721366
+actions =  tensor(1.4781, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0406, -0.0602], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0406, -0.0602], device='cuda:0')
+2025-12-12 19:05:10.735395
+actions =  tensor(1.6016, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0386, -0.3211], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0386, -0.3211], device='cuda:0')
+2025-12-12 19:05:10.746242
+actions =  tensor(1.6367, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1474, -0.4268], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1474, -0.4268], device='cuda:0')
+2025-12-12 19:05:10.756451
+actions =  tensor(1.6150, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.2240, -0.5907], device='cuda:0')
+ gripper applied_torque =  tensor([-0.2240, -0.5907], device='cuda:0')
+2025-12-12 19:05:10.766718
+actions =  tensor(1.5526, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0565, -0.4598], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0565, -0.4598], device='cuda:0')
+2025-12-12 19:05:10.777014
+actions =  tensor(1.3376, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0998, -0.2971], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0998, -0.2971], device='cuda:0')
+2025-12-12 19:05:10.787056
+actions =  tensor(0.8341, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1667, -0.1358], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1667, -0.1358], device='cuda:0')
+2025-12-12 19:05:10.797136
+actions =  tensor(0.0764, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1446, -0.1295], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1446, -0.1295], device='cuda:0')
+2025-12-12 19:05:10.807350
+actions =  tensor(-0.9659, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0358, 0.0359], device='cuda:0')
+ gripper computed_torque =  tensor([-55.7318, -55.9344], device='cuda:0')
+ gripper applied_torque =  tensor([-55.7318, -55.9344], device='cuda:0')
+2025-12-12 19:05:10.817321
+actions =  tensor(-2.0249, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0319, 0.0318], device='cuda:0')
+ gripper computed_torque =  tensor([-47.3907, -47.7129], device='cuda:0')
+ gripper applied_torque =  tensor([-47.3907, -47.7129], device='cuda:0')
+2025-12-12 19:05:10.827777
+actions =  tensor(-2.2253, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0299, 0.0299], device='cuda:0')
+ gripper computed_torque =  tensor([-50.9880, -45.7375], device='cuda:0')
+ gripper applied_torque =  tensor([-50.9880, -45.7375], device='cuda:0')
+2025-12-12 19:05:10.839712
+actions =  tensor(-2.1890, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0297, 0.0299], device='cuda:0')
+ gripper computed_torque =  tensor([-62.3772, -61.0787], device='cuda:0')
+ gripper applied_torque =  tensor([-62.3772, -61.0787], device='cuda:0')
+2025-12-12 19:05:10.851752
+actions =  tensor(-1.7603, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0299, 0.0297], device='cuda:0')
+ gripper computed_torque =  tensor([-63.8875, -61.8355], device='cuda:0')
+ gripper applied_torque =  tensor([-63.8875, -61.8355], device='cuda:0')
+2025-12-12 19:05:10.863609
+actions =  tensor(-1.7673, device='cuda:0')
+reaching the cube
+ gripper computed joint positions =  tensor([0.0302, 0.0294], device='cuda:0')
+ gripper computed_torque =  tensor([-64.5274, -61.4888], device='cuda:0')
+ gripper applied_torque =  tensor([-64.5274, -61.4888], device='cuda:0')
+2025-12-12 19:05:10.875218
+actions =  tensor(-1.7631, device='cuda:0')
+reaching the cube
+lifted
+ gripper computed joint positions =  tensor([0.0305, 0.0292], device='cuda:0')
+ gripper computed_torque =  tensor([-64.8978, -61.3561], device='cuda:0')
+ gripper applied_torque =  tensor([-64.8978, -61.3561], device='cuda:0')
+2025-12-12 19:05:10.886835
+actions =  tensor(-1.6095, device='cuda:0')
+reaching the cube
+lifted
+ gripper computed joint positions =  tensor([0.0308, 0.0291], device='cuda:0')
+ gripper computed_torque =  tensor([-64.3554, -62.3479], device='cuda:0')
+ gripper applied_torque =  tensor([-64.3554, -62.3479], device='cuda:0')
+2025-12-12 19:05:10.898608
+actions =  tensor(-0.6996, device='cuda:0')
+reaching the cube
+lifted
+ gripper computed joint positions =  tensor([0.0305, 0.0294], device='cuda:0')
+ gripper computed_torque =  tensor([-61.7399, -65.1342], device='cuda:0')
+ gripper applied_torque =  tensor([-61.7399, -65.1342], device='cuda:0')
+2025-12-12 19:05:10.910607
+actions =  tensor(0.9552, device='cuda:0')
+reaching the cube
+lifted
+ gripper computed joint positions =  tensor([0.0337, 0.0328], device='cuda:0')
+ gripper computed_torque =  tensor([-0.2552, -1.8464], device='cuda:0')
+ gripper applied_torque =  tensor([-0.2552, -1.8464], device='cuda:0')
+2025-12-12 19:05:10.923417
+actions =  tensor(2.0953, device='cuda:0')
+reaching the cube
+lifted
+ gripper computed joint positions =  tensor([0.0358, 0.0366], device='cuda:0')
+ gripper computed_torque =  tensor([-1.4870, -6.6874], device='cuda:0')
+ gripper applied_torque =  tensor([-1.4870, -6.6874], device='cuda:0')
+2025-12-12 19:05:10.934646
+actions =  tensor(2.0171, device='cuda:0')
+reaching the cube
+lifted
+ gripper computed joint positions =  tensor([0.0373, 0.0386], device='cuda:0')
+ gripper computed_torque =  tensor([-0.5100, -4.8781], device='cuda:0')
+ gripper applied_torque =  tensor([-0.5100, -4.8781], device='cuda:0')
+2025-12-12 19:05:10.945863
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.6806, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0384, 0.0396], device='cuda:0')
+ gripper computed_torque =  tensor([-1.6406, -5.9395], device='cuda:0')
+ gripper applied_torque =  tensor([-1.6406, -5.9395], device='cuda:0')
+2025-12-12 19:05:10.955120
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.4329, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0394, 0.0397], device='cuda:0')
+ gripper computed_torque =  tensor([-1.8147, -0.4955], device='cuda:0')
+ gripper applied_torque =  tensor([-1.8147, -0.4955], device='cuda:0')
+2025-12-12 19:05:10.964297
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.3130, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0397], device='cuda:0')
+ gripper computed_torque =  tensor([-3.0645,  0.2069], device='cuda:0')
+ gripper applied_torque =  tensor([-3.0645,  0.2069], device='cuda:0')
+2025-12-12 19:05:10.973367
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.2124, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0397], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8645,  0.7349], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8645,  0.7349], device='cuda:0')
+2025-12-12 19:05:10.982508
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.2052, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0399], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8312, -0.1051], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8312, -0.1051], device='cuda:0')
+2025-12-12 19:05:10.991559
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.2558, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-1.1118, -1.0563], device='cuda:0')
+ gripper applied_torque =  tensor([-1.1118, -1.0563], device='cuda:0')
+2025-12-12 19:05:11.000904
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.3047, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0246, -0.8541], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0246, -0.8541], device='cuda:0')
+2025-12-12 19:05:11.010472
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.3393, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0069, -0.8109], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0069, -0.8109], device='cuda:0')
+2025-12-12 19:05:11.020153
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.3615, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0379, -0.7485], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0379, -0.7485], device='cuda:0')
+2025-12-12 19:05:11.029693
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.3748, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0889, -0.6956], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0889, -0.6956], device='cuda:0')
+2025-12-12 19:05:11.039052
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.3828, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-1.1417, -0.6501], device='cuda:0')
+ gripper applied_torque =  tensor([-1.1417, -0.6501], device='cuda:0')
+2025-12-12 19:05:11.048287
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.3886, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0385, -0.5007], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0385, -0.5007], device='cuda:0')
+2025-12-12 19:05:11.057550
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.3924, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8922, -0.3653], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8922, -0.3653], device='cuda:0')
+2025-12-12 19:05:11.066979
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.4054, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.6900, -0.1493], device='cuda:0')
+ gripper applied_torque =  tensor([-0.6900, -0.1493], device='cuda:0')
+2025-12-12 19:05:11.076335
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.4367, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.3381,  0.1119], device='cuda:0')
+ gripper applied_torque =  tensor([-0.3381,  0.1119], device='cuda:0')
+2025-12-12 19:05:11.085678
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.4760, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0399, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([0.2080, 0.1253], device='cuda:0')
+ gripper applied_torque =  tensor([0.2080, 0.1253], device='cuda:0')
+2025-12-12 19:05:11.095022
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.5351, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0399, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.3472, -0.5276], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.3472, -0.5276], device='cuda:0')
+2025-12-12 19:05:11.104440
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.5824, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0398, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.4652, -1.2288], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.4652, -1.2288], device='cuda:0')
+2025-12-12 19:05:11.113775
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.6013, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0398, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.4378, -1.5606], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.4378, -1.5606], device='cuda:0')
+2025-12-12 19:05:11.123131
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.5766, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0398, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.4137, -1.8992], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.4137, -1.8992], device='cuda:0')
+2025-12-12 19:05:11.132450
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.5303, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0398, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1424, -2.0681], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1424, -2.0681], device='cuda:0')
+2025-12-12 19:05:11.141793
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.4569, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0399, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1979, -2.4519], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1979, -2.4519], device='cuda:0')
+2025-12-12 19:05:11.151103
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.3487, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.7628, -2.9053], device='cuda:0')
+ gripper applied_torque =  tensor([-0.7628, -2.9053], device='cuda:0')
+2025-12-12 19:05:11.160477
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.2512, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0399, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-1.6700, -3.5386], device='cuda:0')
+ gripper applied_torque =  tensor([-1.6700, -3.5386], device='cuda:0')
+2025-12-12 19:05:11.170191
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.1981, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.6574, -2.5290], device='cuda:0')
+ gripper applied_torque =  tensor([-0.6574, -2.5290], device='cuda:0')
+2025-12-12 19:05:11.179742
+reward_gripper_release_mid_throw = True
+actions =  tensor(1.0990, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-2.2570, -3.9620], device='cuda:0')
+ gripper applied_torque =  tensor([-2.2570, -3.9620], device='cuda:0')
+2025-12-12 19:05:11.189347
+reward_gripper_release_mid_throw = True
+actions =  tensor(0.9193, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-2.9162, -5.0845], device='cuda:0')
+ gripper applied_torque =  tensor([-2.9162, -5.0845], device='cuda:0')
+2025-12-12 19:05:11.198795
+reward_gripper_release_mid_throw = True
+actions =  tensor(0.6544, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-2.5616, -5.0628], device='cuda:0')
+ gripper applied_torque =  tensor([-2.5616, -5.0628], device='cuda:0')
+2025-12-12 19:05:11.208550
+reward_gripper_release_mid_throw = True
+actions =  tensor(0.2441, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-2.7813, -3.4154], device='cuda:0')
+ gripper applied_torque =  tensor([-2.7813, -3.4154], device='cuda:0')
+2025-12-12 19:05:11.218402
+actions =  tensor(-0.2100, device='cuda:0')
+lifted
+ gripper computed joint positions =  tensor([0.0362, 0.0365], device='cuda:0')
+ gripper computed_torque =  tensor([-58.3031, -59.8309], device='cuda:0')
+ gripper applied_torque =  tensor([-58.3031, -59.8309], device='cuda:0')
+2025-12-12 19:05:11.227895
+actions =  tensor(-0.7975, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0323, 0.0328], device='cuda:0')
+ gripper computed_torque =  tensor([-49.5544, -51.7411], device='cuda:0')
+ gripper applied_torque =  tensor([-49.5544, -51.7411], device='cuda:0')
+2025-12-12 19:05:11.237478
+actions =  tensor(-1.1936, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0282, 0.0290], device='cuda:0')
+ gripper computed_torque =  tensor([-40.7125, -43.2464], device='cuda:0')
+ gripper applied_torque =  tensor([-40.7125, -43.2464], device='cuda:0')
+2025-12-12 19:05:11.249839
+actions =  tensor(0.6279, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0319, 0.0326], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0610, -0.7631], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0610, -0.7631], device='cuda:0')
+2025-12-12 19:05:11.261295
+actions =  tensor(0.5760, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0345, 0.0353], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0184, -0.3995], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0184, -0.3995], device='cuda:0')
+2025-12-12 19:05:11.272210
+actions =  tensor(0.7006, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0362, 0.0373], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1086, -2.2347], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1086, -2.2347], device='cuda:0')
+2025-12-12 19:05:11.284494
+actions =  tensor(0.7356, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0375, 0.0388], device='cuda:0')
+ gripper computed_torque =  tensor([-0.3600, -3.4661], device='cuda:0')
+ gripper applied_torque =  tensor([-0.3600, -3.4661], device='cuda:0')
+2025-12-12 19:05:11.296248
+actions =  tensor(0.7638, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0383, 0.0397], device='cuda:0')
+ gripper computed_torque =  tensor([-0.2071, -3.5392], device='cuda:0')
+ gripper applied_torque =  tensor([-0.2071, -3.5392], device='cuda:0')
+2025-12-12 19:05:11.308267
+actions =  tensor(0.7760, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0389, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0779, -3.0135], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0779, -3.0135], device='cuda:0')
+2025-12-12 19:05:11.319372
+actions =  tensor(0.7909, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0392, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1759, -2.0228], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1759, -2.0228], device='cuda:0')
+2025-12-12 19:05:11.331188
+actions =  tensor(0.7907, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0394, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1680, -1.9499], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1680, -1.9499], device='cuda:0')
+2025-12-12 19:05:11.342714
+actions =  tensor(0.7721, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0396, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.6400, -2.1172], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.6400, -2.1172], device='cuda:0')
+2025-12-12 19:05:11.353568
+actions =  tensor(0.6763, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0397, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.2665, -0.8096], device='cuda:0')
+ gripper applied_torque =  tensor([-0.2665, -0.8096], device='cuda:0')
+2025-12-12 19:05:11.372271
+actions =  tensor(0.6253, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0399, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.2152, -0.3862], device='cuda:0')
+ gripper applied_torque =  tensor([-0.2152, -0.3862], device='cuda:0')
+2025-12-12 19:05:11.391737
+actions =  tensor(0.5433, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0399, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1738, -0.3081], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1738, -0.3081], device='cuda:0')
+2025-12-12 19:05:11.403473
+actions =  tensor(0.4494, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1655, -0.3015], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1655, -0.3015], device='cuda:0')
+2025-12-12 19:05:11.415555
+actions =  tensor(0.3387, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.2483, -0.2841], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.2483, -0.2841], device='cuda:0')
+2025-12-12 19:05:11.427585
+actions =  tensor(0.2055, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1904, -0.2560], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1904, -0.2560], device='cuda:0')
+2025-12-12 19:05:11.439185
+actions =  tensor(0.0515, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1197, -0.1480], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1197, -0.1480], device='cuda:0')
+2025-12-12 19:05:11.451360
+actions =  tensor(-0.0810, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0359, 0.0360], device='cuda:0')
+ gripper computed_torque =  tensor([-56.0868, -56.2622], device='cuda:0')
+ gripper applied_torque =  tensor([-56.0868, -56.2622], device='cuda:0')
+2025-12-12 19:05:11.462993
+actions =  tensor(-0.0884, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0319, 0.0319], device='cuda:0')
+ gripper computed_torque =  tensor([-48.1440, -48.2639], device='cuda:0')
+ gripper applied_torque =  tensor([-48.1440, -48.2639], device='cuda:0')
+2025-12-12 19:05:11.474827
+actions =  tensor(-0.0926, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0279, 0.0279], device='cuda:0')
+ gripper computed_torque =  tensor([-40.0197, -40.1669], device='cuda:0')
+ gripper applied_torque =  tensor([-40.0197, -40.1669], device='cuda:0')
+2025-12-12 19:05:11.486224
+actions =  tensor(-0.0942, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0239, 0.0239], device='cuda:0')
+ gripper computed_torque =  tensor([-31.9993, -32.0452], device='cuda:0')
+ gripper applied_torque =  tensor([-31.9993, -32.0452], device='cuda:0')
+2025-12-12 19:05:11.498512
+actions =  tensor(-0.0998, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0199, 0.0199], device='cuda:0')
+ gripper computed_torque =  tensor([-23.9586, -23.9792], device='cuda:0')
+ gripper applied_torque =  tensor([-23.9586, -23.9792], device='cuda:0')
+2025-12-12 19:05:11.510677
+actions =  tensor(-0.1091, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0159, 0.0159], device='cuda:0')
+ gripper computed_torque =  tensor([-15.9270, -15.9492], device='cuda:0')
+ gripper applied_torque =  tensor([-15.9270, -15.9492], device='cuda:0')
+2025-12-12 19:05:11.521766
+actions =  tensor(-0.1209, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0119, 0.0119], device='cuda:0')
+ gripper computed_torque =  tensor([-7.9072, -7.9477], device='cuda:0')
+ gripper applied_torque =  tensor([-7.9072, -7.9477], device='cuda:0')
+2025-12-12 19:05:11.533788
+actions =  tensor(-0.1336, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0081, 0.0081], device='cuda:0')
+ gripper computed_torque =  tensor([-0.2220,  0.0326], device='cuda:0')
+ gripper applied_torque =  tensor([-0.2220,  0.0326], device='cuda:0')
+2025-12-12 19:05:11.545888
+actions =  tensor(-0.1547, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0055, 0.0054], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1714,  0.0765], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1714,  0.0765], device='cuda:0')
+2025-12-12 19:05:11.558392
+actions =  tensor(-0.1810, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0037, 0.0037], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1507,  0.0638], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1507,  0.0638], device='cuda:0')
+2025-12-12 19:05:11.569351
+actions =  tensor(-0.2020, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0025, 0.0024], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1468,  0.0607], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1468,  0.0607], device='cuda:0')
+2025-12-12 19:05:11.581147
+actions =  tensor(-0.2184, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0017, 0.0016], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1323,  0.0448], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1323,  0.0448], device='cuda:0')
+2025-12-12 19:05:11.593068
+actions =  tensor(-0.2306, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0011, 0.0011], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1120,  0.0279], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1120,  0.0279], device='cuda:0')
+2025-12-12 19:05:11.604866
+actions =  tensor(-0.2383, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0008, 0.0007], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0827,  0.0060], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0827,  0.0060], device='cuda:0')
+2025-12-12 19:05:11.618226
+actions =  tensor(-0.2419, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0005, 0.0005], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0413, -0.0256], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0413, -0.0256], device='cuda:0')
+2025-12-12 19:05:11.630972
+actions =  tensor(-0.2409, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0003, 0.0004], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0112, -0.0670], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0112, -0.0670], device='cuda:0')
+2025-12-12 19:05:11.643135
+actions =  tensor(-0.2336, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0002, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0753, -0.1215], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0753, -0.1215], device='cuda:0')
+2025-12-12 19:05:11.654882
+actions =  tensor(-0.2210, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0001, 0.0002], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1566, -0.1992], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1566, -0.1992], device='cuda:0')
+2025-12-12 19:05:11.667232
+actions =  tensor(-0.2035, device='cuda:0')
+ gripper computed joint positions =  tensor([2.1477e-05, 2.2415e-04], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.3506, -0.4022], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.3506, -0.4022], device='cuda:0')
+2025-12-12 19:05:11.680062
+actions =  tensor(-0.1836, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1291, -0.7111], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1291, -0.7111], device='cuda:0')
+2025-12-12 19:05:11.692705
+actions =  tensor(-0.1537, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0769, -0.7210], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0769, -0.7210], device='cuda:0')
+2025-12-12 19:05:11.705138
+actions =  tensor(-0.1253, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0643, -0.7246], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0643, -0.7246], device='cuda:0')
+2025-12-12 19:05:11.718061
+actions =  tensor(-0.1076, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0767, -0.7619], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0767, -0.7619], device='cuda:0')
+2025-12-12 19:05:11.730806
+actions =  tensor(-0.0971, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1591, -0.9074], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1591, -0.9074], device='cuda:0')
+2025-12-12 19:05:11.743454
+actions =  tensor(-0.0846, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.3502, -1.1182], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.3502, -1.1182], device='cuda:0')
+2025-12-12 19:05:11.755298
+actions =  tensor(-0.0648, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.2739, -0.6076], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.2739, -0.6076], device='cuda:0')
+2025-12-12 19:05:11.768066
+actions =  tensor(-0.0418, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0740, -0.6806], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0740, -0.6806], device='cuda:0')
+2025-12-12 19:05:11.780930
+actions =  tensor(-0.0194, device='cuda:0')
+ gripper computed joint positions =  tensor([1.5839e-05, 2.3136e-04], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0094, -0.5570], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0094, -0.5570], device='cuda:0')
+2025-12-12 19:05:11.793869
+actions =  tensor(0.0010, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0042, 0.0043], device='cuda:0')
+ gripper computed_torque =  tensor([55.6694, 55.4563], device='cuda:0')
+ gripper applied_torque =  tensor([55.6694, 55.4563], device='cuda:0')
+2025-12-12 19:05:11.805504
+actions =  tensor(-0.0228, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0029, 0.0029], device='cuda:0')
+ gripper computed_torque =  tensor([-0.4316,  0.1654], device='cuda:0')
+ gripper applied_torque =  tensor([-0.4316,  0.1654], device='cuda:0')
+2025-12-12 19:05:11.817293
+actions =  tensor(0.0398, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0071, 0.0070], device='cuda:0')
+ gripper computed_torque =  tensor([49.8468, 50.0354], device='cuda:0')
+ gripper applied_torque =  tensor([49.8468, 50.0354], device='cuda:0')
+2025-12-12 19:05:11.829214
+actions =  tensor(0.0377, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0113, 0.0111], device='cuda:0')
+ gripper computed_torque =  tensor([40.6265, 41.9800], device='cuda:0')
+ gripper applied_torque =  tensor([40.6265, 41.9800], device='cuda:0')
+2025-12-12 19:05:11.840236
+actions =  tensor(0.0567, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0155, 0.0152], device='cuda:0')
+ gripper computed_torque =  tensor([32.7113, 33.7313], device='cuda:0')
+ gripper applied_torque =  tensor([32.7113, 33.7313], device='cuda:0')
+2025-12-12 19:05:11.852269
+actions =  tensor(0.0904, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0197, 0.0192], device='cuda:0')
+ gripper computed_torque =  tensor([24.3835, 25.5487], device='cuda:0')
+ gripper applied_torque =  tensor([24.3835, 25.5487], device='cuda:0')
+2025-12-12 19:05:11.864359
+actions =  tensor(0.1306, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0238, 0.0233], device='cuda:0')
+ gripper computed_torque =  tensor([15.9479, 17.4266], device='cuda:0')
+ gripper applied_torque =  tensor([15.9479, 17.4266], device='cuda:0')
+2025-12-12 19:05:11.875901
+actions =  tensor(0.1730, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0280, 0.0273], device='cuda:0')
+ gripper computed_torque =  tensor([7.5496, 9.3126], device='cuda:0')
+ gripper applied_torque =  tensor([7.5496, 9.3126], device='cuda:0')
+2025-12-12 19:05:11.886974
+actions =  tensor(0.2176, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0320, 0.0313], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8053,  1.2033], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8053,  1.2033], device='cuda:0')
+2025-12-12 19:05:11.898957
+actions =  tensor(0.2723, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0348, 0.0342], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0620, -0.1764], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0620, -0.1764], device='cuda:0')
+2025-12-12 19:05:11.910979
+actions =  tensor(0.3275, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0368, 0.0361], device='cuda:0')
+ gripper computed_torque =  tensor([-1.3480, -0.2611], device='cuda:0')
+ gripper applied_torque =  tensor([-1.3480, -0.2611], device='cuda:0')
+2025-12-12 19:05:11.922327
+actions =  tensor(0.3719, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0382, 0.0373], device='cuda:0')
+ gripper computed_torque =  tensor([-1.5207, -0.3437], device='cuda:0')
+ gripper applied_torque =  tensor([-1.5207, -0.3437], device='cuda:0')
+2025-12-12 19:05:11.934413
+actions =  tensor(0.3847, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0392, 0.0382], device='cuda:0')
+ gripper computed_torque =  tensor([-2.9479, -0.7760], device='cuda:0')
+ gripper applied_torque =  tensor([-2.9479, -0.7760], device='cuda:0')
+2025-12-12 19:05:11.946586
+actions =  tensor(0.3087, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0396, 0.0388], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8659,  0.0020], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8659,  0.0020], device='cuda:0')
+2025-12-12 19:05:11.959047
+actions =  tensor(0.2839, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0399, 0.0392], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8634, -0.0426], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8634, -0.0426], device='cuda:0')
+2025-12-12 19:05:11.970653
+actions =  tensor(0.2643, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0394], device='cuda:0')
+ gripper computed_torque =  tensor([-0.6659,  0.0206], device='cuda:0')
+ gripper applied_torque =  tensor([-0.6659,  0.0206], device='cuda:0')
+2025-12-12 19:05:11.983183
+actions =  tensor(0.2470, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0396], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1306,  0.0812], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1306,  0.0812], device='cuda:0')
+2025-12-12 19:05:11.995432
+actions =  tensor(0.2312, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0397], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1040,  0.1029], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1040,  0.1029], device='cuda:0')
+2025-12-12 19:05:12.006704
+actions =  tensor(0.2130, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0398], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1532,  0.1271], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1532,  0.1271], device='cuda:0')
+2025-12-12 19:05:12.018493
+actions =  tensor(0.1931, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0399], device='cuda:0')
+ gripper computed_torque =  tensor([-0.2697, -0.1298], device='cuda:0')
+ gripper applied_torque =  tensor([-0.2697, -0.1298], device='cuda:0')
+2025-12-12 19:05:12.030456
+actions =  tensor(0.1624, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0399], device='cuda:0')
+ gripper computed_torque =  tensor([-0.4188, -0.0832], device='cuda:0')
+ gripper applied_torque =  tensor([-0.4188, -0.0832], device='cuda:0')
+2025-12-12 19:05:12.042639
+actions =  tensor(0.1361, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.5912, -0.1032], device='cuda:0')
+ gripper applied_torque =  tensor([-0.5912, -0.1032], device='cuda:0')
+2025-12-12 19:05:12.054272
+actions =  tensor(0.1123, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.7018, -0.1782], device='cuda:0')
+ gripper applied_torque =  tensor([-0.7018, -0.1782], device='cuda:0')
+2025-12-12 19:05:12.066342
+actions =  tensor(0.0887, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.7661, -0.1968], device='cuda:0')
+ gripper applied_torque =  tensor([-0.7661, -0.1968], device='cuda:0')
+2025-12-12 19:05:12.079372
+actions =  tensor(0.0630, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8052, -0.2059], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8052, -0.2059], device='cuda:0')
+2025-12-12 19:05:12.095019
+actions =  tensor(0.0354, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8085, -0.2082], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8085, -0.2082], device='cuda:0')
+2025-12-12 19:05:12.107910
+actions =  tensor(0.0080, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8003, -0.2151], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8003, -0.2151], device='cuda:0')
+2025-12-12 19:05:12.124118
+actions =  tensor(-0.0189, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0360, 0.0360], device='cuda:0')
+ gripper computed_torque =  tensor([-56.8074, -56.4405], device='cuda:0')
+ gripper applied_torque =  tensor([-56.8074, -56.4405], device='cuda:0')
+2025-12-12 19:05:12.138299
+actions =  tensor(0.0040, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0374, 0.0373], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0747, -0.3082], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0747, -0.3082], device='cuda:0')
+2025-12-12 19:05:12.150460
+actions =  tensor(-0.0685, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0335, 0.0333], device='cuda:0')
+ gripper computed_torque =  tensor([-51.3452, -50.9335], device='cuda:0')
+ gripper applied_torque =  tensor([-51.3452, -50.9335], device='cuda:0')
+2025-12-12 19:05:12.162733
+actions =  tensor(-0.0279, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0295, 0.0293], device='cuda:0')
+ gripper computed_torque =  tensor([-43.5462, -42.9380], device='cuda:0')
+ gripper applied_torque =  tensor([-43.5462, -42.9380], device='cuda:0')
+2025-12-12 19:05:12.174130
+actions =  tensor(-0.0359, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0255, 0.0253], device='cuda:0')
+ gripper computed_torque =  tensor([-35.2124, -34.7780], device='cuda:0')
+ gripper applied_torque =  tensor([-35.2124, -34.7780], device='cuda:0')
+2025-12-12 19:05:12.185887
+actions =  tensor(-0.0422, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0215, 0.0212], device='cuda:0')
+ gripper computed_torque =  tensor([-27.1437, -26.6811], device='cuda:0')
+ gripper applied_torque =  tensor([-27.1437, -26.6811], device='cuda:0')
+2025-12-12 19:05:12.200662
+actions =  tensor(-0.0544, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0175, 0.0172], device='cuda:0')
+ gripper computed_torque =  tensor([-19.0744, -18.6219], device='cuda:0')
+ gripper applied_torque =  tensor([-19.0744, -18.6219], device='cuda:0')
+2025-12-12 19:05:12.214982
+actions =  tensor(-0.0688, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0135, 0.0132], device='cuda:0')
+ gripper computed_torque =  tensor([-11.0258, -10.5889], device='cuda:0')
+ gripper applied_torque =  tensor([-11.0258, -10.5889], device='cuda:0')
+2025-12-12 19:05:12.227392
+actions =  tensor(-0.0830, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0095, 0.0093], device='cuda:0')
+ gripper computed_torque =  tensor([-3.0036, -2.5778], device='cuda:0')
+ gripper applied_torque =  tensor([-3.0036, -2.5778], device='cuda:0')
+2025-12-12 19:05:12.238433
+actions =  tensor(-0.0985, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0064, 0.0062], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0894,  0.0753], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0894,  0.0753], device='cuda:0')
+2025-12-12 19:05:12.250619
+actions =  tensor(-0.1293, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0043, 0.0042], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0651,  0.0521], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0651,  0.0521], device='cuda:0')
+2025-12-12 19:05:12.262430
+actions =  tensor(-0.1514, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0029, 0.0028], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0759,  0.0622], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0759,  0.0622], device='cuda:0')
+2025-12-12 19:05:12.274132
+actions =  tensor(-0.1678, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0019, 0.0019], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0800,  0.0620], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0800,  0.0620], device='cuda:0')
+2025-12-12 19:05:12.285792
+actions =  tensor(-0.1794, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0013, 0.0013], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0632,  0.0449], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0632,  0.0449], device='cuda:0')
+2025-12-12 19:05:12.298417
+actions =  tensor(-0.1862, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0009, 0.0008], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0415,  0.0270], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0415,  0.0270], device='cuda:0')
+2025-12-12 19:05:12.311124
+actions =  tensor(-0.1886, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0006, 0.0006], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0107,  0.0023], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0107,  0.0023], device='cuda:0')
+2025-12-12 19:05:12.322966
+actions =  tensor(-0.1857, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0004, 0.0004], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0296, -0.0323], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0296, -0.0323], device='cuda:0')
+2025-12-12 19:05:12.335260
+actions =  tensor(-0.1762, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0002, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0806, -0.0810], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0806, -0.0810], device='cuda:0')
+2025-12-12 19:05:12.347885
+actions =  tensor(-0.1619, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0001, 0.0002], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1490, -0.1564], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1490, -0.1564], device='cuda:0')
+2025-12-12 19:05:12.360408
+actions =  tensor(-0.1446, device='cuda:0')
+ gripper computed joint positions =  tensor([3.4483e-05, 2.1095e-04], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.2417, -0.2723], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.2417, -0.2723], device='cuda:0')
+2025-12-12 19:05:12.374180
+actions =  tensor(-0.1304, device='cuda:0')
+ gripper computed joint positions =  tensor([1.6466e-05, 2.3300e-04], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0333, -0.5327], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0333, -0.5327], device='cuda:0')
+2025-12-12 19:05:12.387996
+actions =  tensor(-0.1043, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0246, -0.6120], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0246, -0.6120], device='cuda:0')
+2025-12-12 19:05:12.400927
+actions =  tensor(-0.0972, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1564, -0.8575], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1564, -0.8575], device='cuda:0')
+2025-12-12 19:05:12.413245
+actions =  tensor(-0.0898, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.2174, -1.0379], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.2174, -1.0379], device='cuda:0')
+2025-12-12 19:05:12.425039
+actions =  tensor(-0.0735, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.2199, -0.8378], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.2199, -0.8378], device='cuda:0')
+2025-12-12 19:05:12.436412
+actions =  tensor(-0.0512, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.2317, -0.5210], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.2317, -0.5210], device='cuda:0')
+2025-12-12 19:05:12.448257
+actions =  tensor(-0.0291, device='cuda:0')
+ gripper computed joint positions =  tensor([7.0369e-06, 2.4522e-04], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0812, -0.6492], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0812, -0.6492], device='cuda:0')
+2025-12-12 19:05:12.459771
+actions =  tensor(-0.0082, device='cuda:0')
+ gripper computed joint positions =  tensor([4.3180e-05, 2.0856e-04], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1942, -0.3826], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1942, -0.3826], device='cuda:0')
+2025-12-12 19:05:12.471212
+actions =  tensor(0.0084, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0042, 0.0043], device='cuda:0')
+ gripper computed_torque =  tensor([55.4754, 55.5404], device='cuda:0')
+ gripper applied_torque =  tensor([55.4754, 55.5404], device='cuda:0')
+2025-12-12 19:05:12.482747
+actions =  tensor(-0.0093, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0030, 0.0029], device='cuda:0')
+ gripper computed_torque =  tensor([-0.6079,  0.2243], device='cuda:0')
+ gripper applied_torque =  tensor([-0.6079,  0.2243], device='cuda:0')
+2025-12-12 19:05:12.493662
+actions =  tensor(0.0420, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0072, 0.0070], device='cuda:0')
+ gripper computed_torque =  tensor([49.5813, 50.1257], device='cuda:0')
+ gripper applied_torque =  tensor([49.5813, 50.1257], device='cuda:0')
+2025-12-12 19:05:12.504535
+actions =  tensor(0.0433, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0114, 0.0111], device='cuda:0')
+ gripper computed_torque =  tensor([40.5012, 42.0306], device='cuda:0')
+ gripper applied_torque =  tensor([40.5012, 42.0306], device='cuda:0')
+2025-12-12 19:05:12.515800
+actions =  tensor(0.0566, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0156, 0.0152], device='cuda:0')
+ gripper computed_torque =  tensor([32.6557, 33.7191], device='cuda:0')
+ gripper applied_torque =  tensor([32.6557, 33.7191], device='cuda:0')
+2025-12-12 19:05:12.528491
+actions =  tensor(0.0911, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0197, 0.0192], device='cuda:0')
+ gripper computed_torque =  tensor([24.3425, 25.5230], device='cuda:0')
+ gripper applied_torque =  tensor([24.3425, 25.5230], device='cuda:0')
+2025-12-12 19:05:12.541642
+actions =  tensor(0.1343, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0239, 0.0233], device='cuda:0')
+ gripper computed_torque =  tensor([15.9291, 17.4032], device='cuda:0')
+ gripper applied_torque =  tensor([15.9291, 17.4032], device='cuda:0')
+2025-12-12 19:05:12.562166
+actions =  tensor(0.1808, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0280, 0.0273], device='cuda:0')
+ gripper computed_torque =  tensor([7.5427, 9.2929], device='cuda:0')
+ gripper applied_torque =  tensor([7.5427, 9.2929], device='cuda:0')
+2025-12-12 19:05:12.583822
+actions =  tensor(0.2285, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0320, 0.0313], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8014,  1.1862], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8014,  1.1862], device='cuda:0')
+2025-12-12 19:05:12.604365
+actions =  tensor(0.2839, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0348, 0.0342], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0188, -0.1580], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0188, -0.1580], device='cuda:0')
+2025-12-12 19:05:12.617637
+actions =  tensor(0.3384, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0369, 0.0360], device='cuda:0')
+ gripper computed_torque =  tensor([-1.2923, -0.2150], device='cuda:0')
+ gripper applied_torque =  tensor([-1.2923, -0.2150], device='cuda:0')
+2025-12-12 19:05:12.628649
+actions =  tensor(0.3662, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0382, 0.0373], device='cuda:0')
+ gripper computed_torque =  tensor([-2.2382, -0.5839], device='cuda:0')
+ gripper applied_torque =  tensor([-2.2382, -0.5839], device='cuda:0')
+2025-12-12 19:05:12.639545
+actions =  tensor(0.2967, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0390, 0.0382], device='cuda:0')
+ gripper computed_torque =  tensor([-1.1174, -0.1290], device='cuda:0')
+ gripper applied_torque =  tensor([-1.1174, -0.1290], device='cuda:0')
+2025-12-12 19:05:12.650528
+actions =  tensor(0.2768, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0395, 0.0388], device='cuda:0')
+ gripper computed_torque =  tensor([-0.9925, -0.2180], device='cuda:0')
+ gripper applied_torque =  tensor([-0.9925, -0.2180], device='cuda:0')
+2025-12-12 19:05:12.661829
+actions =  tensor(0.2621, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0398, 0.0392], device='cuda:0')
+ gripper computed_torque =  tensor([-0.7893, -0.1606], device='cuda:0')
+ gripper applied_torque =  tensor([-0.7893, -0.1606], device='cuda:0')
+2025-12-12 19:05:12.672843
+actions =  tensor(0.2469, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0399, 0.0395], device='cuda:0')
+ gripper computed_torque =  tensor([-0.6709, -0.0353], device='cuda:0')
+ gripper applied_torque =  tensor([-0.6709, -0.0353], device='cuda:0')
+2025-12-12 19:05:12.683536
+actions =  tensor(0.2306, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0396], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1371,  0.0668], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1371,  0.0668], device='cuda:0')
+2025-12-12 19:05:12.694709
+actions =  tensor(0.2127, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0398], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1886,  0.1043], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1886,  0.1043], device='cuda:0')
+2025-12-12 19:05:12.709946
+actions =  tensor(0.1915, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0399], device='cuda:0')
+ gripper computed_torque =  tensor([-0.3208, -0.1422], device='cuda:0')
+ gripper applied_torque =  tensor([-0.3208, -0.1422], device='cuda:0')
+2025-12-12 19:05:12.723716
+actions =  tensor(0.1572, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0399], device='cuda:0')
+ gripper computed_torque =  tensor([-0.4858, -0.1020], device='cuda:0')
+ gripper applied_torque =  tensor([-0.4858, -0.1020], device='cuda:0')
+2025-12-12 19:05:12.735065
+actions =  tensor(0.1305, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.6732, -0.1565], device='cuda:0')
+ gripper applied_torque =  tensor([-0.6732, -0.1565], device='cuda:0')
+2025-12-12 19:05:12.746049
+actions =  tensor(0.1056, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.7986, -0.2374], device='cuda:0')
+ gripper applied_torque =  tensor([-0.7986, -0.2374], device='cuda:0')
+2025-12-12 19:05:12.757023
+actions =  tensor(0.0807, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8515, -0.2591], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8515, -0.2591], device='cuda:0')
+2025-12-12 19:05:12.768258
+actions =  tensor(0.0544, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8869, -0.2667], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8869, -0.2667], device='cuda:0')
+2025-12-12 19:05:12.785651
+actions =  tensor(0.0267, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8841, -0.2658], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8841, -0.2658], device='cuda:0')
+2025-12-12 19:05:12.798069
+actions =  tensor(-0.0006, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0361, 0.0360], device='cuda:0')
+ gripper computed_torque =  tensor([-56.9218, -56.5046], device='cuda:0')
+ gripper applied_torque =  tensor([-56.9218, -56.5046], device='cuda:0')
+2025-12-12 19:05:12.812621
+actions =  tensor(0.0186, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0375, 0.0373], device='cuda:0')
+ gripper computed_torque =  tensor([-1.2017, -0.3505], device='cuda:0')
+ gripper applied_torque =  tensor([-1.2017, -0.3505], device='cuda:0')
+2025-12-12 19:05:12.827166
+actions =  tensor(-0.0515, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0335, 0.0333], device='cuda:0')
+ gripper computed_torque =  tensor([-51.5256, -51.0061], device='cuda:0')
+ gripper applied_torque =  tensor([-51.5256, -51.0061], device='cuda:0')
+2025-12-12 19:05:12.839500
+actions =  tensor(-0.0133, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0295, 0.0293], device='cuda:0')
+ gripper computed_torque =  tensor([-43.7606, -43.0192], device='cuda:0')
+ gripper applied_torque =  tensor([-43.7606, -43.0192], device='cuda:0')
+2025-12-12 19:05:12.850842
+actions =  tensor(-0.0202, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0255, 0.0253], device='cuda:0')
+ gripper computed_torque =  tensor([-35.4212, -34.8428], device='cuda:0')
+ gripper applied_torque =  tensor([-35.4212, -34.8428], device='cuda:0')
+2025-12-12 19:05:12.861747
+actions =  tensor(-0.0266, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0215, 0.0213], device='cuda:0')
+ gripper computed_torque =  tensor([-27.3548, -26.7411], device='cuda:0')
+ gripper applied_torque =  tensor([-27.3548, -26.7411], device='cuda:0')
+2025-12-12 19:05:12.872574
+actions =  tensor(-0.0378, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0175, 0.0173], device='cuda:0')
+ gripper computed_torque =  tensor([-19.2878, -18.6785], device='cuda:0')
+ gripper applied_torque =  tensor([-19.2878, -18.6785], device='cuda:0')
+2025-12-12 19:05:12.884248
+actions =  tensor(-0.0504, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0136, 0.0133], device='cuda:0')
+ gripper computed_torque =  tensor([-11.2398, -10.6472], device='cuda:0')
+ gripper applied_torque =  tensor([-11.2398, -10.6472], device='cuda:0')
+2025-12-12 19:05:12.895634
+actions =  tensor(-0.0638, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0096, 0.0093], device='cuda:0')
+ gripper computed_torque =  tensor([-3.2219, -2.6375], device='cuda:0')
+ gripper applied_torque =  tensor([-3.2219, -2.6375], device='cuda:0')
+2025-12-12 19:05:12.906581
+actions =  tensor(-0.0792, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0064, 0.0062], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1227,  0.0806], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1227,  0.0806], device='cuda:0')
+2025-12-12 19:05:12.917628
+actions =  tensor(-0.1112, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0043, 0.0042], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0873,  0.0520], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0873,  0.0520], device='cuda:0')
+2025-12-12 19:05:12.929029
+actions =  tensor(-0.1360, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0029, 0.0028], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0749,  0.0436], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0749,  0.0436], device='cuda:0')
+2025-12-12 19:05:12.939963
+actions =  tensor(-0.1549, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0020, 0.0019], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0897,  0.0558], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0897,  0.0558], device='cuda:0')
+2025-12-12 19:05:12.951074
+actions =  tensor(-0.1696, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0013, 0.0013], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0742,  0.0406], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0742,  0.0406], device='cuda:0')
+2025-12-12 19:05:12.963089
+actions =  tensor(-0.1797, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0009, 0.0008], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0541,  0.0255], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0541,  0.0255], device='cuda:0')
+2025-12-12 19:05:12.974857
+actions =  tensor(-0.1852, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0006, 0.0006], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0288,  0.0082], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0288,  0.0082], device='cuda:0')
+2025-12-12 19:05:12.989751
+actions =  tensor(-0.1865, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0004, 0.0004], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0068, -0.0186], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0068, -0.0186], device='cuda:0')
+2025-12-12 19:05:13.002892
+actions =  tensor(-0.1820, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0002, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0504, -0.0551], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0504, -0.0551], device='cuda:0')
+2025-12-12 19:05:13.015656
+actions =  tensor(-0.1714, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0001, 0.0002], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1068, -0.1101], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1068, -0.1101], device='cuda:0')
+2025-12-12 19:05:13.027808
+actions =  tensor(-0.1559, device='cuda:0')
+ gripper computed joint positions =  tensor([5.6946e-05, 1.8540e-04], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1816, -0.1945], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1816, -0.1945], device='cuda:0')
+2025-12-12 19:05:13.039219
+actions =  tensor(-0.1394, device='cuda:0')
+ gripper computed joint positions =  tensor([2.3980e-05, 2.2297e-04], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0461, -0.5707], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0461, -0.5707], device='cuda:0')
+2025-12-12 19:05:13.051485
+actions =  tensor(-0.1202, device='cuda:0')
+ gripper computed joint positions =  tensor([9.1823e-06, 2.4129e-04], device='cuda:0')
+ gripper computed_torque =  tensor([-0.0361, -0.5310], device='cuda:0')
+ gripper applied_torque =  tensor([-0.0361, -0.5310], device='cuda:0')
+2025-12-12 19:05:13.064426
+actions =  tensor(-0.1007, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0739, -0.6732], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0739, -0.6732], device='cuda:0')
+2025-12-12 19:05:13.076753
+actions =  tensor(-0.0944, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1814, -0.9248], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1814, -0.9248], device='cuda:0')
+2025-12-12 19:05:13.089406
+actions =  tensor(-0.0841, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.2135, -1.0323], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.2135, -1.0323], device='cuda:0')
+2025-12-12 19:05:13.102281
+actions =  tensor(-0.0655, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.3114, -0.6453], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.3114, -0.6453], device='cuda:0')
+2025-12-12 19:05:13.114913
+actions =  tensor(-0.0426, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0000, 0.0003], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.1147, -0.5130], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.1147, -0.5130], device='cuda:0')
+2025-12-12 19:05:13.127400
+actions =  tensor(-0.0205, device='cuda:0')
+ gripper computed joint positions =  tensor([1.6165e-05, 2.3242e-04], device='cuda:0')
+ gripper computed_torque =  tensor([ 0.0215, -0.5775], device='cuda:0')
+ gripper applied_torque =  tensor([ 0.0215, -0.5775], device='cuda:0')
+2025-12-12 19:05:13.139353
+actions =  tensor(-0.0011, device='cuda:0')
+ gripper computed joint positions =  tensor([6.3183e-05, 1.9276e-04], device='cuda:0')
+ gripper computed_torque =  tensor([-0.2844, -0.3267], device='cuda:0')
+ gripper applied_torque =  tensor([-0.2844, -0.3267], device='cuda:0')
+2025-12-12 19:05:13.152289
+actions =  tensor(0.0140, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0043, 0.0043], device='cuda:0')
+ gripper computed_torque =  tensor([55.3495, 55.5989], device='cuda:0')
+ gripper applied_torque =  tensor([55.3495, 55.5989], device='cuda:0')
+2025-12-12 19:05:13.164585
+actions =  tensor(-0.0030, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0030, 0.0029], device='cuda:0')
+ gripper computed_torque =  tensor([-0.7664,  0.3016], device='cuda:0')
+ gripper applied_torque =  tensor([-0.7664,  0.3016], device='cuda:0')
+2025-12-12 19:05:13.175745
+actions =  tensor(0.0464, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0072, 0.0070], device='cuda:0')
+ gripper computed_torque =  tensor([49.4364, 50.1996], device='cuda:0')
+ gripper applied_torque =  tensor([49.4364, 50.1996], device='cuda:0')
+2025-12-12 19:05:13.187087
+actions =  tensor(0.0430, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0115, 0.0111], device='cuda:0')
+ gripper computed_torque =  tensor([40.4539, 42.0838], device='cuda:0')
+ gripper applied_torque =  tensor([40.4539, 42.0838], device='cuda:0')
+2025-12-12 19:05:13.198567
+actions =  tensor(0.0542, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0156, 0.0151], device='cuda:0')
+ gripper computed_torque =  tensor([32.6292, 33.7432], device='cuda:0')
+ gripper applied_torque =  tensor([32.6292, 33.7432], device='cuda:0')
+2025-12-12 19:05:13.209937
+actions =  tensor(0.0890, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0198, 0.0192], device='cuda:0')
+ gripper computed_torque =  tensor([24.3215, 25.5488], device='cuda:0')
+ gripper applied_torque =  tensor([24.3215, 25.5488], device='cuda:0')
+2025-12-12 19:05:13.221613
+actions =  tensor(0.1330, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0239, 0.0233], device='cuda:0')
+ gripper computed_torque =  tensor([15.9106, 17.4387], device='cuda:0')
+ gripper applied_torque =  tensor([15.9106, 17.4387], device='cuda:0')
+2025-12-12 19:05:13.233628
+actions =  tensor(0.1804, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0280, 0.0273], device='cuda:0')
+ gripper computed_torque =  tensor([7.5212, 9.3342], device='cuda:0')
+ gripper applied_torque =  tensor([7.5212, 9.3342], device='cuda:0')
+2025-12-12 19:05:13.244910
+actions =  tensor(0.2288, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0320, 0.0313], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8263,  1.2283], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8263,  1.2283], device='cuda:0')
+2025-12-12 19:05:13.255994
+actions =  tensor(0.2848, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0348, 0.0342], device='cuda:0')
+ gripper computed_torque =  tensor([-1.0188, -0.1483], device='cuda:0')
+ gripper applied_torque =  tensor([-1.0188, -0.1483], device='cuda:0')
+2025-12-12 19:05:13.267472
+actions =  tensor(0.3391, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0370, 0.0361], device='cuda:0')
+ gripper computed_torque =  tensor([-2.4866,  0.9489], device='cuda:0')
+ gripper applied_torque =  tensor([-2.4866,  0.9489], device='cuda:0')
+2025-12-12 19:05:13.279066
+actions =  tensor(0.3594, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0383, 0.0374], device='cuda:0')
+ gripper computed_torque =  tensor([-1.9383, -0.3990], device='cuda:0')
+ gripper applied_torque =  tensor([-1.9383, -0.3990], device='cuda:0')
+2025-12-12 19:05:13.290275
+actions =  tensor(0.2910, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0390, 0.0383], device='cuda:0')
+ gripper computed_torque =  tensor([-1.1915, -0.1911], device='cuda:0')
+ gripper applied_torque =  tensor([-1.1915, -0.1911], device='cuda:0')
+2025-12-12 19:05:13.301959
+actions =  tensor(0.2700, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0395, 0.0389], device='cuda:0')
+ gripper computed_torque =  tensor([-0.9382, -0.2252], device='cuda:0')
+ gripper applied_torque =  tensor([-0.9382, -0.2252], device='cuda:0')
+2025-12-12 19:05:13.313532
+actions =  tensor(0.2573, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0398, 0.0392], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8161, -0.1653], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8161, -0.1653], device='cuda:0')
+2025-12-12 19:05:13.324382
+actions =  tensor(0.2425, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0395], device='cuda:0')
+ gripper computed_torque =  tensor([-0.6744, -0.0500], device='cuda:0')
+ gripper applied_torque =  tensor([-0.6744, -0.0500], device='cuda:0')
+2025-12-12 19:05:13.336016
+actions =  tensor(0.2264, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0397], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1468,  0.0648], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1468,  0.0648], device='cuda:0')
+2025-12-12 19:05:13.347298
+actions =  tensor(0.2084, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0398], device='cuda:0')
+ gripper computed_torque =  tensor([-0.2164,  0.0916], device='cuda:0')
+ gripper applied_torque =  tensor([-0.2164,  0.0916], device='cuda:0')
+2025-12-12 19:05:13.358471
+actions =  tensor(0.1848, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0399], device='cuda:0')
+ gripper computed_torque =  tensor([-0.3552, -0.1419], device='cuda:0')
+ gripper applied_torque =  tensor([-0.3552, -0.1419], device='cuda:0')
+2025-12-12 19:05:13.369695
+actions =  tensor(0.1517, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0399], device='cuda:0')
+ gripper computed_torque =  tensor([-0.5330, -0.1227], device='cuda:0')
+ gripper applied_torque =  tensor([-0.5330, -0.1227], device='cuda:0')
+2025-12-12 19:05:13.381178
+actions =  tensor(0.1252, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.7282, -0.1890], device='cuda:0')
+ gripper applied_torque =  tensor([-0.7282, -0.1890], device='cuda:0')
+2025-12-12 19:05:13.392192
+actions =  tensor(0.1002, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8454, -0.2620], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8454, -0.2620], device='cuda:0')
+2025-12-12 19:05:13.403485
+actions =  tensor(0.0754, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.8903, -0.2840], device='cuda:0')
+ gripper applied_torque =  tensor([-0.8903, -0.2840], device='cuda:0')
+2025-12-12 19:05:13.414601
+actions =  tensor(0.0490, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.9160, -0.2874], device='cuda:0')
+ gripper applied_torque =  tensor([-0.9160, -0.2874], device='cuda:0')
+2025-12-12 19:05:13.425312
+actions =  tensor(0.0215, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0400, 0.0400], device='cuda:0')
+ gripper computed_torque =  tensor([-0.9076, -0.2842], device='cuda:0')
+ gripper applied_torque =  tensor([-0.9076, -0.2842], device='cuda:0')
+2025-12-12 19:05:13.436819
+actions =  tensor(-0.0055, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0361, 0.0360], device='cuda:0')
+ gripper computed_torque =  tensor([-56.9408, -56.5195], device='cuda:0')
+ gripper applied_torque =  tensor([-56.9408, -56.5195], device='cuda:0')
+2025-12-12 19:05:13.448587
+actions =  tensor(0.0150, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0375, 0.0373], device='cuda:0')
+ gripper computed_torque =  tensor([-1.2065, -0.3653], device='cuda:0')
+ gripper applied_torque =  tensor([-1.2065, -0.3653], device='cuda:0')
+2025-12-12 19:05:13.460008
+actions =  tensor(-0.0558, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0335, 0.0333], device='cuda:0')
+ gripper computed_torque =  tensor([-51.5302, -51.0175], device='cuda:0')
+ gripper applied_torque =  tensor([-51.5302, -51.0175], device='cuda:0')
+2025-12-12 19:05:13.471568
+actions =  tensor(-0.0166, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0295, 0.0293], device='cuda:0')
+ gripper computed_torque =  tensor([-43.7631, -43.0325], device='cuda:0')
+ gripper applied_torque =  tensor([-43.7631, -43.0325], device='cuda:0')
+2025-12-12 19:05:13.483730
+actions =  tensor(-0.0236, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0255, 0.0253], device='cuda:0')
+ gripper computed_torque =  tensor([-35.4211, -34.8553], device='cuda:0')
+ gripper applied_torque =  tensor([-35.4211, -34.8553], device='cuda:0')
+2025-12-12 19:05:13.495302
+actions =  tensor(-0.0299, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0215, 0.0213], device='cuda:0')
+ gripper computed_torque =  tensor([-27.3537, -26.7540], device='cuda:0')
+ gripper applied_torque =  tensor([-27.3537, -26.7540], device='cuda:0')
+2025-12-12 19:05:13.506592
+actions =  tensor(-0.0412, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0175, 0.0173], device='cuda:0')
+ gripper computed_torque =  tensor([-19.2856, -18.6921], device='cuda:0')
+ gripper applied_torque =  tensor([-19.2856, -18.6921], device='cuda:0')
+2025-12-12 19:05:13.518291
+actions =  tensor(-0.0539, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0136, 0.0133], device='cuda:0')
+ gripper computed_torque =  tensor([-11.2370, -10.6604], device='cuda:0')
+ gripper applied_torque =  tensor([-11.2370, -10.6604], device='cuda:0')
+2025-12-12 19:05:13.529999
+actions =  tensor(-0.0675, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0096, 0.0093], device='cuda:0')
+ gripper computed_torque =  tensor([-3.2179, -2.6500], device='cuda:0')
+ gripper applied_torque =  tensor([-3.2179, -2.6500], device='cuda:0')
+2025-12-12 19:05:13.541163
+actions =  tensor(-0.0829, device='cuda:0')
+ gripper computed joint positions =  tensor([0.0064, 0.0062], device='cuda:0')
+ gripper computed_torque =  tensor([-0.1140,  0.0762], device='cuda:0')
+ gripper applied_torque =  tensor([-0.1140,  0.0762], device='cuda:0')
+2025-12-12 19:05:13.552657
