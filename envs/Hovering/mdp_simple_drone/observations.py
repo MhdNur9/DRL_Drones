@@ -129,10 +129,6 @@ def target_pos_b(
     """Position of target in body frame."""
 
     asset: RigidObject = env.scene[asset_cfg.name]
-    # print("****************")
-    # print("Robot details")
-    # print(asset.data.default_mass)
-    # print(asset.data.default_inertia)
 
     if target_pos is None:
         target_pos = env.command_manager.get_term(command_name).command[:, :3]

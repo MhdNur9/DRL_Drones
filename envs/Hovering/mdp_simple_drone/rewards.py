@@ -143,6 +143,8 @@ def ang_vel_l2(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCf
     asset: RigidObject = env.scene[asset_cfg.name]
     return torch.sum(torch.square(asset.data.root_ang_vel_b), dim=1)
 
+
+
 def vel_toward_target(
     env: ManagerBasedRLEnv,
     command_name: str | None = None,
@@ -172,66 +174,6 @@ def vel_toward_target(
     # component of velocity toward target
     v_along = torch.sum(v_w * dir_w, dim=1)  # m/s; >0 when moving toward target
     # keep reward scale bounded (for moothing only -  need further trials)
-    # gate: 1 when far, 0 when near
-    distance = torch.norm(to_tgt, dim=1)
-
-    gate_far = torch.clamp((distance - 0.3) / (1.5 - 0.3), 0.0, 1.0)
-
-
     r = torch.tanh(v_along / 2.0)            # ≈[-1, 1], smooth
 
-    return r* gate_far
-
-
-def motor_balance_band_reward(
-    env: ManagerBasedRLEnv,
-    tol: float = 0.10,          # 10% band
-    bonus: float = 1.0,         # positive reward if all within band
-    penalty_scale: float = 1.0, # how strong the penalty is
-    p: float = 2.0,             # penalty curvature: 1=linear, 2=quadratic
-    eps: float = 1e-6
-) -> torch.Tensor:
-    """
-    Reward motor balance:
-    +bonus if all actions are within ±tol of mean (relative),
-    else negative penalty proportional to how far outside the band.
-    """
-    # print("*****************************")
-    # Use physical thrusts (N): shape (N, 6), nonnegative
-    thrust = env.action_manager.get_term(
-        "body_torque_control_action"
-    ).last_thrust  # (N, 6)
-
-    # print("thrust = ", thrust[0])
-
-    mu = thrust.mean(dim=1, keepdim=True)  # (N, 1)
-    # print("mu = ", mu[0])
-
-    # relative deviation from mean
-    rel_dev = torch.abs(thrust - mu) / (mu + eps)  # (N, 6)
-    # print("rel_dev = ", rel_dev[0])
-
-    max_dev = rel_dev.max(dim=1).values  # (N,)
-    # print("max_dev = ", max_dev[0])
-
-    # inside band?
-    inside = (max_dev <= tol)
-    # print("inside = ", inside[0])
-
-    # how far outside band (0 if inside)
-    exceed = torch.clamp(max_dev - tol, min=0.0)
-    # print("exceed = ", exceed[0])
-
-    # normalize exceed
-    norm_exceed = exceed / tol
-    # print("norm_exceed = ", norm_exceed[0])
-
-    penalty = -penalty_scale * torch.pow(norm_exceed, p)
-    # print("penalty = ", penalty[0])
-
-    reward = torch.where(
-        inside,
-        torch.full_like(max_dev, bonus),
-        penalty,
-    )
-    return reward
+    return r

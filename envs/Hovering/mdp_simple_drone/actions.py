@@ -39,23 +39,10 @@ class BodyTorqueControlAction(ActionTerm):
         self.cfg_default = copy.deepcopy(cfg)
 
         self._robot: Articulation = env.scene[self.cfg.asset_name]
-        # Rotor joints (for visuals)
-        self._rotor_joint_ids = self._robot.find_joints("rotor_.*_joint")
-        print(" self._rotor_joint_ids = ",        self._rotor_joint_ids)
-        rotor_joint_ids, rotor_joint_names = self._robot.find_joints("rotor_.*_joint")
-        self._rotor_joint_ids = rotor_joint_ids
-
-        # (optional debug)
-        print("Rotor joints:", rotor_joint_ids, rotor_joint_names)
-
-        self._spin_signs = torch.tensor([1, -1, 1, -1, 1, -1], device=self.device).view(1, 6)
-
-
         self._body_id = self._robot.find_bodies("base_link")[0]
 
         self._elapsed_time = torch.zeros(self.num_envs, 1, device=self.device)
         self._raw_actions = torch.zeros(self.num_envs, self.action_dim, device=self.device)
-        self._rotor_angle = torch.zeros(self.num_envs, 6,device=self.device,dtype=self._raw_actions.dtype)
         self._processed_actions = torch.zeros_like(self._raw_actions)
         self._actual_thrust = torch.zeros_like(self._raw_actions)
 
@@ -179,8 +166,7 @@ class BodyTorqueControlAction(ActionTerm):
             clamped[:, :3] *= torch.tensor(self.cfg.max_force, device=self.device, dtype=self._raw_actions.dtype)
             clamped[:, 3:] *= torch.tensor(self.cfg.max_ang_vel, device=self.device, dtype=self._raw_actions.dtype)
             clamped[:, 3:] = self._rate_controller.compute_moment(clamped[:, 3:], self._robot.data.root_ang_vel_b)
-            thrusts_ref = torch.bmm(self._allocation_matrix.inverse(), clamped.unsqueeze(-1)).squeeze(-1)            
-
+            thrusts_ref = torch.bmm(self._allocation_matrix.inverse(), clamped.unsqueeze(-1)).squeeze(-1)
         elif self.cfg.control_level == "attitude":
             # Clamp orientation setpoint and 3D force
             # Calculate wrench based on orientation setpoint
@@ -205,21 +191,6 @@ class BodyTorqueControlAction(ActionTerm):
 
         self._robot.set_external_force_and_torque(forces, torques, body_ids=self._body_id)
         self._robot.update(self._env.physics_dt)
-        # --- Visual rotor spinning (independent from physics thrust control) ---
-        k_vis = 8.0e-7 
-        omega = torch.sqrt(torch.clamp(self._actual_thrust, min=0.0) / k_vis)  # (num_envs, 6)
-        omega = torch.clamp(omega, 0.0, 1500.0)  # cap for visuals
-        omega = omega * self._spin_signs
-
-        # integrate angle
-        self._rotor_angle = (self._rotor_angle + omega * self._env.physics_dt) % (2 * torch.pi)
-        # print("self._rotor_angle  = ",self._rotor_angle )
-
-        # WRITE POSITIONS (this WILL rotate the mesh)
-        self._robot.write_joint_position_to_sim(
-            self._rotor_angle,
-            joint_ids=self._rotor_joint_ids
-        )
         self._robot.write_data_to_sim()
 
         self._elapsed_time += self._env.physics_dt
@@ -262,9 +233,9 @@ class BodyTorqueControlActionCfg(ActionTermCfg):
     """Thrust coefficient."""
     kd: float = 2.388e-5
     """Drag coefficient."""
-    length: float = 0.215
+    length: float = 0.38998
     """Arm length."""
-    alpha: float = 0.0
+    alpha: float = 0.3490658
     """Tilt angle."""
 
     # Motor related
