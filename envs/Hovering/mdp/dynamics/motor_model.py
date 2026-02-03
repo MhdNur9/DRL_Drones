@@ -60,3 +60,100 @@ class MotorModel:
         Resets the motor model to initial conditions.
         """
         self.thrust[env_ids] = self.init_thrust
+
+
+class MotorModelV2:
+    """
+    V2-style motor model (RotorGroup-like):
+    - input cmds in [-1, 1]
+    - maintains internal throttle state
+    - throttle dynamics with tau_up/tau_down
+    - thrust = (throttle^2) * KF
+    """
+
+    def __init__(
+        self,
+        num_envs: int,
+        num_motors: int,
+        dt: float,
+        device: str,
+        KF,                   # per-motor thrust coefficient in N at t=1 (shape [6] or [N,6])
+        tau_up=0.43,
+        tau_down=0.43,
+        init_throttle=0.0,
+        noise_scale=0.0,
+        use: bool = True,
+    ):
+        self.num_envs = num_envs
+        self.num_motors = num_motors
+        self.dt = dt
+        self.device = device
+        self.use = use
+
+        # Expand parameters to (N, M)
+        # self.KF = torch.as_tensor(KF, device=device).float()
+        self.device = torch.device(device) if not isinstance(device, torch.device) else device
+        self.KF = torch.as_tensor(KF, device=self.device).float()
+
+        if self.KF.ndim == 1:
+            self.KF = self.KF.unsqueeze(0).expand(num_envs, -1)
+
+        self.tau_up = torch.as_tensor(tau_up, device=device).float()
+        self.tau_down = torch.as_tensor(tau_down, device=device).float()
+        if self.tau_up.ndim == 0:
+            self.tau_up = self.tau_up.expand(num_envs, num_motors)
+        elif self.tau_up.ndim == 1:
+            self.tau_up = self.tau_up.unsqueeze(0).expand(num_envs, -1)
+
+        if self.tau_down.ndim == 0:
+            self.tau_down = self.tau_down.expand(num_envs, num_motors)
+        elif self.tau_down.ndim == 1:
+            self.tau_down = self.tau_down.unsqueeze(0).expand(num_envs, -1)
+
+        self.noise_scale = float(noise_scale)
+
+        # throttle state in [0, 1]
+        self.throttle = torch.full((num_envs, num_motors), float(init_throttle), device=device)
+
+    @staticmethod
+    def _cmd_to_target_throttle(cmds: torch.Tensor) -> torch.Tensor:
+        # V2: target_throttle = sqrt(clamp((cmd+1)/2, 0, 1))
+        return torch.sqrt(torch.clamp((cmds + 1.0) * 0.5, 0.0, 1.0))
+
+    def update_thrust(self, cmds: torch.Tensor) -> torch.Tensor:
+        """
+        Keep the same method name `update_thrust` so your existing pipeline can call it,
+        BUT now the input is cmds in [-1,1] (not thrust_ref).
+        Returns thrusts in Newtons with shape (N, M).
+        """
+        cmds = cmds.clamp(-1.0, 1.0)
+
+        if not self.use:
+            # If bypassing dynamics, just compute thrust from instantaneous target throttle
+            target = self._cmd_to_target_throttle(cmds)
+            t = torch.clamp(target.square(), 0.0, 1.0)
+            return t * self.KF
+
+        target_throttle = self._cmd_to_target_throttle(cmds)
+
+        # V2: tau = tau_up if target > current else tau_down; then clamp tau to [0,1]
+        tau = torch.where(target_throttle > self.throttle, self.tau_up, self.tau_down)
+        tau = torch.clamp(tau, 0.0, 1.0)
+
+        # V2 integrates throttle using tau as a gain (not dt-scaled in their snippet)
+        # To stay closer to their code, we keep it as: throttle += tau*(target-throttle)
+        # If you want dt dependence: throttle += dt * tau * (target-throttle)
+        self.throttle = self.throttle + tau * (target_throttle - self.throttle)
+
+        # noise (their code multiplies by 0. -> effectively off). Keep optional
+        if self.noise_scale > 0:
+            noise = torch.randn_like(self.throttle) * self.noise_scale
+        else:
+            noise = 0.0
+
+        t = torch.clamp(self.throttle.square() + noise, 0.0, 1.0)
+        thrusts = t * self.KF
+        return thrusts
+
+    def reset(self, env_ids):
+        self.throttle[env_ids] = 0.0

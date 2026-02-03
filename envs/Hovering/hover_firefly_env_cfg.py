@@ -98,7 +98,6 @@ class ActionsCfg:
         control_level="thrust",
     )
 
-
 @configclass
 class ObservationsCfg:
     """Observation specifications for the MDP."""

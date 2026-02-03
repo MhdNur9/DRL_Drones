@@ -12,7 +12,8 @@ from isaaclab.utils import configclass
 from envs.Hovering.mdp.controllers.attitude import AttitudeController
 from envs.Hovering.mdp.controllers.body_rate import BodyRateController
 from envs.Hovering.mdp.dynamics.allocation import compute_allocation
-from envs.Hovering.mdp.dynamics.motor_model import MotorModel
+# from envs.Hovering.mdp.dynamics.motor_model import MotorModel
+from envs.Hovering.mdp.dynamics.motor_model import MotorModelV2
 from envs.Hovering.mdp.utils.logger import log
 
 if TYPE_CHECKING:
@@ -67,17 +68,33 @@ class BodyTorqueControlAction(ActionTerm):
         self._allocation_matrix = compute_allocation(
             self._kf, self._kd, self._length, self._alpha, self.num_envs, device=self.device
         ).to(self.device, dtype=self._raw_actions.dtype)
-        self._motor_model = MotorModel(
-            self.num_envs,
-            self.cfg.taus,
-            self.cfg.init_thrust,
-            self.cfg.max_thrust,
-            self.cfg.max_thrust_rate,
-            self.cfg.min_thrust_rate,
-            env.physics_dt,
-            self.cfg.use_motor_model,
-            self.device,
+        # self._motor_model = MotorModel(
+        #             self.num_envs,
+        #     self.cfg.taus,
+        #     self.cfg.init_thrust,
+        #     self.cfg.max_thrust,
+        #     self.cfg.max_thrust_rate,
+        #     self.cfg.min_thrust_rate,
+        #     env.physics_dt,
+        #     self.cfg.use_motor_model,
+        #     self.device,
+        # )
+        self._motor_model = MotorModelV2(
+            num_envs=self.num_envs,
+            num_motors=self.cfg.num_motors,
+            dt=env.physics_dt,
+            device=torch.device(self.device),   # or just self.device
+            KF=self.cfg.max_thrust,             # treat max_thrust as "KF" scale (see note below)
+            tau_up=0.43,
+            tau_down=0.43,
+            init_throttle=0.0,
+            noise_scale=0.0,
+            use=self.cfg.use_motor_model,
         )
+
+
+
+
         self._rate_controller = BodyRateController(
             self.num_envs,
             self._robot.data.default_inertia[:, 0].view(-1, 3, 3),
@@ -193,7 +210,12 @@ class BodyTorqueControlAction(ActionTerm):
             )
             thrusts_ref = torch.bmm(self._allocation_matrix.inverse(), clamped.unsqueeze(-1)).squeeze(-1)
 
-        self._actual_thrust = self._motor_model.update_thrust(thrusts_ref)
+        # self._actual_thrust = self._motor_model.update_thrust(thrusts_ref)
+        if self.cfg.control_level == "thrust":
+            self._actual_thrust = self._motor_model.update_thrust(clamped)
+        else:
+            self._actual_thrust = thrusts_ref
+
         self._processed_actions = torch.bmm(self._allocation_matrix, self._actual_thrust.unsqueeze(-1)).squeeze(-1)
 
     def apply_actions(self):
