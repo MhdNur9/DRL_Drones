@@ -138,12 +138,12 @@ class EventCfg:
         mode="reset",
         params={
             "pose_range": {
-                "x": (-0.5, 4.0),
-                "y": (-0.5, 4.0),
-                "z": (0.01, 5.0),
-                # "x": (-0.01, 0.01),
-                # "y": (-0.01, 0.01),
-                # "z": (0.01, 0.02),
+                # "x": (0.0, 4.0),
+                # "y": (0.0, 4.0),
+                # "z": (0.05, 5.0),
+                "x": (0.01, 0.02),
+                "y": (0.01, 0.02),
+                "z": (0.03, 0.03),
                 "roll": (-0.5, 0.5),
                 "pitch": (-0.5, 0.5),
                 "yaw": (-0.5, 0.5),
@@ -181,7 +181,6 @@ class EventCfg:
     #         "torque_range": (-0.05, 0.05),
     #     },
     # )
-
     # steady wind
     wind_robot = EventTerm(
         func=mdp.apply_user_wind_event,
@@ -195,8 +194,7 @@ class EventCfg:
             "asset_cfg": SceneEntityCfg("robot", body_names="base_link"),
         },
     )
-
-
+    
     object_releasing = EventTerm(
         func=mdp.reset_obj_releaseing_event,
         mode="interval",
@@ -297,7 +295,7 @@ class HoverEnvCfg(ManagerBasedRLEnvCfg):
         """Post initialization."""
         # general settings
         self.decimation = 2
-        self.episode_length_s = 15
+        self.episode_length_s = 20
         # simulation settings
         self.sim.dt = 1 / 400
         self.sim.render_interval = self.decimation

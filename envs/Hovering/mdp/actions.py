@@ -312,7 +312,7 @@ class BodyTorqueControlActionCfg(ActionTermCfg):
     """Maximum angular velocity."""
     k_attitude: float = 100.0
     """Proportional gain for attitude error."""
-    k_rates: float = 10.0
+    k_rates: float = 100.0
     """Proportional gain for angular velocity error."""
     ControlLevel = Union[Literal["thrust"], Literal["rates"], Literal["attitude"]]
     control_level: ControlLevel = "thrust"

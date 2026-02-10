@@ -47,7 +47,6 @@ def generate_plots(log_directory: str):  # noqa: C901
         print(f"Created directory: {plot_directory}")
     # read the log file
     log_data = pd.read_csv(log_directory)
-
     # check if the time column is present, otherwise create a column with values starting from zero with increments of 0.005
     if "time" not in log_data.columns:
         log_data["time"] = np.arange(0, len(log_data) * 0.005, 0.005)
@@ -56,6 +55,7 @@ def generate_plots(log_directory: str):  # noqa: C901
     # check if px, py, pz, pxd, pyd, pzd columns are present
     if all(col in log_data.columns for col in ["px", "py", "pz", "pxd", "pyd", "pzd"]):
         plot_position_tracking = True
+       
     else:
         plot_position_tracking = False
 
@@ -140,6 +140,16 @@ def generate_plots(log_directory: str):  # noqa: C901
         plot_pos_error_in_ee_frame = True
     else:
         plot_pos_error_in_ee_frame = False
+    
+    if all(col in log_data.columns for col in ["wind_fx", "wind_fy", "wind_fz"]):
+        wind_force = True
+    else:
+        wind_force = False
+
+    if all(col in log_data.columns for col in ["wind_tx", "wind_ty", "wind_tz"]):
+        wind_torques = True
+    else:
+        wind_torques = False
 
     if plot_position_tracking:
         # plot the position tracking
@@ -148,6 +158,7 @@ def generate_plots(log_directory: str):  # noqa: C901
         ax[0].plot(log_data["time"], log_data["px"], label=r"$\mathbf{p}_{}$")
         ax[0].plot(log_data["time"], log_data["pxd"], label=r"$\mathbf{p}_{r}$", linestyle="--")
         ax[0].set_ylabel(r"$\mathbf{p}_x$ [m]")
+        ax[0].set_ylim(0.0, 3.5)
         # place the legend outside the plot in the center top of the plot
         ax[0].legend(title="", frameon=False, loc="best", ncol=2)
         ax[0].grid()
@@ -156,6 +167,7 @@ def generate_plots(log_directory: str):  # noqa: C901
         ax[1].plot(log_data["time"], log_data["py"], label=r"$\mathbf{p}_{y}$")
         ax[1].plot(log_data["time"], log_data["pyd"], label=r"$\mathbf{p}_{r,y}$", linestyle="--")
         ax[1].set_ylabel(r"$\mathbf{p}_y$ [m]")
+        ax[1].set_ylim(0.0, 3.5)
         # ax[1].legend(title='',frameon=True, loc='upper left', ncol=2)
         ax[1].grid()
         ax[1].set_xlim(0, log_data["time"].max())
@@ -163,6 +175,7 @@ def generate_plots(log_directory: str):  # noqa: C901
         ax[2].plot(log_data["time"], log_data["pz"], label=r"$\mathbf{p}$")
         ax[2].plot(log_data["time"], log_data["pzd"], label=r"$\mathbf{p}_{r,z}$", linestyle="--")
         ax[2].set_ylabel(r"$\mathbf{p}_z [m]$")
+        ax[2].set_ylim(0.2, 5)
         # ax[2].legend(title='',frameon=True, loc='upper left', ncol=2)
         ax[2].grid()
         ax[2].set_xlim(0, log_data["time"].max())
@@ -493,7 +506,7 @@ def generate_plots(log_directory: str):  # noqa: C901
     if plot_rotors_thrusts:
         # plot the force tracking
         fig, ax = plt.subplots()
-        fig.suptitle("Rotors Thrusts")
+        fig.suptitle("Rotors Thrust")
         ax.axhline(0, color="black", linestyle="--")
         ax.axhline(14, color="black", linestyle="--")
         ax.plot(log_data["time"], log_data["t1"], label=r"$\boldsymbol{\gamma}_{1}$")
@@ -503,6 +516,7 @@ def generate_plots(log_directory: str):  # noqa: C901
         ax.plot(log_data["time"], log_data["t5"], label=r"$\boldsymbol{\gamma}_{5}$")
         ax.plot(log_data["time"], log_data["t6"], label=r"$\boldsymbol{\gamma}_{6}$")
         ax.set_ylabel(r"$\boldsymbol{\gamma}$ [N]")
+        ax.set_ylim(0.0, 8)
         ax.legend(title="", frameon=False, loc="best", ncol=3)
         ax.grid()
         ax.set_xlim(0, log_data["time"].max())
@@ -515,7 +529,7 @@ def generate_plots(log_directory: str):  # noqa: C901
     if plot_rotors_thrusts:
         # plot the force tracking
         fig, ax = plt.subplots(6, 1, figsize=(6, 10))
-        fig.suptitle("Rotors Thrusts")
+        fig.suptitle("Rotors Thrust")
 
         ax[0].plot(log_data["time"], log_data["t1"], label=r"$\boldsymbol{\gamma}_{1}$")
         ax[0].set_ylabel(r"$\boldsymbol{\gamma}_{1}$ [N]")
@@ -606,6 +620,7 @@ def generate_plots(log_directory: str):  # noqa: C901
         plt.tight_layout()
         plt.savefig(os.path.join(plot_directory, "hybrid_tracking.pdf"))
         # plt.show()
+    
     if plot_pos_error_in_ee_frame:
         # plot the position of the end effector tracking
         fig, ax = plt.subplots(3, 1)
@@ -632,3 +647,31 @@ def generate_plots(log_directory: str):  # noqa: C901
         plt.tight_layout()
         plt.savefig(os.path.join(plot_directory, "position_error_ee.pdf"))
         # plt.show()
+
+    # -----------------------------
+    # Wind force / torque plots
+    # -----------------------------
+    wind_force = all(col in log_data.columns for col in ["wind_fx", "wind_fy", "wind_fz"])
+    wind_torques = all(col in log_data.columns for col in ["wind_tx", "wind_ty", "wind_tz"])
+
+    if wind_force:
+        fig, ax = plt.subplots(3, 1)
+        fig.suptitle("Wind Forces")
+        ax[0].plot(log_data["time"], log_data["wind_fx"]); ax[0].set_ylabel("Fx [N]"); ax[0].grid()
+        ax[1].plot(log_data["time"], log_data["wind_fy"]); ax[1].set_ylabel("Fy [N]"); ax[1].grid()
+        ax[2].plot(log_data["time"], log_data["wind_fz"]); ax[2].set_ylabel("Fz [N]"); ax[2].grid()
+        for a in ax: a.set_xlim(0, log_data["time"].max())
+        plt.xlabel("Time [s]")
+        plt.tight_layout()
+        plt.savefig(os.path.join(plot_directory, "wind_forces.pdf"))
+
+    if wind_torques:
+        fig, ax = plt.subplots(3, 1)
+        fig.suptitle("Wind Torques")
+        ax[0].plot(log_data["time"], log_data["wind_tx"]); ax[0].set_ylabel("Tx [Nm]"); ax[0].grid()
+        ax[1].plot(log_data["time"], log_data["wind_ty"]); ax[1].set_ylabel("Ty [Nm]"); ax[1].grid()
+        ax[2].plot(log_data["time"], log_data["wind_tz"]); ax[2].set_ylabel("Tz [Nm]"); ax[2].grid()
+        for a in ax: a.set_xlim(0, log_data["time"].max())
+        plt.xlabel("Time [s]")
+        plt.tight_layout()
+        plt.savefig(os.path.join(plot_directory, "wind_torques.pdf"))

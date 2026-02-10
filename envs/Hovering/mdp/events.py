@@ -3,10 +3,13 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Literal
 
 import torch
+import math
 from isaaclab.assets import Articulation, RigidObject
 from isaaclab.envs.mdp.events import _randomize_prop_by_op
 from isaaclab.managers import SceneEntityCfg
 import isaaclab.utils.math as math_utils
+
+from envs.Hovering.mdp.utils.logger import log
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedEnv
@@ -176,7 +179,9 @@ def reset_root_state_uniform_event(
 
     # place object under robot: same x,y, lower z
     obj_pos_w = robot_pos_w.clone()
-    obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.04  # or your desired offset
+    obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.04  # or your desired offsetù
+    obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+    obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids)    
 
     # orientation: zero (identity quaternion) OR keep object's default
     obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
@@ -187,6 +192,16 @@ def reset_root_state_uniform_event(
 
 
     #################################################################
+    # print("obj mass = ",obj.data.default_mass)
+    # print("robot mass = ",robot.data.default_mass)
+    # masses = robot.root_physx_view.get_masses()
+    # total_mass = masses.sum()
+
+    # gravity = 9.81
+    # total_weight = total_mass * gravity
+
+    # print(f"Total mass [kg]: {total_mass:.4f}")
+    # print(f"Total weight [N]: {total_weight:.4f}")
     # print("robot pos = ",robot.data.root_pos_w[:, :3])
     # print("object pos = ",obj.data.root_pos_w[:, :3])
 
@@ -250,8 +265,9 @@ def reset_obj_releaseing_event(
 
     # write pose
     root_pose_all = torch.cat([obj.data.root_pos_w.clone(), obj.data.root_com_quat_w.clone()], dim=-1)
-    root_pose_all[env_ids, 2] = 0.04
-    # obj.write_root_pose_to_sim(root_pose_all[env_ids], env_ids=env_ids)
+    root_pose_all[env_ids, 2] = root_pose_all[env_ids, 2]-0.2
+    obj.write_root_pose_to_sim(root_pose_all[env_ids], env_ids=env_ids)
+
 
     # obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
 
@@ -259,3 +275,56 @@ def reset_obj_releaseing_event(
     #################################################################
     # print("robot pos = ",robot.data.root_pos_w[:, :3])
     # print("object pos = ",obj.data.root_pos_w[:, :3])
+
+
+
+def apply_user_wind_event(
+    env,
+    env_ids,
+    wind_force_w=(0.0, 0.0, 0.0),            # from EventTerm params
+    wind_torque_w=(0.0, 0.0, 0.0),           # from EventTerm params
+    wind_freq=1.0,
+    phase=0.0,
+    asset_cfg=SceneEntityCfg("robot"),
+    dt=0.0,
+):
+    asset = env.scene[asset_cfg.name]
+    if env_ids is None:
+        env_ids = torch.arange(env.scene.num_envs, device=asset.device)
+
+    num_bodies = len(asset_cfg.body_ids) if isinstance(asset_cfg.body_ids, list) else asset.num_bodies
+    N = len(env_ids)
+
+    if not hasattr(env, "_wind_time_s"):
+        env._wind_time_s = 0.0
+    # use dt if provided, otherwise fall back to env.step_dt
+    dt_eff = float(dt) if float(dt) > 0.0 else float(getattr(env, "step_dt", 0.0))
+    env._wind_time_s += dt_eff
+
+    s = math.sin(2.0 * math.pi * float(wind_freq) * env._wind_time_s + float(phase))
+
+
+    wind_force = torch.tensor(wind_force_w, device=asset.device) * s
+    wind_torque = torch.tensor(wind_torque_w, device=asset.device) * s
+
+    forces = wind_force.view(1, 1, 3).expand(N, num_bodies, 3)
+    torques = wind_torque.view(1, 1, 3).expand(N, num_bodies, 3)
+
+    # IMPORTANT: log env0 + body0 as (1,3)
+    log(env, ["wind_fx", "wind_fy", "wind_fz"], forces[0])
+    log(env, ["wind_tx", "wind_ty", "wind_tz"], torques[0])
+    # if not hasattr(env, "_wind_dbg"):
+    #     env._wind_dbg = True
+    #     print("[WIND DBG] dt:", dt, "dt_eff:", dt_eff, "step_dt:", getattr(env, "step_dt", None))
+
+
+    asset.set_external_force_and_torque(forces, torques, env_ids=env_ids, body_ids=asset_cfg.body_ids)
+
+    # ---- SAFE PRINT (only once per event) ----
+    # print(
+    #     f"[WIND EVENT] force_w = {wind_force_w}, "
+    #     f"torque_w = {wind_torque_w}, "
+    #     f"applied_to_bodies = {asset_cfg.body_ids}"
+    # )
+
+

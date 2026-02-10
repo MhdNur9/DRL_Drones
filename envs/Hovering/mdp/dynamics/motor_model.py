@@ -157,3 +157,6 @@ class MotorModelV2:
 
     def reset(self, env_ids):
         self.throttle[env_ids] = 0.0
+
+
+        
