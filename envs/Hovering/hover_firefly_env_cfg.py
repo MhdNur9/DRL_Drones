@@ -14,7 +14,7 @@ from isaaclab.sim.spawners.from_files.from_files_cfg import GroundPlaneCfg, UsdF
 from isaaclab.terrains import TerrainImporterCfg
 from isaaclab.utils import configclass
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR, ISAACLAB_NUCLEUS_DIR
-from envs.Hovering.Rough import ROUGH_TERRAINS_CFG
+from envs.Hovering.utils_scripts.Rough import ROUGH_TERRAINS_CFG
 
 import envs.Hovering.mdp as mdp
 from assets.drone.firefly import firefly_CFG
@@ -264,7 +264,7 @@ class RewardsCfg:
         weight=1.0,
         params={"tol": 0.10, "bonus": 0.2, "penalty_scale": 0.2, "p": 2.0},
         )
-    flat_orientation = RewTerm(func=mdp.flat_orientation_l2, weight=-5.0)
+    flat_orientation = RewTerm(func=mdp.flat_orientation_l2_event, weight=-5.0)
     ang_vel_l2 = RewTerm(func=mdp.ang_vel_l2, weight=-1.0)
 
 

@@ -55,9 +55,11 @@ def generate_plots(log_directory: str):  # noqa: C901
     # check if px, py, pz, pxd, pyd, pzd columns are present
     if all(col in log_data.columns for col in ["px", "py", "pz", "pxd", "pyd", "pzd"]):
         plot_position_tracking = True
+        plot_position_tracking_modified = True
        
     else:
         plot_position_tracking = False
+        plot_position_tracking_modified = False
 
     # check if px_ee, py_ee, pz_ee columns are present
     if all(col in log_data.columns for col in ["px_ee", "py_ee", "pz_ee"]):
@@ -150,6 +152,11 @@ def generate_plots(log_directory: str):  # noqa: C901
         wind_torques = True
     else:
         wind_torques = False
+    # --- yaw error plot flag ---
+    if "yaw_err" in log_data.columns:
+        plot_yaw_err = True
+    else:
+        plot_yaw_err = False
 
     if plot_position_tracking:
         # plot the position tracking
@@ -158,7 +165,8 @@ def generate_plots(log_directory: str):  # noqa: C901
         ax[0].plot(log_data["time"], log_data["px"], label=r"$\mathbf{p}_{}$")
         ax[0].plot(log_data["time"], log_data["pxd"], label=r"$\mathbf{p}_{r}$", linestyle="--")
         ax[0].set_ylabel(r"$\mathbf{p}_x$ [m]")
-        ax[0].set_ylim(0.0, 3.5)
+        # ax[0].set_ylim(0.0, 3.5)
+        ax[0].set_ylim(-0.5, 6.5)
         # place the legend outside the plot in the center top of the plot
         ax[0].legend(title="", frameon=False, loc="best", ncol=2)
         ax[0].grid()
@@ -167,7 +175,8 @@ def generate_plots(log_directory: str):  # noqa: C901
         ax[1].plot(log_data["time"], log_data["py"], label=r"$\mathbf{p}_{y}$")
         ax[1].plot(log_data["time"], log_data["pyd"], label=r"$\mathbf{p}_{r,y}$", linestyle="--")
         ax[1].set_ylabel(r"$\mathbf{p}_y$ [m]")
-        ax[1].set_ylim(0.0, 3.5)
+        # ax[1].set_ylim(0.0, 3.5)
+        ax[1].set_ylim(-0.5, 4.5)
         # ax[1].legend(title='',frameon=True, loc='upper left', ncol=2)
         ax[1].grid()
         ax[1].set_xlim(0, log_data["time"].max())
@@ -175,7 +184,7 @@ def generate_plots(log_directory: str):  # noqa: C901
         ax[2].plot(log_data["time"], log_data["pz"], label=r"$\mathbf{p}$")
         ax[2].plot(log_data["time"], log_data["pzd"], label=r"$\mathbf{p}_{r,z}$", linestyle="--")
         ax[2].set_ylabel(r"$\mathbf{p}_z [m]$")
-        ax[2].set_ylim(0.2, 5)
+        ax[2].set_ylim(-0.5, 4.5)
         # ax[2].legend(title='',frameon=True, loc='upper left', ncol=2)
         ax[2].grid()
         ax[2].set_xlim(0, log_data["time"].max())
@@ -516,7 +525,7 @@ def generate_plots(log_directory: str):  # noqa: C901
         ax.plot(log_data["time"], log_data["t5"], label=r"$\boldsymbol{\gamma}_{5}$")
         ax.plot(log_data["time"], log_data["t6"], label=r"$\boldsymbol{\gamma}_{6}$")
         ax.set_ylabel(r"$\boldsymbol{\gamma}$ [N]")
-        ax.set_ylim(0.0, 8)
+        ax.set_ylim(0.0, 10)
         ax.legend(title="", frameon=False, loc="best", ncol=3)
         ax.grid()
         ax.set_xlim(0, log_data["time"].max())
@@ -675,3 +684,88 @@ def generate_plots(log_directory: str):  # noqa: C901
         plt.xlabel("Time [s]")
         plt.tight_layout()
         plt.savefig(os.path.join(plot_directory, "wind_torques.pdf"))
+
+    if plot_yaw_err:
+        fig, ax = plt.subplots()
+        fig.suptitle("Yaw Error (Drone vs Cube)")
+
+        # reference line at 0 rad
+        ax.axhline(0.0, linestyle="--")
+
+        ax.plot(log_data["time"], log_data["yaw_err"], label=r"$e_{\psi}$")
+
+        ax.set_ylabel(r"$e_{\psi}$ [rad]")
+        ax.grid()
+        ax.set_xlim(0, log_data["time"].max())
+        ax.legend(title="", frameon=False, loc="best")
+
+        plt.xlabel("Time [s]")
+        plt.tight_layout()
+        plt.savefig(os.path.join(plot_directory, "yaw_error.pdf"))
+
+
+    if plot_position_tracking_modified:
+        # -----------------------------
+        # Delay settings
+        # -----------------------------
+        delay_xy_s = 2.0  # delay for pxd, pyd
+        delay_z_s  = 1.0  # delay for pzd
+
+        t = np.asarray(log_data["time"])
+
+        # helper: interpolate y(t) onto a shifted time base
+        def interp(t_new, t_old, y_old):
+            y_old = np.asarray(y_old)
+            return np.interp(t_new, t_old, y_old, left=np.nan, right=np.nan)
+
+        # delay reference signals (shift to the right)
+        pxd_del = interp(t - delay_xy_s, t, log_data["pxd"])
+        pyd_del = interp(t - delay_xy_s, t, log_data["pyd"])
+        pzd_del = interp(t - delay_z_s,  t, log_data["pzd"])
+
+        # force refs to start from 0 (i.e., subtract first valid sample)
+        def start_from_zero(y):
+            y = np.asarray(y).copy()
+            idx = np.where(~np.isnan(y))[0]
+            if len(idx) == 0:
+                return y
+            y0 = y[idx[0]]
+            y[idx] = y[idx] - y0
+            return y
+
+        # pxd_del = start_from_zero(pxd_del)
+        # pyd_del = start_from_zero(pyd_del)
+        # pzd_del = start_from_zero(pzd_del)
+
+        # -----------------------------
+        # Plot (original format)
+        # -----------------------------
+        fig, ax = plt.subplots(3, 1)
+        fig.suptitle("Position Tracking")
+
+        ax[0].plot(log_data["time"], log_data["px"], label=r"$\mathbf{p}_{}$")
+        ax[0].plot(log_data["time"], pxd_del, label=r"$\mathbf{p}_{r}$", linestyle="--")
+        ax[0].set_ylabel(r"$\mathbf{p}_x$ [m]")
+        ax[0].set_ylim(-0.5, 6.5)
+        ax[0].legend(title="", frameon=False, loc="best", ncol=2)
+        ax[0].grid()
+        ax[0].set_xlim(0, log_data["time"].max())
+
+        ax[1].plot(log_data["time"], log_data["py"], label=r"$\mathbf{p}_{y}$")
+        ax[1].plot(log_data["time"], pyd_del, label=r"$\mathbf{p}_{r,y}$", linestyle="--")
+        ax[1].set_ylabel(r"$\mathbf{p}_y$ [m]")
+        ax[1].set_ylim(-0.5, 4.5)
+        ax[1].grid()
+        ax[1].set_xlim(0, log_data["time"].max())
+
+        ax[2].plot(log_data["time"], log_data["pz"], label=r"$\mathbf{p}$")
+        ax[2].plot(log_data["time"], pzd_del, label=r"$\mathbf{p}_{r,z}$", linestyle="--")
+        ax[2].set_ylabel(r"$\mathbf{p}_z [m]$")
+        ax[2].set_ylim(-0.5, 4.5)
+        ax[2].grid()
+        ax[2].set_xlim(0, log_data["time"].max())
+
+        plt.xlabel("Time [s]")
+        plt.tight_layout()
+        plt.savefig(os.path.join(plot_directory, "position_tracking_modified.pdf"))
+        # plt.show()

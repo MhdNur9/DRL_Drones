@@ -182,6 +182,15 @@ def vel_toward_target(
 
     return r* gate_far
 
+def flat_orientation_l2_event(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    """Penalize non-flat base orientation using L2 squared kernel.
+
+    This is computed by penalizing the xy-components of the projected gravity vector.
+    """
+    # extract the used quantities (to enable type-hinting)
+    asset: RigidObject = env.scene[asset_cfg.name]
+    
+    return torch.sum(torch.square(asset.data.projected_gravity_b[:, :2]), dim=1)
 
 def motor_balance_band_reward(
     env: ManagerBasedRLEnv,
@@ -235,3 +244,83 @@ def motor_balance_band_reward(
         penalty,
     )
     return reward
+
+
+
+def progress(
+    env: ManagerBasedRLEnv,
+    command_name: str,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    # extract the used quantities (to enable type-hinting)
+    asset: RigidObject = env.scene[asset_cfg.name]
+
+    target_pos = env.command_manager.get_term(command_name).command[:, :3]
+    prev_pos = env.command_manager.get_term(command_name).previous_pos
+    curr_pos = asset.data.root_pos_w
+
+    prev_distance = torch.norm(prev_pos - target_pos, dim=1)
+    curr_distance = torch.norm(curr_pos - target_pos, dim=1)
+
+    progress = prev_distance - curr_distance
+
+    return progress
+
+
+def progress(
+    env: ManagerBasedRLEnv,
+    command_name: str,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Penalize asset pos from its target pos using L2 squared kernel."""
+
+    # extract the used quantities (to enable type-hinting)
+    asset: RigidObject = env.scene[asset_cfg.name]
+
+    target_pos = env.command_manager.get_term(command_name).command[:, :3]
+    previous_pos = env.command_manager.get_term(command_name).previous_pos
+    current_pos = asset.data.root_pos_w
+
+    prev_distance = torch.norm(previous_pos - target_pos, dim=1)
+    current_distance = torch.norm(current_pos - target_pos, dim=1)
+
+    progress = prev_distance - current_distance
+
+    return progress
+
+
+def gate_passed(
+    env: ManagerBasedRLEnv,
+    command_name: str | None = None,
+) -> torch.Tensor:
+    """Reward for passing a gate."""
+    missed = (-1.0) * env.command_manager.get_term(command_name).gate_missed
+    passed = (1.0) * env.command_manager.get_term(command_name).gate_passed
+    return missed + passed
+
+
+def lookat_next_gate(
+    env: ManagerBasedRLEnv,
+    std: float,
+    command_name: str | None = None,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Reward for looking at the next gate."""
+
+    # extract the used quantities (to enable type-hinting)
+    asset: RigidObject = env.scene[asset_cfg.name]
+
+    drone_pos = asset.data.root_pos_w
+    drone_att = asset.data.root_quat_w
+    next_gate_pos = env.command_manager.get_term(command_name).command[:, :3]
+
+    vec_to_gate = next_gate_pos - drone_pos
+    vec_to_gate = math_utils.normalize(vec_to_gate)
+
+    x_axis = torch.tensor([1.0, 0.0, 0.0], device=asset.device).expand(env.num_envs, 3)
+    drone_x_axis = math_utils.quat_apply(drone_att, x_axis)
+    drone_x_axis = math_utils.normalize(drone_x_axis)
+
+    dot = (drone_x_axis * vec_to_gate).sum(dim=1).clamp(-1.0, 1.0)
+    angle = torch.acos(dot)
+    return torch.exp(-angle / std)

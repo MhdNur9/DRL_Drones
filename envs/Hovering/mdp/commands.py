@@ -3,162 +3,76 @@ from __future__ import annotations
 from collections.abc import Sequence
 from dataclasses import MISSING
 from typing import TYPE_CHECKING
-
+import cv2
 import torch
-from isaaclab.assets import Articulation
-from isaaclab.managers import CommandTerm, CommandTermCfg
+
+
+from isaaclab.assets import Articulation, RigidObjectCollection
+from isaaclab.managers import CommandTerm, CommandTermCfg,SceneEntityCfg
 from isaaclab.markers import VisualizationMarkers, VisualizationMarkersCfg
 from isaaclab.markers.config import FRAME_MARKER_CFG
+from isaaclab.sensors import TiledCamera
 from isaaclab.utils import configclass
 import isaaclab.utils.math as math_utils
 
 from envs.Hovering.mdp.utils.logger import log
+from .events import reset_after_prev_gate
+
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedEnv
 
 
-class UniformPoseCommandWorld(CommandTerm):
-    """Command generator that generates a pose command from a uniform distribution."""
+class TargetPosFromTrackCommand(CommandTerm):
+    """Outputs a 3D position command that points to a track object indexed by `next_idx`."""
 
-    cfg: UniformPoseCommandWorldCfg
-    """Configuration for the command generator."""
+    cfg: "TargetPosFromTrackCommandCfg"
 
-    def __init__(self, cfg: UniformPoseCommandWorldCfg, env: ManagerBasedEnv):
-        """Initialize the command generator class.
-
-        Args:
-            cfg: The configuration parameters for the command generator.
-            env: The environment object.
-        """
-        # initialize the base class
+    def __init__(self, cfg: "TargetPosFromTrackCommandCfg", env: ManagerBasedEnv):
         super().__init__(cfg, env)
+        self.cfg = cfg
 
-        # extract the robot and body index for which the command is generated
-        self.robot: Articulation = env.scene[cfg.asset_name]
+        self.track: RigidObjectCollection = env.scene[cfg.track_name]
+        self.num_points = self.track.num_objects
+        self.curr_idx = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
 
-        # create buffers
-        # -- commands: (x, y, z, qw, qx, qy, qz) in simulation world frame
-        self.pose_command_w = torch.zeros(self.num_envs, 7, device=self.device)
-        self.pose_command_w[:, 3] = 1.0
 
-    def __str__(self) -> str:
-        msg = "UniformPoseCommandWorld:\n"
-        msg += f"\tCommand dimension: {tuple(self.command.shape[1:])}\n"
-        msg += f"\tResampling time range: {self.cfg.resampling_time_range}\n"
-        return msg
+        # one index per env
+        self.next_idx = torch.zeros(self.num_envs, dtype=torch.long, device=self.device)
+        if cfg.start_index is not None:
+            self.next_idx[:] = int(cfg.start_index)
 
-    """
-    Properties
-    """
+        # command buffer: (N,3)
+        self._command = torch.zeros(self.num_envs, 3, device=self.device)
 
     @property
     def command(self) -> torch.Tensor:
-        """The desired pose command. Shape is (num_envs, 7).
-
-        The first three elements correspond to the position, followed by the quaternion orientation in (w, x, y, z).
-        """
-        return self.pose_command_w
-
-    """
-    Implementation specific functions.
-    """
+        # Return current target position (world)
+        return self._command
 
     def _update_metrics(self):
         pass
 
-    def _resample_command(self, env_ids: Sequence[int]):
-        # -- position
-        r = torch.empty(len(env_ids), device=self.device)
-        self.pose_command_w[env_ids, 0] = r.uniform_(*self.cfg.ranges.pos_x) + self._env.scene.env_origins[env_ids, 0]
-        self.pose_command_w[env_ids, 1] = r.uniform_(*self.cfg.ranges.pos_y) + self._env.scene.env_origins[env_ids, 1]
-        self.pose_command_w[env_ids, 2] = r.uniform_(*self.cfg.ranges.pos_z) + self._env.scene.env_origins[env_ids, 2]
-        # -- orientation
-        euler_angles = torch.zeros_like(self.pose_command_w[env_ids, :3])
-        euler_angles[:, 0].uniform_(*self.cfg.ranges.roll)
-        euler_angles[:, 1].uniform_(*self.cfg.ranges.pitch)
-        euler_angles[:, 2].uniform_(*self.cfg.ranges.yaw)
-        quat = math_utils.quat_from_euler_xyz(euler_angles[:, 0], euler_angles[:, 1], euler_angles[:, 2])
-        # make sure the quaternion has real part as positive
-        self.pose_command_w[env_ids, 3:] = math_utils.quat_unique(quat) if self.cfg.make_quat_unique else quat
+    def _resample_command(self, env_ids):
+        # When an env resets, set it back to first point (or configured start)
+        if self.cfg.start_index is None:
+            self.next_idx[env_ids] = 0
+        else:
+            self.next_idx[env_ids] = int(self.cfg.start_index)
 
     def _update_command(self):
-        log(self._env, ["pxd", "pyd", "pzd"], self.pose_command_w[:, :3])
+        # track positions: (N, num_points, 3)
+        pos_w = self.track.data.object_com_pos_w
+        self._command = pos_w[torch.arange(self.num_envs, device=self.device), self.next_idx]
 
-    def _set_debug_vis_impl(self, debug_vis: bool):
-        # create markers if necessary for the first tome
-        if debug_vis:
-            if not hasattr(self, "goal_pose_visualizer"):
-                # -- goal pose
-                self.goal_pose_visualizer = VisualizationMarkers(self.cfg.goal_pose_visualizer_cfg)
-                # -- current body pose
-                self.current_pose_visualizer = VisualizationMarkers(self.cfg.current_pose_visualizer_cfg)
-            # set their visibility to true
-            self.goal_pose_visualizer.set_visibility(True)
-            self.current_pose_visualizer.set_visibility(True)
-        else:
-            if hasattr(self, "goal_pose_visualizer"):
-                self.goal_pose_visualizer.set_visibility(False)
-                self.current_pose_visualizer.set_visibility(False)
-
-    def _debug_vis_callback(self, event):
-        # check if robot is initialized
-        # note: this is needed in-case the robot is de-initialized. we can't access the data
-        if not self.robot.is_initialized:
-            return
-        # update the markers
-        self.goal_pose_visualizer.visualize(self.pose_command_w[:, :3], self.pose_command_w[:, 3:])
-        self.current_pose_visualizer.visualize(self.robot.data.root_pos_w, self.robot.data.root_quat_w)
+    # helper for your event
+    def advance(self, env_ids: torch.Tensor, step: int = 1):
+        self.next_idx[env_ids] = (self.next_idx[env_ids] + step) % self.num_points
 
 
 @configclass
-class UniformPoseCommandWorldCfg(CommandTermCfg):
-    """Configuration for uniform pose command generator."""
+class TargetPosFromTrackCommandCfg(CommandTermCfg):
+    class_type: type = TargetPosFromTrackCommand
 
-    class_type: type = UniformPoseCommandWorld
-
-    asset_name: str = MISSING
-    """Name of the asset in the environment for which the commands are generated."""
-
-    make_quat_unique: bool = False
-    """Whether to make the quaternion unique or not. Defaults to False.
-
-    If True, the quaternion is made unique by ensuring the real part is positive.
-    """
-
-    @configclass
-    class Ranges:
-        """Uniform distribution ranges for the pose commands."""
-
-        pos_x: tuple[float, float] = MISSING
-        """Range for the x position (in m)."""
-
-        pos_y: tuple[float, float] = MISSING
-        """Range for the y position (in m)."""
-
-        pos_z: tuple[float, float] = MISSING
-        """Range for the z position (in m)."""
-
-        roll: tuple[float, float] = MISSING
-        """Range for the roll angle (in rad)."""
-
-        pitch: tuple[float, float] = MISSING
-        """Range for the pitch angle (in rad)."""
-
-        yaw: tuple[float, float] = MISSING
-        """Range for the yaw angle (in rad)."""
-
-    ranges: Ranges = MISSING
-    """Ranges for the commands."""
-
-    goal_pose_visualizer_cfg: VisualizationMarkersCfg = FRAME_MARKER_CFG.replace(prim_path="/Visuals/Command/goal_pose")
-    """The configuration for the goal pose visualization marker. Defaults to FRAME_MARKER_CFG."""
-
-    current_pose_visualizer_cfg: VisualizationMarkersCfg = FRAME_MARKER_CFG.replace(
-        prim_path="/Visuals/Command/body_pose"
-    )
-    """The configuration for the current pose visualization marker. Defaults to FRAME_MARKER_CFG."""
-
-    # Set the scale of the visualization markers to (0.1, 0.1, 0.1)
-    goal_pose_visualizer_cfg.markers["frame"].scale = (0.1, 0.1, 0.1)
-    current_pose_visualizer_cfg.markers["frame"].scale = (0.1, 0.1, 0.1)
+    track_name: str = MISSING
+    start_index: int | None = 0

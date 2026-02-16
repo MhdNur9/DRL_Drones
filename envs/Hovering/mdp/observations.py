@@ -36,11 +36,28 @@ def root_rotmat_w(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntit
 
     # extract the used quantities (to enable type-hinting)
     asset: RigidObject = env.scene[asset_cfg.name]
+    object: RigidObject = env.scene["object"]
 
     quat = asset.data.root_quat_w
     rotmat = math_utils.matrix_from_quat(quat)
     flat_rotmat = rotmat.view(-1, 9)
     log(env, ["r11", "r12", "r13", "r21", "r22", "r23", "r31", "r32", "r33"], flat_rotmat)
+    #####
+    q_d = asset.data.root_quat_w      # (N,4) wxyz
+    q_c = object.data.root_quat_w     # (N,4) wxyz
+
+    q_rel = math_utils.quat_mul(math_utils.quat_inv(q_d), q_c)
+
+    roll, pitch, yaw = math_utils.euler_xyz_from_quat(q_rel)  # each (N,)
+    yaw_err = yaw  # already relative yaw (cube w.r.t drone)
+
+    # print("yaw_err =", yaw_err)
+
+    log(env, ["yaw_err"], yaw_err.unsqueeze(-1)-0.44)
+    # log as (1,) tensor for env0 (or log whole batch if your logger supports it)
+    # log(env, ["cube_ori_err_rad"], theta.view(-1, 1))
+  
+    #####
     return flat_rotmat
 
 
@@ -152,26 +169,32 @@ def target_pos_b(
 
 
 
-def target_pos_b_modified(
-    
+
+
+
+def target_pos_b_track(
     env: ManagerBasedRLEnv,
     command_name: str | None = None,
     target_pos: list | None = None,
     asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
 ) -> torch.Tensor:
-    """Penalize asset pos from its target pos using L2 squared kernel."""
+    """Position of target in body frame."""
 
-    # extract the used quantities (to enable type-hinting)
     asset: RigidObject = env.scene[asset_cfg.name]
 
+
     if target_pos is None:
-        target_pos = env.command_manager.get_term(command_name).command
+        target_pos = env.command_manager.get_term(command_name).command[:, :3]
         target_pos_tensor = target_pos[:, :3]
+        # print("target_pos = ",target_pos)
     else:
         target_pos_tensor = (
             torch.tensor(target_pos, dtype=torch.float32, device=asset.device).repeat(env.num_envs, 1)
             + env.scene.env_origins
         )
+    log(env, ["pxd", "pyd", "pzd"], target_pos_tensor)
 
-    distance = torch.norm(asset.data.root_pos_w - target_pos_tensor, dim=1)
-    return asset.data.root_pos_w - target_pos_tensor
+    pos_b, _ = math_utils.subtract_frame_transforms(asset.data.root_pos_w, asset.data.root_quat_w, target_pos_tensor)
+    # print("pos_b = ",pos_b)
+
+    return pos_b

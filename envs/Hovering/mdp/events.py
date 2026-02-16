@@ -277,7 +277,6 @@ def reset_obj_releaseing_event(
     # print("object pos = ",obj.data.root_pos_w[:, :3])
 
 
-
 def apply_user_wind_event(
     env,
     env_ids,
@@ -327,4 +326,72 @@ def apply_user_wind_event(
     #     f"applied_to_bodies = {asset_cfg.body_ids}"
     # )
 
+def advance_track_target_event(
+    env: ManagerBasedEnv,
+    env_ids: torch.Tensor,
+    command_name: str = "target_pos",
+    step: int = 1,
+):
+    # resolve env ids
+    if env_ids is None:
+        env_ids = torch.arange(env.scene.num_envs, device=env.device)
 
+    target_pos = env.command_manager.get_term(command_name).command[:, :3]
+    target_pos_tensor = target_pos[:, :3]
+    # print(" target_pos = ",target_pos)
+    term = env.command_manager.get_term(command_name)
+
+    # debug before
+    # print("*******************************")
+    # print("before target_pos =", term.command[env_ids[:1], :3])
+
+    # this MUST exist in your command class
+    term.advance(env_ids, step=step)
+
+    # debug after
+    # print("after  target_pos =", term.command[env_ids[:1], :3])
+
+
+
+
+def reset_after_prev_gate(
+    env: ManagerBasedEnv,
+    env_ids: torch.Tensor,
+    gate_pose: torch.Tensor,
+    pose_range: dict[str, tuple[float, float]],
+    velocity_range: dict[str, tuple[float, float]],
+    asset_cfg_name: str = "robot",
+):
+    """Reset the asset right after a random gate."""
+
+    # extract the used quantities (to enable type-hinting)
+    asset: RigidObject | Articulation = env.scene[asset_cfg_name]
+
+    # get default root state
+    root_states = asset.data.default_root_state[env_ids].clone()
+
+    # poses
+    range_list = [pose_range.get(key, (0.0, 0.0)) for key in ["x", "y", "z", "roll", "pitch", "yaw"]]
+    ranges = torch.tensor(range_list, device=asset.device)
+    rand_samples = math_utils.sample_uniform(ranges[:, 0], ranges[:, 1], (len(env_ids), 6), device=asset.device)
+
+    gate_pos = gate_pose[env_ids, :3]
+    gate_quat = gate_pose[env_ids, 3:7]
+    offset = torch.tensor([1.0, 0.0, 0.0], device=asset.device).expand(len(env_ids), 3)
+    offset_world = math_utils.quat_apply(gate_quat, offset)
+    pos_after_prev_gate = gate_pos + offset_world
+
+    positions = root_states[:, 0:3] + env.scene.env_origins[env_ids] + pos_after_prev_gate + rand_samples[:, 0:3]
+    orientations_delta = math_utils.quat_from_euler_xyz(rand_samples[:, 3], rand_samples[:, 4], rand_samples[:, 5])
+    orientations = math_utils.quat_mul(root_states[:, 3:7], orientations_delta)
+
+    # velocities
+    range_list = [velocity_range.get(key, (0.0, 0.0)) for key in ["x", "y", "z", "roll", "pitch", "yaw"]]
+    ranges = torch.tensor(range_list, device=asset.device)
+    rand_samples = math_utils.sample_uniform(ranges[:, 0], ranges[:, 1], (len(env_ids), 6), device=asset.device)
+
+    velocities = root_states[:, 7:13] + rand_samples
+
+    # set into the physics simulation
+    asset.write_root_pose_to_sim(torch.cat([positions, orientations], dim=-1), env_ids=env_ids)
+    asset.write_root_velocity_to_sim(velocities, env_ids=env_ids)
