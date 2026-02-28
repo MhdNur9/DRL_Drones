@@ -1,0 +1,95 @@
+seed: 42
+models:
+  separate: true
+  policy:
+    class: GaussianMixin
+    network:
+    - name: net
+      input: STATES
+      layers:
+      - 256
+      - 256
+      activations: elu
+    output: tanh(ACTIONS)
+  critic_1:
+    class: DeterministicMixin
+    clip_actions: false
+    network:
+    - name: net
+      input: concatenate([STATES, ACTIONS])
+      layers:
+      - 256
+      - 256
+      activations: elu
+    output: ONE
+  critic_2:
+    class: DeterministicMixin
+    clip_actions: false
+    network:
+    - name: net
+      input: concatenate([STATES, ACTIONS])
+      layers:
+      - 256
+      - 256
+      activations: elu
+    output: ONE
+  target_critic_1:
+    class: DeterministicMixin
+    clip_actions: false
+    network:
+    - name: net
+      input: concatenate([STATES, ACTIONS])
+      layers:
+      - 256
+      - 256
+      activations: elu
+    output: ONE
+  target_critic_2:
+    class: DeterministicMixin
+    clip_actions: false
+    network:
+    - name: net
+      input: concatenate([STATES, ACTIONS])
+      layers:
+      - 256
+      - 256
+      activations: elu
+    output: ONE
+memory:
+  class: RandomMemory
+  memory_size: 50000
+agent:
+  class: SAC
+  gradient_steps: 1
+  batch_size: 512
+  discount_factor: 0.99
+  polyak: 0.005
+  actor_learning_rate: 0.0003
+  critic_learning_rate: 0.0003
+  learning_rate_scheduler: null
+  learning_rate_scheduler_kwargs: {}
+  state_preprocessor: null
+  state_preprocessor_kwargs: {}
+  random_timesteps: 0
+  learning_starts: 0
+  grad_norm_clip: 0
+  learn_entropy: true
+  entropy_learning_rate: 0.001
+  initial_entropy_value: 0.2
+  target_entropy: null
+  rewards_shaper: null
+  mixed_precision: false
+  experiment:
+    directory: "firefly_hover_SAC_v1"
+    experiment_name: 
+    write_interval: auto
+    checkpoint_interval: auto
+    store_separately: false
+    wandb: false
+    wandb_kwargs: {}
+trainer:
+  class: SequentialTrainer
+  timesteps: 100000
+  # timesteps: 5
+  close_environment_at_exit: false
+  environment_info: log

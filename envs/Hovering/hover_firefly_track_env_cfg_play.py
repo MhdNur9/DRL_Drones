@@ -21,7 +21,7 @@ import isaaclab.utils.math as math_utils
 from envs.Hovering.utils_scripts.Rough import ROUGH_TERRAINS_CFG
 
 import envs.Hovering.mdp as mdp
-from assets.drone.firefly import firefly_CFG
+from assets.drone.firefly import firefly_CFG,object_CFG
 
 from .utils_scripts.track_gen import gen_track
 
@@ -30,45 +30,83 @@ class HoverSceneCfg(InteractiveSceneCfg):
     """Configuration for a drone scene."""
 
     # ground plane
-    object = RigidObjectCfg(
-                prim_path="{ENV_REGEX_NS}/Object",
-                init_state=RigidObjectCfg.InitialStateCfg(pos=[0.5, 0, 0.055], rot=[1, 0, 0, 0]),
-                spawn=UsdFileCfg(
-                    usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Blocks/DexCube/dex_cube_instanceable.usd",
-                    # scale=(0.5, 0.5, 0.5),
-                                        scale=(1.0, 1.0, 1.0),
-                    rigid_props=RigidBodyPropertiesCfg(
-                        solver_position_iteration_count=16,
-                        solver_velocity_iteration_count=1,
-                        max_angular_velocity=1000.0,
-                        max_linear_velocity=1000.0,
-                        max_depenetration_velocity=5.0,
-                        disable_gravity=False,
-                    ),
-                    mass_props=sim_utils.MassPropertiesCfg(mass=0.5),
-                ),
-                )
+    object1: RigidObjectCfg = object_CFG.replace(
+        prim_path="{ENV_REGEX_NS}/Object1",
+        init_state=RigidObjectCfg.InitialStateCfg(
+            pos=[0.5, 0, 0.0],   
+            rot=[1, 0, 0, 0]
+        ),
+    )
+    object2: RigidObjectCfg = object_CFG.replace(
+        prim_path="{ENV_REGEX_NS}/Object2",
+        init_state=RigidObjectCfg.InitialStateCfg(
+            pos=[1.0, 0, 0.0],   
+            rot=[1, 0, 0, 0]
+        ),
+    )
+    object3: RigidObjectCfg = object_CFG.replace(
+        prim_path="{ENV_REGEX_NS}/Object3",
+        init_state=RigidObjectCfg.InitialStateCfg(
+            pos=[1.5, 0, 0.0],   
+            rot=[1, 0, 0, 0]
+        ),
+    )
+    object4: RigidObjectCfg = object_CFG.replace(
+        prim_path="{ENV_REGEX_NS}/Object4",
+        init_state=RigidObjectCfg.InitialStateCfg(
+            pos=[1.75, 0, 0.0],   
+            rot=[1, 0, 0, 0]
+        ),
+    )
 
+    object5: RigidObjectCfg = object_CFG.replace(
+        prim_path="{ENV_REGEX_NS}/Object5",
+        init_state=RigidObjectCfg.InitialStateCfg(
+            pos=[2.0, 0, 0.0],   
+            rot=[1, 0, 0, 0]
+        ),
+    )
+    
+    object6: RigidObjectCfg = object_CFG.replace(
+        prim_path="{ENV_REGEX_NS}/Object6",
+        init_state=RigidObjectCfg.InitialStateCfg(
+            pos=[1.0, 0.5, 0.0],   
+            rot=[1, 0, 0, 0]
+        ),
+    )
+    
+    object7: RigidObjectCfg = object_CFG.replace(
+        prim_path="{ENV_REGEX_NS}/Object7",
+        init_state=RigidObjectCfg.InitialStateCfg(
+            pos=[1.0, 1.0, 0.0],   
+            rot=[1, 0, 0, 0]
+        ),
+    )
+    object8: RigidObjectCfg = object_CFG.replace(
+        prim_path="{ENV_REGEX_NS}/Object8",
+        init_state=RigidObjectCfg.InitialStateCfg(
+            pos=[1.0, 1.0, 0.0],   
+            rot=[1, 0, 0, 0]
+        ),
+    )
+    
     # track
     track: RigidObjectCollectionCfg = gen_track(
         track_config={
         # --- Bottom square (Z = 1.0) ---
-        "1":  {"pos": (1.0, 1.0, 1.0), "yaw": 0.0, "color": (0.0, 0.0, 1.0)},
+        "1":  {"pos": (1.0, 1.0, 1.0), "yaw": 0.0, "color": (0.0, 1.0, 0.0)},
         "2":  {"pos": (4.0, 1.0, 1.0), "yaw": 0.0, "color": (1.0, 1.0, 0.0)},
         "3":  {"pos": (4.0, 4.0, 1.0), "yaw": 0.0, "color": (1.0, 1.0, 0.0)},
         "4":  {"pos": (1.0, 4.0, 1.0), "yaw": 0.0, "color": (1.0, 1.0, 0.0)},
-
         # --- Move up ---
         "5":  {"pos": (1.0, 4.0, 3.0), "yaw": 0.0, "color": (1.0, 1.0, 0.0)},
-
         # --- Top square (Z = 3.0) ---
         "6":  {"pos": (4.0, 4.0, 3.0), "yaw": 0.0, "color": (1.0, 1.0, 0.0)},
         "7":  {"pos": (4.0, 1.0, 3.0), "yaw": 0.0, "color": (1.0, 1.0, 0.0)},
         "8":  {"pos": (1.0, 1.0, 3.0), "yaw": 0.0, "color": (1.0, 1.0, 0.0)},
-
         # --- Go back down ---
         "9":  {"pos": (1.0, 1.0, 1.0), "yaw": 0.0, "color": (0.0, 0.0, 1.0)},
-        "10":  {"pos": (0.1, 0.1, 0.1), "yaw": 0.0, "color": (0.0, 1.0, 0.0)},
+        "10":  {"pos": (0.1, 0.1, 0.5), "yaw": 0.0, "color": (0.0, 1.0, 0.0)},
         }
     )
     # tiled_camera: TiledCameraCfg = TiledCameraCfg(
@@ -155,7 +193,7 @@ class ObservationsCfg:
 
         # (1) Full state
         position = ObsTerm(func=mdp.root_pos_w)
-        orientation = ObsTerm(func=mdp.root_rotmat_w)
+        orientation = ObsTerm(func=mdp.root_rotmat_w_track)
         linear_vel = ObsTerm(func=mdp.root_lin_vel_b)
         angular_vel = ObsTerm(func=mdp.root_ang_vel_b)
         # (2) Hover specific
@@ -186,12 +224,12 @@ class EventCfg:
         mode="reset",
         params={
             "pose_range": {
-                "x": (-0.1, 0.1),
-                "y": (-0.1, 0.1),
+                # "x": (-0.5, 0.5),
+                # "y": (-0.5, 0.5),
                 # "z": (0.01, 0.015),
-                # "x": (-0.01, 0.01),
-                # "y": (-0.01, 0.01),
-                "z": (0.01, 0.015),
+                "x": (-0.01, 0.01),
+                "y": (-0.01, 0.01),
+                "z": (0.01, 0.02),
                 "roll": (-0.5, 0.5),
                 "pitch": (-0.5, 0.5),
                 "yaw": (-0.5, 0.5),
@@ -206,18 +244,25 @@ class EventCfg:
             },
         },
     )
-    
-    # randomize rigid body inertia
-    # randomize_inertia = EventTerm(
-    #     func=mdp.randomize_rigid_body_inertia,
-    #     mode="reset",
-    #     params={
-    #         "asset_cfg": SceneEntityCfg("robot", body_names="base_link"),
-    #         "inertia_distribution_params": (0.8, 1.2),
-    #         "operation": "scale",
-    #         "distribution": "uniform",
-    #     }
-    # )
+   
+    advance_target = EventTerm(
+        func=mdp.advance_track_target_event,
+        mode="interval",
+        interval_range_s=(5.0, 5.0),  
+        params={"command_name": "target_pos", "step": 1},
+    )
+
+    object_releasing = EventTerm(
+        func=mdp.reset_obj_releaseing_track_event,
+        mode="interval",
+        interval_range_s=(48, 48.1),
+    )
+
+    place_objects_seq = EventTerm(
+        func=mdp.place_objects_sequentially_event,
+        mode="interval",
+        interval_range_s=(0.05, 0.05),  # call frequently so timing is accurate
+    )
 
     # # Disturbances
     # push_robot = EventTerm(
@@ -244,20 +289,6 @@ class EventCfg:
     #     },
     # )
 
-    advance_target = EventTerm(
-        func=mdp.advance_track_target_event,
-        mode="interval",
-        interval_range_s=(5.0, 5.0),  
-        params={"command_name": "target_pos", "step": 1},
-    )
-
-
-
-    object_releasing = EventTerm(
-        func=mdp.reset_obj_releaseing_event,
-        mode="interval",
-        interval_range_s=(48, 48.1),
-    )
     # randomize wrench map parameters
     # randomize_wrench_map = EventTerm(
     #     func=mdp.randomize_wrench_map,
@@ -293,39 +324,37 @@ class EventCfg:
 @configclass
 class RewardsCfg:
     """Reward terms for the MDP."""
-    terminating = RewTerm(func=mdp.is_terminated, weight=-500.0)
+    terminating = RewTerm(func=mdp.is_terminated_reward, weight=-500.0)
 
-    action_rate_l2 = RewTerm(func=mdp.action_rate_l2, weight=-0.005)
+    action_rate_l2 = RewTerm(func=mdp.action_rate_l2_reward, weight=-0.005)
 
     motor_balance = RewTerm(func=mdp.motor_balance_band_reward, weight=4.0,
         params={"tol": 0.10, "bonus": 0.2, "penalty_scale": 0.2, "p": 2.0},)
     
-    flat_orientation = RewTerm(func=mdp.flat_orientation_l2_event, weight=-5.0)
+    flat_orientation = RewTerm(func=mdp.flat_orientation_l2_reward, weight=-5.0)
 
     ang_vel_l2 = RewTerm(func=mdp.ang_vel_l2, weight=-1.0)
     
-    pos_error_tanh = RewTerm(func=mdp.pos_error_tanh, weight=15.0,
+    pos_error_tanh1 = RewTerm(func=mdp.pos_error_tanh, weight=15.0,
                               params={"command_name": "target_pos", "std": 2.0},)
     
-    pos_error_tanh_fine_tune_far = RewTerm(func=mdp.pos_error_tanh, weight=15.0,
+    pos_error_tanh2 = RewTerm(func=mdp.pos_error_tanh, weight=15.0,
                     params={"command_name": "target_pos", "std": 1.0},)
     
-    pos_error_tanh_fine_tune_mid = RewTerm(func=mdp.pos_error_tanh, weight=25.0,
+    pos_error_tanh3 = RewTerm(func=mdp.pos_error_tanh, weight=25.0,
                     params={"command_name": "target_pos", "std": 0.3},)
     
-    pos_error_tanh_very_fine = RewTerm(func=mdp.pos_error_tanh, weight=35.0,
+    pos_error_tanh4 = RewTerm(func=mdp.pos_error_tanh, weight=35.0,
                     params={"command_name": "target_pos", "std": 0.1},)
     
-    pos_error_tanh_very_close = RewTerm(func=mdp.pos_error_tanh, weight=35.0,
+    pos_error_tanh5 = RewTerm(func=mdp.pos_error_tanh, weight=55.0,
                     params={"command_name": "target_pos", "std": 0.05},)
     
-    pos_error_tanh_very_close = RewTerm(func=mdp.pos_error_tanh, weight=35.0,
-                    params={"command_name": "target_pos", "std": 0.01},)
-    
-    vel_toward = RewTerm(func=mdp.vel_toward_target, weight=35.0,
-                    params={"command_name": "target_pos"},) 
-    
-
+    # pos_error_tanh6 = RewTerm(func=mdp.pos_error_tanh, weight=35.0,
+    #                 params={"command_name": "target_pos", "std": 0.01},)
+       
+    vel_toward = RewTerm(func=mdp.vel_toward_target, weight=55.0,
+                    params={"command_name": "target_pos"},)
 
 
 @configclass
@@ -358,7 +387,7 @@ class HoverEnvCfg(ManagerBasedRLEnvCfg):
         """Post initialization."""
         # general settings
         self.decimation = 2
-        self.episode_length_s = 53
+        self.episode_length_s = 50
         # simulation settings
         self.sim.dt = 1 / 400
         self.sim.render_interval = self.decimation

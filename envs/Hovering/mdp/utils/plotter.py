@@ -143,15 +143,35 @@ def generate_plots(log_directory: str):  # noqa: C901
     else:
         plot_pos_error_in_ee_frame = False
     
-    if all(col in log_data.columns for col in ["wind_fx", "wind_fy", "wind_fz"]):
-        wind_force = True
-    else:
-        wind_force = False
+    # if all(col in log_data.columns for col in ["wind_fx", "wind_fy", "wind_fz"]):
+    #     wind_force = True
+    # else:
+    #     wind_force = False
 
-    if all(col in log_data.columns for col in ["wind_tx", "wind_ty", "wind_tz"]):
-        wind_torques = True
-    else:
-        wind_torques = False
+    # if all(col in log_data.columns for col in ["wind_tx", "wind_ty", "wind_tz"]):
+    #     wind_torques = True
+    # else:
+    #     wind_torques = False
+    wind_force = all(col in log_data.columns for col in ["wind_fx", "wind_fy", "wind_fz"])
+    wind_torques = all(col in log_data.columns for col in ["wind_tx", "wind_ty", "wind_tz"])
+
+    
+    TAR = False
+    required_cols = [
+    "is_terminated rew",
+    "action_rate_l2 rew",
+    "motor_balance_band rew",
+    "flat_orientation_l2 rew",
+    "ang_vel_l2 rew",
+    "pos_error_tanh_std_2.0",
+    "pos_error_tanh_std_1.0",
+    "pos_error_tanh_std_0.3",
+    "pos_error_tanh_std_0.1",
+    "pos_error_tanh_std_0.01",
+    "vel_toward_target rew",
+    ]
+    TAR = all(col in log_data.columns for col in required_cols)
+    
     # --- yaw error plot flag ---
     if "yaw_err" in log_data.columns:
         plot_yaw_err = True
@@ -192,6 +212,34 @@ def generate_plots(log_directory: str):  # noqa: C901
         plt.xlabel("Time [s]")
         plt.tight_layout()
         plt.savefig(os.path.join(plot_directory, "position_tracking.pdf"))
+
+        file_path = os.path.join(plot_directory, "position_tracking.txt")
+
+        # Convert to numpy arrays
+        px  = np.asarray(log_data["px"], dtype=float)
+        pxd = np.asarray(log_data["pxd"], dtype=float)
+
+        py  = np.asarray(log_data["py"], dtype=float)
+        pyd = np.asarray(log_data["pyd"], dtype=float)
+
+        pz  = np.asarray(log_data["pz"], dtype=float)
+        pzd = np.asarray(log_data["pzd"], dtype=float)
+
+        # Compute per-step RMSE (3D Euclidean error)
+        euclid_per_step = np.sqrt(
+            (px - pxd)**2 +
+            (py - pyd)**2 +
+            (pz - pzd)**2
+        )
+
+        # Convert to list with 3 decimal precision
+        rmse_list = [round(float(v), 3) for v in euclid_per_step]
+
+        # Save as list format
+        with open(file_path, "w") as f:
+            f.write(str(rmse_list))
+
+        print("Saved position tracking per-step list to:", file_path)
         # plt.show()
 
     # plot the position of the end effector only if the position tracking in the end effector is not plotted
@@ -533,6 +581,107 @@ def generate_plots(log_directory: str):  # noqa: C901
         plt.xlabel("Time [s]")
         plt.tight_layout()
         plt.savefig(os.path.join(plot_directory, "rotors_thrusts.pdf"))
+        # plot the force tracking (average thrust)
+        fig, ax = plt.subplots()
+        fig.suptitle("Average Rotors Thrust")
+
+        ax.axhline(0, color="black", linestyle="--")
+        ax.axhline(14, color="black", linestyle="--")
+
+        # Stack thrusts
+        thrust_matrix = np.vstack([
+            log_data["t1"],
+            log_data["t2"],
+            log_data["t3"],
+            log_data["t4"],
+            log_data["t5"],
+            log_data["t6"],
+        ])
+
+        # Average across rotors (row-wise mean)
+        avg_thrust = np.mean(thrust_matrix, axis=0)
+
+
+        file_path = os.path.join(plot_directory, "average_thrust.txt")
+
+        # Convert to list with 3 decimal precision
+        formatted_list = [round(float(val), 3) for val in avg_thrust]
+
+        with open(file_path, "w") as f:
+            f.write(str(formatted_list))
+
+        print("Saved average thrust list to:", file_path)
+
+        # Plot average
+        ax.plot(
+            log_data["time"],
+            avg_thrust,
+            label=r"$\bar{\boldsymbol{\gamma}}$",
+            linewidth=1.3   # reduced thickness
+        )
+
+        ax.set_ylabel(r"$\boldsymbol{\gamma}$ [N]")
+        ax.set_ylim(0.0, 10)
+        ax.legend(title="", frameon=False, loc="best")
+        ax.grid()
+        ax.set_xlim(0, log_data["time"].max())
+
+        plt.xlabel("Time [s]")
+        plt.tight_layout()
+        plt.savefig(os.path.join(plot_directory, "rotors_thrusts_avg.pdf"))
+        # -----------------------------
+        # Physical constants
+        # -----------------------------
+        g = 9.81
+        m_drone = 1.5
+        m_payload = 0.5
+        m_total = m_drone + m_payload
+
+        # -----------------------------
+        # Plot Thrust-to-Weight Ratio
+        # -----------------------------
+        fig, ax = plt.subplots()
+        fig.suptitle("Thrust-to-Weight Ratio (T/W)")
+
+        # Stack thrusts (N)
+        thrust_matrix = np.vstack([
+            log_data["t1"],
+            log_data["t2"],
+            log_data["t3"],
+            log_data["t4"],
+            log_data["t5"],
+            log_data["t6"],
+        ])
+
+        # Total thrust (sum across rotors) [N]
+        total_thrust = np.sum(thrust_matrix, axis=0)
+
+        # Thrust-to-weight ratio
+        tw_ratio = total_thrust / (m_total * g)
+
+        # Save list to txt (3 decimals, same style)
+        file_path = os.path.join(plot_directory, "thrust_to_weight_ratio.txt")
+        formatted_list = [round(float(val), 3) for val in tw_ratio]
+        with open(file_path, "w") as f:
+            f.write(str(formatted_list))
+        print("Saved T/W ratio list to:", file_path)
+
+        # Plot
+        ax.axhline(1.0, color="black", linestyle="--", linewidth=1.5, label="Hover (T/W = 1)")
+        ax.plot(log_data["time"], tw_ratio, label=r"$\mathrm{T/W}$", linewidth=2)
+
+        ax.set_ylabel(r"$\mathrm{T/W}$ [-]")
+        ax.set_ylim(0.0, max(2.0, 1.1 * float(np.max(tw_ratio))))
+        ax.legend(title="", frameon=False, loc="best")
+        ax.grid()
+        ax.set_xlim(0, log_data["time"].max())
+
+        plt.xlabel("Time [s]")
+        plt.tight_layout()
+        plt.savefig(os.path.join(plot_directory, "thrust_to_weight_ratio.pdf"))
+        # plt.show()
+        # overall_avg = np.mean(avg_thrust)
+        # print("Average thrust over entire episode = ", overall_avg)
         # plt.show()
 
     if plot_rotors_thrusts:
@@ -657,11 +806,6 @@ def generate_plots(log_directory: str):  # noqa: C901
         plt.savefig(os.path.join(plot_directory, "position_error_ee.pdf"))
         # plt.show()
 
-    # -----------------------------
-    # Wind force / torque plots
-    # -----------------------------
-    wind_force = all(col in log_data.columns for col in ["wind_fx", "wind_fy", "wind_fz"])
-    wind_torques = all(col in log_data.columns for col in ["wind_tx", "wind_ty", "wind_tz"])
 
     if wind_force:
         fig, ax = plt.subplots(3, 1)
@@ -742,6 +886,8 @@ def generate_plots(log_directory: str):  # noqa: C901
         # -----------------------------
         fig, ax = plt.subplots(3, 1)
         fig.suptitle("Position Tracking")
+        plot_axis=[3,9,13,18,25,33,39,42]
+        # plot_axis=[3,9,13,18,26,33,39,42]
 
         ax[0].plot(log_data["time"], log_data["px"], label=r"$\mathbf{p}_{}$")
         ax[0].plot(log_data["time"], pxd_del, label=r"$\mathbf{p}_{r}$", linestyle="--")
@@ -754,18 +900,107 @@ def generate_plots(log_directory: str):  # noqa: C901
         ax[1].plot(log_data["time"], log_data["py"], label=r"$\mathbf{p}_{y}$")
         ax[1].plot(log_data["time"], pyd_del, label=r"$\mathbf{p}_{r,y}$", linestyle="--")
         ax[1].set_ylabel(r"$\mathbf{p}_y$ [m]")
-        ax[1].set_ylim(-0.5, 4.5)
+        ax[1].set_ylim(-0.5, 6)
         ax[1].grid()
         ax[1].set_xlim(0, log_data["time"].max())
 
         ax[2].plot(log_data["time"], log_data["pz"], label=r"$\mathbf{p}$")
         ax[2].plot(log_data["time"], pzd_del, label=r"$\mathbf{p}_{r,z}$", linestyle="--")
         ax[2].set_ylabel(r"$\mathbf{p}_z [m]$")
-        ax[2].set_ylim(-0.5, 4.5)
+        ax[2].set_ylim(-0.5, 5.0)
         ax[2].grid()
         ax[2].set_xlim(0, log_data["time"].max())
 
         plt.xlabel("Time [s]")
+        # loc="lower center", bbox_to_anchor=(0.5, -0.25)
         plt.tight_layout()
+        plt.subplots_adjust(hspace=0.4)
+        # -----------------------------
+        # Mark object release event
+        # -----------------------------
+        t_release = 48.0
+
+        for i in range(3):
+            if i == 0:
+                ax[i].axvline(t_release, linestyle="--", linewidth=1,
+                            color="k", label="Object released")
+            else:
+                ax[i].axvline(t_release, linestyle="--", linewidth=1, color="k")
+        # -----------------------------
+        # Mark additional time instants
+        # -----------------------------
+        for t_event in plot_axis:
+            for i in range(3):
+                ax[i].axvline(
+                    t_event,
+                    linestyle=":",
+                    linewidth=0.8,
+                    color="gray",
+                    alpha=0.7
+                )
+
+        for i in range(3):
+            ax[i].legend(
+                frameon=False,
+                loc="upper center",
+                bbox_to_anchor=(0.5, 1.05),   # slightly above the axes
+                ncol=3
+            )
+
+        plt.subplots_adjust(hspace=0.4)
+        
         plt.savefig(os.path.join(plot_directory, "position_tracking_modified.pdf"))
+        # plt.show()
+    
+    if not TAR:
+        missing = [c for c in required_cols if c not in log_data.columns]
+        print("[WARN] Missing reward columns, skipping total reward plot:")
+        for c in missing:
+            print("  -", c)
+    else:
+        # ---------------------------------------------------
+        # Choose: weighted vs unweighted total
+        # ---------------------------------------------------
+        use_weights = True  # set False if you want a simple sum
+
+        if use_weights:
+            # These weights MUST match your RewTerm weights in RewardsCfg
+            weights = {
+                "is_terminated rew": -500.0,
+                "action_rate_l2 rew": -0.005,
+                "motor_balance_band rew": 1.0,
+                "flat_orientation_l2 rew": -5.0,
+                "ang_vel_l2 rew": -1.0,
+                "pos_error_tanh_std_2.0": 15.0,
+                "pos_error_tanh_std_1.0": 15.0,
+                "pos_error_tanh_std_0.3": 25.0,
+                "pos_error_tanh_std_0.1": 35.0,
+                "pos_error_tanh_std_0.01": 35.0,
+                "vel_toward_target rew": 30.0,
+            }
+
+            total_rew = np.zeros(len(log_data["time"]), dtype=np.float64)
+            for col in required_cols:
+                w = weights.get(col, 1.0)
+                total_rew += w * np.asarray(log_data[col], dtype=np.float64)
+        else:
+            # simple sum of the logged reward terms
+            total_rew = np.zeros(len(log_data["time"]), dtype=np.float64)
+            for col in required_cols:
+                total_rew += np.asarray(log_data[col], dtype=np.float64)
+
+        # ---------------------------------------------------
+        # Plot (same general format as your position plots)
+        # ---------------------------------------------------
+        fig, ax = plt.subplots(1, 1)
+        fig.suptitle("Total Reward")
+        ax.plot(log_data["time"], total_rew, label="Total reward")
+        ax.set_ylabel("Reward")
+        ax.grid()
+        ax.set_xlim(0, log_data["time"].max())
+        ax.legend(title="", frameon=False, loc="best")
+
+        plt.xlabel("Time [s]")
+        plt.tight_layout()
+        # plt.savefig(os.path.join(plot_directory, "total_rewards.pdf"))
         # plt.show()

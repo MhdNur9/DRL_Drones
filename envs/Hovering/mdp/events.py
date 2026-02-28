@@ -172,23 +172,24 @@ def reset_root_state_uniform_event(
 
 
     ################################################################# Object
-    obj: RigidObject | Articulation = env.scene["object"]
+    # obj1: RigidObject | Articulation = env.scene["object1"]
 
-    # robot world position you already computed
-    robot_pos_w = positions  # (N,3) from earlier robot reset
+    # # robot world position you already computed
+    # robot_pos_w = positions  # (N,3) from earlier robot reset
+    # # print("previous position = ", robot_pos_w)
 
-    # place object under robot: same x,y, lower z
-    obj_pos_w = robot_pos_w.clone()
-    obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.04  # or your desired offsetù
-    obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
-    obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids)    
+    # # place object under robot: same x,y, lower z
+    # obj_pos_w = robot_pos_w.clone()
+    # obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.04  # 
+    # obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+    # obj1.write_root_velocity_to_sim(obj_vel, env_ids=env_ids)    
 
-    # orientation: zero (identity quaternion) OR keep object's default
-    obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
-    obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
+    # # orientation: zero (identity quaternion) OR keep object's default
+    # obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
+    # obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
 
     # write pose
-    obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
+    # obj1.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
 
 
     #################################################################
@@ -246,6 +247,8 @@ def reset_obj_releaseing_event(
 ):
     ################################################################# Object
     obj: RigidObject | Articulation = env.scene["object"]
+
+
     robot: RigidObject | Articulation = env.scene[asset_cfg.name]
     # print("---------------------")
     # print("object pos = ",obj.data.root_pos_w[:, :3])
@@ -266,16 +269,47 @@ def reset_obj_releaseing_event(
     # write pose
     root_pose_all = torch.cat([obj.data.root_pos_w.clone(), obj.data.root_com_quat_w.clone()], dim=-1)
     root_pose_all[env_ids, 2] = root_pose_all[env_ids, 2]-0.2
-    obj.write_root_pose_to_sim(root_pose_all[env_ids], env_ids=env_ids)
+    
 
+def reset_obj_releaseing_track_event(
+    env: ManagerBasedEnv,
+    env_ids: torch.Tensor,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+):
+    ################################################################# Object
+    obj1: RigidObject | Articulation = env.scene["object1"]
+    obj2: RigidObject | Articulation = env.scene["object2"]
+    obj3: RigidObject | Articulation = env.scene["object3"]
+    obj4: RigidObject | Articulation = env.scene["object4"]
+    obj5: RigidObject | Articulation = env.scene["object5"]
+    obj6: RigidObject | Articulation = env.scene["object6"]
 
-    # obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
-
-
-    #################################################################
-    # print("robot pos = ",robot.data.root_pos_w[:, :3])
+    robot: RigidObject | Articulation = env.scene[asset_cfg.name]
+    # print("---------------------")
     # print("object pos = ",obj.data.root_pos_w[:, :3])
+    # print("robot pos = ",robot.data.root_pos_w[:, :3])
 
+    # robot world position you already computed
+    # place object under robot: same x,y, lower z
+    obj_pos_w = obj1.data.root_pos_w.clone()
+    # print("before object pos = ",obj_pos_w)
+    # print("before object pos = ",obj_pos_w[:, :3])
+    obj_pos_w[:, 2] = 0.04  # 
+    # print("after object pos = ",obj_pos_w[:, :3])
+
+    # # orientation: zero (identity quaternion) OR keep object's default
+    obj_quat_w = obj1.data.root_com_quat_w.clone()
+    # print("obj_quat_w = ",obj.data.root_com_quat_w.clone())
+
+    # write pose
+    root_pose_all = torch.cat([obj1.data.root_pos_w.clone(), obj1.data.root_com_quat_w.clone()], dim=-1)
+    root_pose_all[env_ids, 2] = root_pose_all[env_ids, 2]-0.2
+    obj1.write_root_pose_to_sim(root_pose_all[env_ids], env_ids=env_ids)
+    obj2.write_root_pose_to_sim(root_pose_all[env_ids], env_ids=env_ids)
+    obj3.write_root_pose_to_sim(root_pose_all[env_ids], env_ids=env_ids)
+    obj4.write_root_pose_to_sim(root_pose_all[env_ids], env_ids=env_ids)
+    obj5.write_root_pose_to_sim(root_pose_all[env_ids], env_ids=env_ids)
+    obj6.write_root_pose_to_sim(root_pose_all[env_ids], env_ids=env_ids)
 
 def apply_user_wind_event(
     env,
@@ -395,3 +429,188 @@ def reset_after_prev_gate(
     # set into the physics simulation
     asset.write_root_pose_to_sim(torch.cat([positions, orientations], dim=-1), env_ids=env_ids)
     asset.write_root_velocity_to_sim(velocities, env_ids=env_ids)
+
+def place_objects_sequentially_event(
+    env: ManagerBasedEnv,
+    env_ids: torch.Tensor,
+):
+    """Every `period_s`, place the next object in `object_names` at `target_pos_w`.
+    First placement happens at `start_time_s`.
+    """
+
+    device = env.device
+    robot: RigidObject | Articulation = env.scene["robot"]
+    positions = robot.data.root_pos_w[env_ids] + env.scene.env_origins[env_ids]
+    target_pos = env.command_manager.get_term("target_pos").command[:, :3]
+    target_pos_tensor = target_pos[:, :3][0]
+    
+    goal = torch.tensor([1., 1., 1.], device=target_pos_tensor.device)
+    distance = torch.norm(robot.data.root_pos_w - target_pos_tensor, dim=1)
+    obj: RigidObject | Articulation = env.scene["object1"]
+    target = target_pos_tensor[0]          # shape (3,)
+    z_value = obj.data.root_pos_w[0, 2]                # extract z
+    dist_ok = (distance[0].item() < 0.2)  # convert to Python float/bool
+    z_ok = (z_value.item() < 0.1)
+    target_ok = torch.allclose(target, goal, atol=1e-3)
+    if target_ok and dist_ok and z_ok:
+        robot_pos_w = positions  # (N,3) from earlier robot reset
+        obj_pos_w = robot_pos_w.clone()
+        obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.1  # 
+        obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+        obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
+        obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
+        obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids) 
+        obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
+
+
+    goal = torch.tensor([4., 1., 1.], device=target_pos_tensor.device)
+    distance = torch.norm(robot.data.root_pos_w - target_pos_tensor, dim=1)
+    obj: RigidObject | Articulation = env.scene["object2"]
+    z_value = obj.data.root_pos_w[0, 2]                # extract z
+    dist_ok = (distance[0].item() < 0.2)  # convert to Python float/bool
+    z_ok = (z_value.item() < 0.1)
+    target_ok = torch.allclose(target_pos_tensor, goal, atol=1e-3)
+    if target_ok and dist_ok and z_ok:
+        robot_pos_w = positions  # (N,3) from earlier robot reset
+        obj_pos_w = robot_pos_w.clone()
+        obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.1  # 
+        obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+        obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
+        obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
+        obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids) 
+        obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
+
+
+    goal = torch.tensor([4., 4., 1.], device=target_pos_tensor.device)
+    distance = torch.norm(robot.data.root_pos_w - target_pos_tensor, dim=1)
+    obj: RigidObject | Articulation = env.scene["object3"]
+    z_value = obj.data.root_pos_w[0, 2]                # extract z
+    dist_ok = (distance[0].item() < 0.2)  # convert to Python float/bool
+    z_ok = (z_value.item() < 0.1)
+    target_ok = torch.allclose(target_pos_tensor, goal, atol=1e-3)
+    if target_ok and dist_ok and z_ok:
+        robot_pos_w = positions  # (N,3) from earlier robot reset
+        obj_pos_w = robot_pos_w.clone()
+        obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.1  # 
+        obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+        obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
+        obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
+        obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids) 
+        obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
+
+
+
+    goal = torch.tensor([1., 4., 1.], device=target_pos_tensor.device)
+    distance = torch.norm(robot.data.root_pos_w - target_pos_tensor, dim=1)
+    obj: RigidObject | Articulation = env.scene["object4"]
+    z_value = obj.data.root_pos_w[0, 2]                # extract z
+    dist_ok = (distance[0].item() < 0.2)  # convert to Python float/bool
+    z_ok = (z_value.item() < 0.1)
+    target_ok = torch.allclose(target_pos_tensor, goal, atol=1e-3)
+    if target_ok and dist_ok and z_ok:
+        robot_pos_w = positions  # (N,3) from earlier robot reset
+        obj_pos_w = robot_pos_w.clone()
+        obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.1  # 
+        obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+        obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
+        obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
+        obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids) 
+        obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
+
+
+    goal = torch.tensor([1., 4., 3.], device=target_pos_tensor.device)
+    distance = torch.norm(robot.data.root_pos_w - target_pos_tensor, dim=1)
+    obj: RigidObject | Articulation = env.scene["object5"]
+    z_value = obj.data.root_pos_w[0, 2]                # extract z
+    dist_ok = (distance[0].item() < 0.2)  # convert to Python float/bool
+    z_ok = (z_value.item() < 0.1)
+    target_ok = torch.allclose(target_pos_tensor, goal, atol=1e-3)
+    if target_ok and dist_ok and z_ok:
+        robot_pos_w = positions  # (N,3) from earlier robot reset
+        obj_pos_w = robot_pos_w.clone()
+        obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.1  # 
+        obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+        obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
+        obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
+        obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids) 
+        obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
+
+    
+    goal = torch.tensor([4., 4., 3.], device=target_pos_tensor.device)
+    distance = torch.norm(robot.data.root_pos_w - target_pos_tensor, dim=1)
+    obj: RigidObject | Articulation = env.scene["object6"]
+    z_value = obj.data.root_pos_w[0, 2]                # extract z
+    dist_ok = (distance[0].item() < 0.2)  # convert to Python float/bool
+    z_ok = (z_value.item() < 0.1)
+    target_ok = torch.allclose(target_pos_tensor, goal, atol=1e-3)
+    if target_ok and dist_ok and z_ok:
+        robot_pos_w = positions  # (N,3) from earlier robot reset
+        obj_pos_w = robot_pos_w.clone()
+        obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.1  # 
+        obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+        obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
+        obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
+        obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids) 
+        obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
+
+
+    goal = torch.tensor([4., 1., 3.], device=target_pos_tensor.device)
+    distance = torch.norm(robot.data.root_pos_w - target_pos_tensor, dim=1)
+    obj: RigidObject | Articulation = env.scene["object7"]
+    z_value = obj.data.root_pos_w[0, 2]                # extract z
+    dist_ok = (distance[0].item() < 0.2)  # convert to Python float/bool
+    z_ok = (z_value.item() < 0.1)
+    target_ok = torch.allclose(target_pos_tensor, goal, atol=1e-3)
+    if target_ok and dist_ok and z_ok:
+        robot_pos_w = positions  # (N,3) from earlier robot reset
+        obj_pos_w = robot_pos_w.clone()
+        obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.1  # 
+        obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+        obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
+        obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
+        obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids) 
+        obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
+
+
+    goal = torch.tensor([1., 1., 3.], device=target_pos_tensor.device)
+    distance = torch.norm(robot.data.root_pos_w - target_pos_tensor, dim=1)
+    obj: RigidObject | Articulation = env.scene["object8"]
+    z_value = obj.data.root_pos_w[0, 2]                # extract z
+    dist_ok = (distance[0].item() < 0.2)  # convert to Python float/bool
+    z_ok = (z_value.item() < 0.1)
+    target_ok = torch.allclose(target_pos_tensor, goal, atol=1e-3)
+    if target_ok and dist_ok and z_ok:
+        robot_pos_w = positions  # (N,3) from earlier robot reset
+        obj_pos_w = robot_pos_w.clone()
+        obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.1  # 
+        obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+        obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
+        obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
+        obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids) 
+        obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
+
+
+    goal = torch.tensor([4., 1., 1.], device=target_pos_tensor.device)
+    distance = torch.norm(robot.data.root_pos_w - target_pos_tensor, dim=1)
+    obj: RigidObject | Articulation = env.scene["object2"]
+    z_value = obj.data.root_pos_w[0, 2]                # extract z
+    # print("**************")
+    # print("target_pos_tensor  = ", target_pos_tensor)
+    # print("goal = ",goal)
+    # print("object pos = ",obj.data.root_pos_w[:, :3],z_value)
+    # print("distance = ",distance)
+    dist_ok = (distance[0].item() < 0.2)  # convert to Python float/bool
+    z_ok = (z_value.item() < 0.1)
+    target_ok = torch.allclose(target_pos_tensor, goal, atol=1e-3)
+    # print("target_ok:", target_ok, "dist_ok:", dist_ok, "z_ok:", z_ok)
+    if target_ok and dist_ok and z_ok:
+        robot_pos_w = positions  # (N,3) from earlier robot reset
+        obj_pos_w = robot_pos_w.clone()
+        obj_pos_w[:, 2] = robot_pos_w[:, 2] - 0.1  # 
+        obj_vel = torch.zeros((len(env_ids), 6), device=robot.device)
+        obj_quat_w = torch.zeros((len(env_ids), 4), device=robot.device)
+        obj_quat_w[:, 0] = 1.0  # [w,x,y,z] = [1,0,0,0]
+        # print("obj position = ",    obj.data.root_pos_w[:, :3])
+        obj.write_root_velocity_to_sim(obj_vel, env_ids=env_ids) 
+        obj.write_root_pose_to_sim(torch.cat([obj_pos_w, obj_quat_w], dim=-1), env_ids=env_ids)
+

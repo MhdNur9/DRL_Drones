@@ -18,6 +18,7 @@ def root_lin_vel_b(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEnti
     # extract the used quantities (to enable type-hinting)
     asset: RigidObject = env.scene[asset_cfg.name]
     lin_vel = asset.data.root_lin_vel_b
+    # print("lin_vel = ",lin_vel)
     log(env, ["vx", "vy", "vz"], lin_vel)
     return lin_vel
 
@@ -36,7 +37,42 @@ def root_rotmat_w(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntit
 
     # extract the used quantities (to enable type-hinting)
     asset: RigidObject = env.scene[asset_cfg.name]
-    object: RigidObject = env.scene["object"]
+    object1: RigidObject = env.scene["object"]
+    
+    quat = asset.data.root_quat_w
+    rotmat = math_utils.matrix_from_quat(quat)
+    flat_rotmat = rotmat.view(-1, 9)
+    log(env, ["r11", "r12", "r13", "r21", "r22", "r23", "r31", "r32", "r33"], flat_rotmat)
+    #####
+    q_d = asset.data.root_quat_w      # (N,4) wxyz
+    q_c = object1.data.root_quat_w     # (N,4) wxyz
+
+    q_rel = math_utils.quat_mul(math_utils.quat_inv(q_d), q_c)
+
+    roll, pitch, yaw = math_utils.euler_xyz_from_quat(q_rel)  # each (N,)
+    yaw_err = yaw  # already relative yaw (cube w.r.t drone)
+
+    # print("yaw_err =", yaw_err)
+
+    log(env, ["yaw_err"], yaw_err.unsqueeze(-1)-0.44)
+    # log as (1,) tensor for env0 (or log whole batch if your logger supports it)
+    # log(env, ["cube_ori_err_rad"], theta.view(-1, 1))
+  
+    #####
+    return flat_rotmat
+
+
+def root_rotmat_w_track(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+    """Asset root orientation (3x3 flattened rotation matrix) in the world frame."""
+
+    # extract the used quantities (to enable type-hinting)
+    asset: RigidObject = env.scene[asset_cfg.name]
+    object1: RigidObject = env.scene["object1"]
+    object2: RigidObject = env.scene["object2"]
+    object3: RigidObject = env.scene["object3"]
+    object4: RigidObject = env.scene["object4"]
+    object5: RigidObject = env.scene["object5"]
+    object6: RigidObject = env.scene["object6"]
 
     quat = asset.data.root_quat_w
     rotmat = math_utils.matrix_from_quat(quat)
@@ -44,7 +80,7 @@ def root_rotmat_w(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntit
     log(env, ["r11", "r12", "r13", "r21", "r22", "r23", "r31", "r32", "r33"], flat_rotmat)
     #####
     q_d = asset.data.root_quat_w      # (N,4) wxyz
-    q_c = object.data.root_quat_w     # (N,4) wxyz
+    q_c = object1.data.root_quat_w     # (N,4) wxyz
 
     q_rel = math_utils.quat_mul(math_utils.quat_inv(q_d), q_c)
 

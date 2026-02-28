@@ -6,6 +6,7 @@ import isaaclab.utils.math as math_utils
 import torch
 from isaaclab.assets import RigidObject
 from isaaclab.managers import SceneEntityCfg
+from envs.Hovering.mdp.utils.logger import log
 
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedRLEnv
@@ -83,7 +84,13 @@ def pos_error_tanh(
         )
 
     distance = torch.norm(asset.data.root_pos_w - target_pos_tensor, dim=1)
-    return 1 - torch.tanh(distance / std)
+
+    reward = 1 - torch.tanh(distance / std)
+
+    log_name = f"pos_error_tanh_std_{std}"
+    log(env, [log_name], reward.unsqueeze(-1))
+
+    return reward
 
 
 def att_error_mag(
@@ -141,7 +148,9 @@ def ang_vel_l2(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCf
     """Penalize base angular velocity using L2 squared kernel."""
     # extract the used quantities (to enable type-hinting)
     asset: RigidObject = env.scene[asset_cfg.name]
-    return torch.sum(torch.square(asset.data.root_ang_vel_b), dim=1)
+    result=torch.sum(torch.square(asset.data.root_ang_vel_b), dim=1)
+    log(env, ["ang_vel_l2 rew"], result.unsqueeze(-1))
+    return result
 
 def vel_toward_target(
     env: ManagerBasedRLEnv,
@@ -179,18 +188,22 @@ def vel_toward_target(
 
 
     r = torch.tanh(v_along / 2.0)            # ≈[-1, 1], smooth
+    result=r*gate_far
+    log(env, ["vel_toward_target rew"], result.unsqueeze(-1))
 
-    return r* gate_far
+    return result
 
-def flat_orientation_l2_event(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
+def flat_orientation_l2_reward(env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot")) -> torch.Tensor:
     """Penalize non-flat base orientation using L2 squared kernel.
 
     This is computed by penalizing the xy-components of the projected gravity vector.
     """
     # extract the used quantities (to enable type-hinting)
     asset: RigidObject = env.scene[asset_cfg.name]
+    result=torch.sum(torch.square(asset.data.projected_gravity_b[:, :2]), dim=1)
+    log(env, ["flat_orientation_l2 rew"], result.unsqueeze(-1))
     
-    return torch.sum(torch.square(asset.data.projected_gravity_b[:, :2]), dim=1)
+    return result
 
 def motor_balance_band_reward(
     env: ManagerBasedRLEnv,
@@ -243,6 +256,7 @@ def motor_balance_band_reward(
         torch.full_like(max_dev, bonus),
         penalty,
     )
+    log(env, ["motor_balance_band rew"], reward.unsqueeze(-1))
     return reward
 
 
@@ -288,6 +302,7 @@ def progress(
 
     return progress
 
+# reward =  tensor(0., device='cuda:0')
 
 def gate_passed(
     env: ManagerBasedRLEnv,
@@ -298,6 +313,18 @@ def gate_passed(
     passed = (1.0) * env.command_manager.get_term(command_name).gate_passed
     return missed + passed
 
+def is_terminated_reward(env: ManagerBasedRLEnv) -> torch.Tensor:
+    """Penalize terminated episodes that don't correspond to episodic timeouts."""
+    reward = env.termination_manager.terminated.float()
+    # print("reward = ", reward)
+    log(env, ["is_terminated rew"], reward.unsqueeze(-1))
+    return reward
+    
+def action_rate_l2_reward(env: ManagerBasedRLEnv) -> torch.Tensor:
+    """Penalize the rate of change of the actions using L2 squared kernel."""
+    reward=torch.sum(torch.square(env.action_manager.action - env.action_manager.prev_action), dim=1)
+    log(env, ["action_rate_l2 rew"], reward.unsqueeze(-1))
+    return reward
 
 def lookat_next_gate(
     env: ManagerBasedRLEnv,

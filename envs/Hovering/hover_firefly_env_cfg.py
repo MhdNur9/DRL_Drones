@@ -264,7 +264,7 @@ class RewardsCfg:
         weight=1.0,
         params={"tol": 0.10, "bonus": 0.2, "penalty_scale": 0.2, "p": 2.0},
         )
-    flat_orientation = RewTerm(func=mdp.flat_orientation_l2_event, weight=-5.0)
+    flat_orientation = RewTerm(func=mdp.flat_orientation_l2_reward, weight=-5.0)
     ang_vel_l2 = RewTerm(func=mdp.ang_vel_l2, weight=-1.0)
 
 
@@ -297,7 +297,7 @@ class HoverEnvCfg(ManagerBasedRLEnvCfg):
         """Post initialization."""
         # general settings
         self.decimation = 2
-        self.episode_length_s = 15
+        self.episode_length_s = 20
         # simulation settings
         self.sim.dt = 1 / 400
         self.sim.render_interval = self.decimation
